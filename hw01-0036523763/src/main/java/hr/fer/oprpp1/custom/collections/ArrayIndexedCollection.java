@@ -103,38 +103,101 @@ public class ArrayIndexedCollection extends Collection {
      */
     @Override
     public boolean remove(Object value) {
-        Object[] helperArray = new Object[elements.length];
-        int helperArrayIndex = 0;
-        for(int i = 0; i < size; i++) {
-            if (elements[i].equals(value)) {
-                helperArray[helperArrayIndex] = elements[i];
-                helperArrayIndex++;
-            }
+        int foundObjectindex = indexOf(value);
+        if (foundObjectindex == -1) return false;
+        remove(foundObjectindex);
+        return true;
+    }
+
+    /**
+     * Removes element at provided index.
+     * @param index index of element which should be removed
+     * @return
+     */
+    public void remove(int index){
+        if (!isInBounds(index)) throw new IndexOutOfBoundsException();
+        for(int j = index; j < size - 1; j++) {
+            elements[j] = elements[j + 1];
         }
-        if(elements.)
+        elements[size - 1] = null;
+        size--;
     }
 
-    public boolean remove(int index){
-
-    }
-
+    /**
+     * Creates an array from all elements of this collection and returns it.
+     * @return array filled with elements from this collection
+     */
     @Override
-    public boolean isEmpty() {
-        return super.isEmpty();
+    public Object[] toArray() {
+        return Arrays.copyOf(elements, size);
     }
 
-    @Override
-    public Object[] toArray() throws UnsupportedOperationException {
-        return super.toArray();
-    }
-
+    /**
+     * Applies process method of provided processor to each element, for each element of the collection.
+     * @param processor processor used to process collection elements
+     */
     @Override
     public void forEach(Processor processor) {
-        super.forEach(processor);
+        for(int i = 0; i < size; i++) {
+            processor.process(elements[i]);
+        }
     }
 
+    /**
+     * Removes all elements from this collection.
+     */
     @Override
     public void clear() {
-        super.clear();
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
+    }
+
+    /**
+     * Returns object at provided index
+     * @param index index of object which should be returned
+     * @return object at the provided index
+     */
+    public Object get(int index) {
+        if (!isInBounds(index)) throw new IndexOutOfBoundsException();
+        return elements[index];
+    }
+
+    /**
+     * Inserts given element at the provided index.
+     * @param value element to be inserted
+     * @param position index at which the element should be inserted
+     */
+    public void insert(Object value, int position){
+        if (!isInBounds(position)) throw new IndexOutOfBoundsException();
+        Object[] helperArray = Arrays.copyOf(elements, size);
+        elements = Arrays.copyOfRange(helperArray,0, position - 1);
+        add(value);
+        for(int i = position + 1; i < helperArray.length; i++){
+            add(helperArray[i]);
+        }
+    }
+
+    /**
+     * Finds the element equal to the provided {@code value}, determined using the {@code equals} method.
+     * @param value sought element
+     * @return index of sought element
+     */
+    public int indexOf(Object value) {
+        for (int i = 0; i < size; i++) {
+            if(elements[i].equals(value)) return i;
+        }
+        return -1;
+    }
+
+    /**
+     * Checks if provided index is in collection bounds.
+     * @param index index which is being tested
+     * @return true if index is in bounds, otherwise false
+     */
+    private boolean isInBounds(int index) {
+        if (index < 0 || index >= elements.length) return false;
+        return true;
     }
 }

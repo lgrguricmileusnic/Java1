@@ -58,9 +58,9 @@ public class Collection {
     }
 
     /**
-     * Adds all elements from collection to an empty array and returns it.
+     * Creates an array from all elements of this collection and returns it.
      * Default implementation throws <code>UnsupportedOperationException</code>.
-     * @return array representation of the collection
+     * @return array filled with elements from this collection
      * @throws UnsupportedOperationException
      */
     public Object[] toArray(){
@@ -70,7 +70,7 @@ public class Collection {
     /**
      * Applies process method of provided processor to each element, for each element of the collection.
      * No default implementation.
-     * @param processor processor used to process elements
+     * @param processor processor used to process collection elements
      */
     public void forEach(Processor processor) {}
 
