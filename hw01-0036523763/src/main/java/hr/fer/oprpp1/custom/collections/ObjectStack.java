@@ -25,12 +25,14 @@ public class ObjectStack {
     }
 
     public Object pop() {
+        if (isEmpty()) throw new EmptyStackException();
         Object element = storage.get(storage.size() - 1);
         storage.remove(storage.size() - 1);
         return element;
     }
 
     public Object peek() {
+        if (isEmpty()) throw new EmptyStackException();
         return storage.get(storage.size() - 1);
     }
 
