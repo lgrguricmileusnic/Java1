@@ -7,7 +7,11 @@ package hr.fer.oprpp1.custom.collections;
 public class Processor {
     /**
      * Action to be performed on the passed object.
+     *
      * @param value reference of the object on which the action will be performed
      */
-    public void process(Object value) {};
+    public void process(Object value) {
+    }
+
+
 }

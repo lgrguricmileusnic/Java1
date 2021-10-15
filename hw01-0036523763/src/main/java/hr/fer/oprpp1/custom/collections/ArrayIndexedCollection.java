@@ -22,6 +22,7 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Constructor creates an empty instance of this collection with the provided {@code initialCapacity}.
+     *
      * @param initialCapacity initial capacity of collection
      */
     public ArrayIndexedCollection(int initialCapacity) {
@@ -34,19 +35,20 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Creates an instance of this collection with elements and capacity provided by the {@code other} collection.
+     *
      * @param other collection from which the objects will be copied to the created collection
      */
     public ArrayIndexedCollection(Collection other) {
         Objects.requireNonNull(other);
-        this.size = other.size();
-        elements = new Object[size];
+        elements = new Object[other.size()];
         addAll(other);
     }
 
     /**
      * Creates an instance of this collection with elements provided by the {@code other} collection and with the provided {@code initial capacity}.
      * If the provided initial capacity is smaller than the provided collection, the provided collection's size will be used as initial capacity.
-     * @param other collection from which the objects will be copied to the created collection
+     *
+     * @param other           collection from which the objects will be copied to the created collection
      * @param initialCapacity required initial capacity
      */
     public ArrayIndexedCollection(Collection other, int initialCapacity) {
@@ -59,6 +61,7 @@ public class ArrayIndexedCollection extends Collection {
     }
 
     /**
+     * Returns the number of elements in this collection.
      * @return returns the number of currently stored objects in this collection
      */
     @Override
@@ -69,13 +72,14 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Adds object to this collection, doubles the capacity if the collection is full.
-     * @param value element which will be added to the collection.
+     *
+     * @param value element which will be added to the collection
      */
     @Override
     public void add(Object value) {
         Objects.requireNonNull(value);
         if (size == elements.length) {
-            Arrays.copyOf(elements, elements.length * 2);
+            elements = Arrays.copyOf(elements, elements.length * 2);
         }
         elements[size] = value;
         size++;
@@ -83,12 +87,13 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Tests element presence in collection.
+     *
      * @param value element whose presence is being tested.
      * @return true if element is present, false otherwise
      */
     @Override
     public boolean contains(Object value) {
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             if (elements[i].equals(value)) {
                 return true;
             }
@@ -98,25 +103,27 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Removes first element in index order with the provided {@code value}.
+     *
      * @param value Value of element which should be removed.
      * @return true if element was found and removed, otherwise false
      */
     @Override
     public boolean remove(Object value) {
-        int foundObjectindex = indexOf(value);
-        if (foundObjectindex == -1) return false;
-        remove(foundObjectindex);
+        int foundObjectIndex = indexOf(value);
+        if (foundObjectIndex == -1) return false;
+        remove(foundObjectIndex);
         return true;
     }
 
     /**
      * Removes element at provided index.
+     *
      * @param index index of element which should be removed
      * @return
      */
-    public void remove(int index){
+    public void remove(int index) {
         if (!isInBounds(index)) throw new IndexOutOfBoundsException();
-        for(int j = index; j < size - 1; j++) {
+        for (int j = index; j < size - 1; j++) {
             elements[j] = elements[j + 1];
         }
         elements[size - 1] = null;
@@ -125,6 +132,7 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Creates an array from all elements of this collection and returns it.
+     *
      * @return array filled with elements from this collection
      */
     @Override
@@ -134,11 +142,12 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Applies process method of provided processor to each element, for each element of the collection.
-     * @param processor processor used to process collection elements
+     *
+     * @param processor processor used to process each collection element
      */
     @Override
     public void forEach(Processor processor) {
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             processor.process(elements[i]);
         }
     }
@@ -156,6 +165,7 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Returns object at provided index
+     *
      * @param index index of object which should be returned
      * @return object at the provided index
      */
@@ -166,38 +176,68 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Inserts given element at the provided index.
-     * @param value element to be inserted
+     *
+     * @param value    element to be inserted
      * @param position index at which the element should be inserted
      */
-    public void insert(Object value, int position){
+    public void insert(Object value, int position) {
+        if (position == size) {
+            add(value);
+            return;
+        }
         if (!isInBounds(position)) throw new IndexOutOfBoundsException();
         Object[] helperArray = Arrays.copyOf(elements, size);
-        elements = Arrays.copyOfRange(helperArray,0, position - 1);
+        clear();
+        if (position != 0) {
+            elements = Arrays.copyOfRange(helperArray, 0, position);
+            size = elements.length;
+        }
         add(value);
-        for(int i = position + 1; i < helperArray.length; i++){
+        for (int i = position; i < helperArray.length; i++) {
             add(helperArray[i]);
         }
+        return;
     }
 
     /**
      * Finds the element equal to the provided {@code value}, determined using the {@code equals} method.
+     *
      * @param value sought element
      * @return index of sought element
      */
     public int indexOf(Object value) {
         for (int i = 0; i < size; i++) {
-            if(elements[i].equals(value)) return i;
+            if (elements[i].equals(value)) return i;
         }
         return -1;
     }
 
     /**
+     * Checks if the passed object is an instance of ArrayIndexedCollection
+     * and whether this collection and the passed collection have the same size, and elements in the same order.
+     *
+     * @param other object being compared with this collection
+     * @return true if equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof ArrayIndexedCollection) {
+            return this.size == ((ArrayIndexedCollection) other).size() &&
+                    Arrays.equals(this.toArray(), ((ArrayIndexedCollection) other).toArray());
+        }
+        return false;
+    }
+
+    /**
      * Checks if provided index is in collection bounds.
+     *
      * @param index index which is being tested
      * @return true if index is in bounds, otherwise false
      */
     private boolean isInBounds(int index) {
-        if (index < 0 || index >= elements.length) return false;
+        if (index < 0 || index >= size()) return false;
         return true;
     }
+
+
 }

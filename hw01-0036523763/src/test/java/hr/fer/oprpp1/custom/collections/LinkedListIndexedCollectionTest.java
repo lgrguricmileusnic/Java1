@@ -1,60 +1,42 @@
 package hr.fer.oprpp1.custom.collections;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class ArrayIndexedCollectionTest {
-    private ArrayIndexedCollection testCollection;
-
+public class LinkedListIndexedCollectionTest {
+    LinkedListIndexedCollection testCollection;
     @BeforeEach
     public void setup() {
-        testCollection = new ArrayIndexedCollection();
+        testCollection = new LinkedListIndexedCollection();
         for (int i = 0; i < 3; i++) {
             testCollection.add(Integer.valueOf(i));
         }
     }
 
-    @Test
-    public void testIllegalInitialCapacity() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(-1);
-        });
-    }
 
     @Test
     public void testPassedCollectionIsNull() {
         assertThrows(NullPointerException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(null);
+            LinkedListIndexedCollection a = new LinkedListIndexedCollection(null);
         });
-    }
-
-    @Test
-    public void testPassedCollectionIsNullInTwoArgumentConstructor() {
-        assertThrows(NullPointerException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(null, 16);
-        });
-    }
-
-    @Test
-    public void testIllegalInitialCapacityInTwoArgumentConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(testCollection, -1);
-        });
-        assertEquals(testCollection, new ArrayIndexedCollection(testCollection));
     }
 
     @Test
     public void testCreatingCollectionFromCollection() {
-        assertEquals(testCollection, new ArrayIndexedCollection(testCollection));
+        ArrayIndexedCollection a = new ArrayIndexedCollection();
+        a.add(0);
+        a.add(1);
+        a.add(2);
+        LinkedListIndexedCollection l = new LinkedListIndexedCollection(a);
+        assertEquals(testCollection, new LinkedListIndexedCollection(a));
     }
 
     @Test
     public void testToArray() {
-        assertArrayEquals(testCollection.toArray(), new Object[]{0, 1, 2});
+        Object[] array = testCollection.toArray();
+        assertArrayEquals(new Object[]{0, 1, 2}, array);
     }
 
     @Test
@@ -73,17 +55,10 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testAddingValues() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection();
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         a.add(1);
         a.add(2);
         assertArrayEquals(new Object[]{1, 2}, a.toArray());
-    }
-
-    @Test
-    public void testAddingElementWhenCollectionIsFull() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(2);
-        a.addAll(testCollection);
-        assertEquals(testCollection, a);
     }
 
     @Test
@@ -98,7 +73,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testRemoveContainedElement() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(5);
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         a.addAll(testCollection);
         assertTrue(a.remove(Integer.valueOf(2)));
         assertArrayEquals(new Object[]{0, 1}, a.toArray());
@@ -106,7 +81,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testShouldRemoveOneOfMultipleSameElements() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(5);
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         a.addAll(testCollection);
         a.add(2);
         a.add(3);
@@ -118,7 +93,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testRemovingNonExistingElement() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(4);
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         a.addAll(testCollection);
         assertFalse(a.remove(Integer.valueOf(3)));
         assertEquals(testCollection, a);
@@ -128,7 +103,7 @@ public class ArrayIndexedCollectionTest {
     public void testRemovingFromEmptyArray() {
         testCollection.clear();
         assertFalse(testCollection.remove(Integer.valueOf(3)));
-        assertEquals(testCollection, new ArrayIndexedCollection());
+        assertEquals(testCollection, new LinkedListIndexedCollection());
     }
 
 
@@ -149,7 +124,7 @@ public class ArrayIndexedCollectionTest {
     @Test
     public void testClear() {
         testCollection.clear();
-        assertEquals(testCollection, new ArrayIndexedCollection());
+        assertEquals(testCollection, new LinkedListIndexedCollection());
     }
 
     @Test
@@ -190,7 +165,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testInsertAtLastIndex() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(testCollection);
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection(testCollection);
         testCollection.add(-1);
         a.insert(-1, a.size());
         assertEquals(testCollection, a);
@@ -199,7 +174,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testInsertAtArrayStart() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(testCollection);
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection(testCollection);
         a.remove(0);
         a.insert(0, 0);
         assertEquals(testCollection, a);
@@ -208,7 +183,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testInsertElementInMiddleOfArray() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection();
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         a.add(0);
         a.add(2);
         a.add(3);
@@ -218,18 +193,8 @@ public class ArrayIndexedCollectionTest {
     }
 
     @Test
-    public void testInsertIntoFullArray() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(2);
-        a.add(1);
-        a.add(2);
-        assertDoesNotThrow(() -> {
-            a.insert(3, 1);
-        });
-    }
-
-    @Test
     public void testInsertIntoEmptyArray() {
-        ArrayIndexedCollection a = new ArrayIndexedCollection(3);
+        LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         assertDoesNotThrow(() -> {
             a.insert(3, 0);
         });
