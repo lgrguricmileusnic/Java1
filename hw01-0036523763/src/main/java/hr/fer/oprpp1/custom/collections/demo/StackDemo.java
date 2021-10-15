@@ -10,9 +10,9 @@ public class StackDemo {
         int operand2;
         int result = 0;
         for (String element : expression) {
-            char current = element.charAt(0);
+            char current = element.charAt(element.length() - 1);
             if (Character.isDigit(current)){
-                stack.push(current);
+                stack.push(Integer.parseInt(element));
             } else {
                 operand2 = (int) stack.pop();
                 operand1 = (int) stack.pop();
@@ -28,10 +28,12 @@ public class StackDemo {
                     case '%' -> operand1 % operand2;
                     default -> throw new IllegalStateException("Unexpected operator: " + current);
                 };
+                stack.push(result);
             }
         }
+        result = (int) stack.pop();
         if (stack.isEmpty()) {
-            System.out.print(result);
+            System.out.println("Expression evaluates to " + Integer.toString(result));
         } else {
             System.err.println("Invalid input, expression could not be evaluated");
         }
