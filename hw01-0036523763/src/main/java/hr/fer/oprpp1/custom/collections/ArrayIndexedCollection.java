@@ -68,6 +68,7 @@ public class ArrayIndexedCollection extends Collection {
 
     /**
      * Returns the number of elements in this collection.
+     *
      * @return returns the number of currently stored objects in this collection
      */
     @Override

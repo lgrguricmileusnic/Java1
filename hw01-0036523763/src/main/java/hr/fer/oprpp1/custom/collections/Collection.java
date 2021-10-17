@@ -19,6 +19,7 @@ public class Collection {
 
     /**
      * Checks if collection is empty.
+     *
      * @return true if collection contains no objects and false otherwise
      */
     public boolean isEmpty() {

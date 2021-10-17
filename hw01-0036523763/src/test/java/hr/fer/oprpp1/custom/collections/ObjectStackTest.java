@@ -2,10 +2,12 @@ package hr.fer.oprpp1.custom.collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ObjectStackTest {
     ObjectStack testStack;
+
     @BeforeEach
     public void setup() {
         testStack = new ObjectStack();

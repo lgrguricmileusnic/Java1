@@ -20,6 +20,7 @@ public class ObjectStack {
 
     /**
      * Checks if collection is empty.
+     *
      * @return true if collection contains no objects and false otherwise
      */
     public boolean isEmpty() {
@@ -28,6 +29,7 @@ public class ObjectStack {
 
     /**
      * Returns stack size.
+     *
      * @return number of elements currently stored objects on the stack
      */
     public int size() {
@@ -36,6 +38,7 @@ public class ObjectStack {
 
     /**
      * Puts a value on the stack.
+     *
      * @param value value to be put on the stack
      */
     public void push(Object value) {
@@ -44,6 +47,7 @@ public class ObjectStack {
 
     /**
      * Removes element from the top of this stack and returns it.
+     *
      * @return popped element
      */
     public Object pop() {
@@ -55,6 +59,7 @@ public class ObjectStack {
 
     /**
      * Returns element from the top of this stack, but does not remove it.
+     *
      * @return element from the top of this stack
      */
     public Object peek() {

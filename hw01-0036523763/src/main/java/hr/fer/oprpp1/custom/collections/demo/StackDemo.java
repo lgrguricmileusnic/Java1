@@ -9,9 +9,10 @@ import hr.fer.oprpp1.custom.collections.ObjectStack;
 public class StackDemo {
     /**
      * main method
+     *
      * @param args expression to be evaluated, written in postfix notation
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ObjectStack stack = new ObjectStack();
         String[] expression = args[0].split(" ");
         int operand1;
@@ -19,7 +20,7 @@ public class StackDemo {
         int result;
         for (String element : expression) {
             char current = element.charAt(element.length() - 1);
-            if (Character.isDigit(current)){
+            if (Character.isDigit(current)) {
                 stack.push(Integer.parseInt(element));
             } else {
                 operand2 = (int) stack.pop();
@@ -29,7 +30,7 @@ public class StackDemo {
                     case '+' -> operand1 + operand2;
                     case '-' -> operand1 - operand2;
                     case '/' -> {
-                        if (operand2==0) throw new ArithmeticException("Division by zero is not allowed");
+                        if (operand2 == 0) throw new ArithmeticException("Division by zero is not allowed");
                         yield operand1 / operand2;
                     }
                     case '*' -> operand1 * operand2;
