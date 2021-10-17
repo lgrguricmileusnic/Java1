@@ -2,13 +2,21 @@ package hr.fer.oprpp1.custom.collections.demo;
 
 import hr.fer.oprpp1.custom.collections.ObjectStack;
 
+/**
+ * Command-line application which calculates a simple arithmetical expression in postfix notation.
+ * Supported operations are addition, subtraction, integer division, multiplication and modulo (+, -, /, *, %).
+ */
 public class StackDemo {
-    public static void main(String args[]){
+    /**
+     * main method
+     * @param args expression to be evaluated, written in postfix notation
+     */
+    public static void main(String[] args){
         ObjectStack stack = new ObjectStack();
         String[] expression = args[0].split(" ");
         int operand1;
         int operand2;
-        int result = 0;
+        int result;
         for (String element : expression) {
             char current = element.charAt(element.length() - 1);
             if (Character.isDigit(current)){
@@ -33,7 +41,7 @@ public class StackDemo {
         }
         result = (int) stack.pop();
         if (stack.isEmpty()) {
-            System.out.println("Expression evaluates to " + Integer.toString(result));
+            System.out.println("Expression evaluates to " + result + ".");
         } else {
             System.err.println("Invalid input, expression could not be evaluated");
         }

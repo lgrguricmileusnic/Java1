@@ -1,6 +1,5 @@
 package hr.fer.oprpp1.custom.collections;
 
-import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ public class LinkedListIndexedCollectionTest {
     public void setup() {
         testCollection = new LinkedListIndexedCollection();
         for (int i = 0; i < 3; i++) {
-            testCollection.add(Integer.valueOf(i));
+            testCollection.add(i);
         }
     }
 
@@ -23,9 +22,7 @@ public class LinkedListIndexedCollectionTest {
     }
     @Test
     public void testPassedCollectionIsNull() {
-        assertThrows(NullPointerException.class, () -> {
-            LinkedListIndexedCollection a = new LinkedListIndexedCollection(null);
-        });
+        assertThrows(NullPointerException.class, () -> new LinkedListIndexedCollection(null));
     }
 
     @Test
@@ -34,7 +31,6 @@ public class LinkedListIndexedCollectionTest {
         a.add(0);
         a.add(1);
         a.add(2);
-        LinkedListIndexedCollection l = new LinkedListIndexedCollection(a);
         assertEquals(testCollection, new LinkedListIndexedCollection(a));
     }
 
@@ -52,9 +48,7 @@ public class LinkedListIndexedCollectionTest {
 
     @Test
     public void testAddingNullValue() {
-        assertThrows(NullPointerException.class, () -> {
-            testCollection.add(null);
-        });
+        assertThrows(NullPointerException.class, () -> testCollection.add(null));
     }
 
     @Test
@@ -121,16 +115,12 @@ public class LinkedListIndexedCollectionTest {
 
     @Test
     public void testIndexLessThanZeroRemoveMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.remove(-1);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.remove(-1));
     }
 
     @Test
     public void testIndexCrossedUpperBoundRemoveMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.remove(100);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.remove(100));
     }
 
     @Test
@@ -155,30 +145,22 @@ public class LinkedListIndexedCollectionTest {
 
     @Test
     public void testIndexLessThanZeroGetMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.get(-1);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.get(-1));
     }
 
     @Test
     public void testIndexCrossedUpperBoundGetMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.get(100);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.get(100));
     }
 
     @Test
     public void testIndexLessThanZeroInsertMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.insert(1, -1);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.insert(1, -1));
     }
 
     @Test
     public void testIndexCrossedUpperBoundInsertMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.insert(1, 100);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.insert(1, 100));
     }
 
     @Test
@@ -213,9 +195,7 @@ public class LinkedListIndexedCollectionTest {
     @Test
     public void testInsertIntoEmptyArray() {
         LinkedListIndexedCollection a = new LinkedListIndexedCollection();
-        assertDoesNotThrow(() -> {
-            a.insert(3, 0);
-        });
+        assertDoesNotThrow(() -> a.insert(3, 0));
     }
 
     @Test

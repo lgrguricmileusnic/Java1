@@ -9,7 +9,13 @@ import java.util.Objects;
  * @author Lovro Grgurić Mileusnić
  */
 public class ArrayIndexedCollection extends Collection {
+    /**
+     * number of elements stored in the collection
+     */
     private int size;
+    /**
+     * Object array used to store the collection in memory.
+     */
     private Object[] elements;
 
     /**
@@ -119,7 +125,6 @@ public class ArrayIndexedCollection extends Collection {
      * Removes element at provided index.
      *
      * @param index index of element which should be removed
-     * @return
      */
     public void remove(int index) {
         if (!isInBounds(index)) throw new IndexOutOfBoundsException();
@@ -196,7 +201,6 @@ public class ArrayIndexedCollection extends Collection {
         for (int i = position; i < helperArray.length; i++) {
             add(helperArray[i]);
         }
-        return;
     }
 
     /**
@@ -235,8 +239,7 @@ public class ArrayIndexedCollection extends Collection {
      * @return true if index is in bounds, otherwise false
      */
     private boolean isInBounds(int index) {
-        if (index < 0 || index >= size()) return false;
-        return true;
+        return index >= 0 && index < size();
     }
 
 

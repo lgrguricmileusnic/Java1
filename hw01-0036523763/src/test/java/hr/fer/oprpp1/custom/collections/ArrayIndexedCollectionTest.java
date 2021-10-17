@@ -14,36 +14,28 @@ public class ArrayIndexedCollectionTest {
     public void setup() {
         testCollection = new ArrayIndexedCollection();
         for (int i = 0; i < 3; i++) {
-            testCollection.add(Integer.valueOf(i));
+            testCollection.add(i);
         }
     }
 
     @Test
     public void testIllegalInitialCapacity() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(-1);
-        });
+        assertThrows(IllegalArgumentException.class, () -> new ArrayIndexedCollection(-1));
     }
 
     @Test
     public void testPassedCollectionIsNull() {
-        assertThrows(NullPointerException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(null);
-        });
+        assertThrows(NullPointerException.class, () -> new ArrayIndexedCollection(null));
     }
 
     @Test
     public void testPassedCollectionIsNullInTwoArgumentConstructor() {
-        assertThrows(NullPointerException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(null, 16);
-        });
+        assertThrows(NullPointerException.class, () -> new ArrayIndexedCollection(null, 16));
     }
 
     @Test
     public void testIllegalInitialCapacityInTwoArgumentConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            ArrayIndexedCollection a = new ArrayIndexedCollection(testCollection, -1);
-        });
+        assertThrows(IllegalArgumentException.class, () -> new ArrayIndexedCollection(testCollection, -1));
         assertEquals(testCollection, new ArrayIndexedCollection(testCollection));
     }
 
@@ -65,9 +57,7 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testAddingNullValue() {
-        assertThrows(NullPointerException.class, () -> {
-            testCollection.add(null);
-        });
+        assertThrows(NullPointerException.class, () -> testCollection.add(null));
     }
 
     @Test
@@ -141,16 +131,12 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testIndexLessThanZeroRemoveMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.remove(-1);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.remove(-1));
     }
 
     @Test
     public void testIndexCrossedUpperBoundRemoveMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.remove(100);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.remove(100));
     }
 
     @Test
@@ -169,30 +155,22 @@ public class ArrayIndexedCollectionTest {
 
     @Test
     public void testIndexLessThanZeroGetMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.get(-1);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.get(-1));
     }
 
     @Test
     public void testIndexCrossedUpperBoundGetMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.get(100);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.get(100));
     }
 
     @Test
     public void testIndexLessThanZeroInsertMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.insert(1, -1);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.insert(1, -1));
     }
 
     @Test
     public void testIndexCrossedUpperBoundInsertMethod() {
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testCollection.insert(1, 100);
-        });
+        assertThrows(IndexOutOfBoundsException.class, () -> testCollection.insert(1, 100));
     }
 
     @Test
@@ -229,17 +207,13 @@ public class ArrayIndexedCollectionTest {
         ArrayIndexedCollection a = new ArrayIndexedCollection(2);
         a.add(1);
         a.add(2);
-        assertDoesNotThrow(() -> {
-            a.insert(3, 1);
-        });
+        assertDoesNotThrow(() -> a.insert(3, 1));
     }
 
     @Test
     public void testInsertIntoEmptyArray() {
         ArrayIndexedCollection a = new ArrayIndexedCollection(3);
-        assertDoesNotThrow(() -> {
-            a.insert(3, 0);
-        });
+        assertDoesNotThrow(() -> a.insert(3, 0));
     }
 
     @Test

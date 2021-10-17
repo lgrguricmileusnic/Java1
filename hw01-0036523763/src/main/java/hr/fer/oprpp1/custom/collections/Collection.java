@@ -11,11 +11,14 @@ package hr.fer.oprpp1.custom.collections;
 
 public class Collection {
 
-
+    /**
+     * Default constructor.
+     */
     protected Collection() {
     }
 
     /**
+     * Checks if collection is empty.
      * @return true if collection contains no objects and false otherwise
      */
     public boolean isEmpty() {
@@ -57,7 +60,7 @@ public class Collection {
      * Default implementation always returns false;
      *
      * @param value Value of element which should be removed.
-     * @return true if an element was removed, othewise false, default implementation always returns false
+     * @return true if an element was removed, otherwise false, default implementation always returns false
      */
     public boolean remove(Object value) {
         return false;
@@ -68,7 +71,7 @@ public class Collection {
      * Default implementation throws <code>UnsupportedOperationException</code>.
      *
      * @return array filled with elements from this collection
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException default implementation always throws UnsupportedOperationException
      */
     public Object[] toArray() {
         throw new UnsupportedOperationException();

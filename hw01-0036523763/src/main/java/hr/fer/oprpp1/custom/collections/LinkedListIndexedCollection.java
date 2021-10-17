@@ -1,7 +1,6 @@
 package hr.fer.oprpp1.custom.collections;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Objects;
 
 /**
@@ -12,23 +11,42 @@ import java.util.Objects;
  */
 
 public class LinkedListIndexedCollection extends Collection {
+    /**
+     * number of items stored in the collection
+     */
     private int size;
+    /**
+     * reference to the first item node in the {@code LinkedListIndexedCollection}
+     */
     private LinkedNode first;
+    /**
+     * reference to the last item node in the {@code LinkedListIndexedCollection}
+     */
     private LinkedNode last;
 
     /**
      * Class representation of a node.
      */
-    private class LinkedNode {
+    private static class LinkedNode {
         private LinkedNode previous;
         private LinkedNode next;
         private Object value;
 
+        /**
+         * Default constructor, initialises all LinkedNode data members as null
+         */
         private LinkedNode() {
             previous = next = null;
             value = null;
         }
 
+        /**
+         * LinkedNode Constructor which stores passed {@code value} and sets up a one way link to the {@code previous} node.
+         * To complete the link, a reference to this node must be stored in the previous node's {@code next} data member
+         *
+         * @param value    value to be stored in the node
+         * @param previous reference to the previous node
+         */
         private LinkedNode(Object value, LinkedNode previous) {
             Objects.requireNonNull(value);
             this.value = value;
@@ -81,8 +99,8 @@ public class LinkedListIndexedCollection extends Collection {
      * Returns value of element at passed index.
      * Never has greater complexity than n/2.
      *
-     * @param index
-     * @return
+     * @param index index of the sought object
+     * @return value stored at the passed index
      */
     public Object get(int index) {
         if (!isInBounds(index)) throw new IndexOutOfBoundsException();
@@ -114,7 +132,6 @@ public class LinkedListIndexedCollection extends Collection {
 
 
         size++;
-        return;
     }
 
     /**
@@ -157,8 +174,6 @@ public class LinkedListIndexedCollection extends Collection {
         }
         node.value = null;
         size--;
-        return;
-
     }
 
     /**
@@ -203,8 +218,7 @@ public class LinkedListIndexedCollection extends Collection {
      */
     @Override
     public boolean contains(Object value) {
-        if (indexOf(value) == -1) return false;
-        return true;
+        return indexOf(value) != -1;
     }
 
     /**
@@ -244,12 +258,6 @@ public class LinkedListIndexedCollection extends Collection {
      */
     @Override
     public void clear() {
-        LinkedNode current = first;
-        while (current.next != null) {
-            current.previous = null;
-            current.value = null;
-            current = current.next;
-        }
         first = last = null;
         size = 0;
     }
@@ -261,8 +269,7 @@ public class LinkedListIndexedCollection extends Collection {
      * @return true if index is in bounds, otherwise false
      */
     private boolean isInBounds(int index) {
-        if (index < 0 || index >= size()) return false;
-        return true;
+        return index >= 0 && index < size();
     }
 
     /**
