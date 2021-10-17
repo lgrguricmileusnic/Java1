@@ -58,6 +58,12 @@ public class ArrayIndexedCollectionTest {
     }
 
     @Test
+    public void testToArrayForEmptyCollection() {
+        Object[] array = (new ArrayIndexedCollection()).toArray();
+        assertArrayEquals(new Object[]{}, array);
+    }
+
+    @Test
     public void testAddingNullValue() {
         assertThrows(NullPointerException.class, () -> {
             testCollection.add(null);
@@ -65,7 +71,7 @@ public class ArrayIndexedCollectionTest {
     }
 
     @Test
-    public void testSizeWhenAddingValues() {
+    public void testSizeShouldChangeWhenAddingElements() {
         testCollection.add(5);
         testCollection.add(2);
         assertEquals(5, testCollection.size());
@@ -74,9 +80,10 @@ public class ArrayIndexedCollectionTest {
     @Test
     public void testAddingValues() {
         ArrayIndexedCollection a = new ArrayIndexedCollection();
+        a.add(0);
         a.add(1);
         a.add(2);
-        assertArrayEquals(new Object[]{1, 2}, a.toArray());
+        assertEquals(testCollection, a);
     }
 
     @Test
@@ -105,7 +112,7 @@ public class ArrayIndexedCollectionTest {
     }
 
     @Test
-    public void testShouldRemoveOneOfMultipleSameElements() {
+    public void testShouldRemoveOneOfMultipleEqualElements() {
         ArrayIndexedCollection a = new ArrayIndexedCollection(5);
         a.addAll(testCollection);
         a.add(2);

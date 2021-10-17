@@ -1,5 +1,6 @@
 package hr.fer.oprpp1.custom.collections;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,11 @@ public class LinkedListIndexedCollectionTest {
         }
     }
 
-
+    @Test
+    public void testDefaultConstructor() {
+        LinkedListIndexedCollection l = new LinkedListIndexedCollection();
+        assertTrue(l.size() == 0 && l.isEmpty());
+    }
     @Test
     public void testPassedCollectionIsNull() {
         assertThrows(NullPointerException.class, () -> {
@@ -40,6 +45,12 @@ public class LinkedListIndexedCollectionTest {
     }
 
     @Test
+    public void testToArrayForEmptyCollection() {
+        Object[] array = (new LinkedListIndexedCollection()).toArray();
+        assertArrayEquals(new Object[]{}, array);
+    }
+
+    @Test
     public void testAddingNullValue() {
         assertThrows(NullPointerException.class, () -> {
             testCollection.add(null);
@@ -47,7 +58,7 @@ public class LinkedListIndexedCollectionTest {
     }
 
     @Test
-    public void testSizeWhenAddingValues() {
+    public void testSizeShouldChangeWhenAddingElements() {
         testCollection.add(5);
         testCollection.add(2);
         assertEquals(5, testCollection.size());
@@ -56,9 +67,10 @@ public class LinkedListIndexedCollectionTest {
     @Test
     public void testAddingValues() {
         LinkedListIndexedCollection a = new LinkedListIndexedCollection();
+        a.add(0);
         a.add(1);
         a.add(2);
-        assertArrayEquals(new Object[]{1, 2}, a.toArray());
+        assertEquals(testCollection, a);
     }
 
     @Test
@@ -80,7 +92,7 @@ public class LinkedListIndexedCollectionTest {
     }
 
     @Test
-    public void testShouldRemoveOneOfMultipleSameElements() {
+    public void testShouldRemoveOneOfMultipleEqualElements() {
         LinkedListIndexedCollection a = new LinkedListIndexedCollection();
         a.addAll(testCollection);
         a.add(2);
@@ -129,6 +141,12 @@ public class LinkedListIndexedCollectionTest {
 
     @Test
     public void testGetElement() {
+        testCollection.add(3);
+        testCollection.add(3);
+        testCollection.add(3);
+        testCollection.add(3);
+        testCollection.add(3);
+
         Object[] testArray = testCollection.toArray();
         for (int i = 0; i < testCollection.size(); i++) {
             assertEquals(testArray[i], testCollection.get(i));
@@ -214,4 +232,5 @@ public class LinkedListIndexedCollectionTest {
     public void testIndexOfNull() {
         assertEquals(-1, testCollection.indexOf(null));
     }
+
 }
