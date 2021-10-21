@@ -2,9 +2,11 @@ package hr.fer.zemris.java.hw03.prob1;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import hr.fer.oprpp.hw02.prob1.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
 
 
 public class Prob1Test {
@@ -182,7 +184,6 @@ public class Prob1Test {
 		checkTokenStream(lexer, correctData);
 	}
 
-
 	@Test
 	public void testSomeSymbols() {
 		// Lets check for several symbols...
@@ -199,7 +200,6 @@ public class Prob1Test {
 
 		checkTokenStream(lexer, correctData);
 	}
-
 
 	@Test
 	public void testCombinedInput() {
@@ -240,11 +240,14 @@ public class Prob1Test {
 
 
 
+
 	@Test
 	public void testNullState() {
 		assertThrows(NullPointerException.class, () -> new Lexer("").setState(null));
 	}
 	
+
+
 
 	@Test
 	public void testNotNullInExtended() {

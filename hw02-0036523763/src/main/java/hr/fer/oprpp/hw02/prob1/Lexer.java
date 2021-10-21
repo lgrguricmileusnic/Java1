@@ -19,6 +19,7 @@ public class Lexer {
      */
     private int currentIndex;
 
+
     private LexerState state;
 
     /**
@@ -43,7 +44,9 @@ public class Lexer {
     public Token nextToken() {
         char current = 0;
         boolean escaped = false;
+
         String tokenValue;
+
         do {
             if (isDone()) {
                 token = new Token(TokenType.EOF, null);
@@ -53,6 +56,7 @@ public class Lexer {
             current = data[currentIndex++];
 
         } while (current == '\n' || current == '\r' || current == '\t' || Character.isWhitespace(current));
+
         tokenValue = "";
         switch (state) {
             case BASIC -> {
@@ -122,6 +126,7 @@ public class Lexer {
     public Token getToken() {
         return token;
     }
+
 
     public void setState(LexerState newState) {
         Objects.requireNonNull(newState);
