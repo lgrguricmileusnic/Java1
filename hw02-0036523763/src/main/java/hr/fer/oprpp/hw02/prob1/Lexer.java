@@ -19,6 +19,8 @@ public class Lexer {
      */
     private int currentIndex;
 
+    private LexerState state;
+
     /**
      * Constructs a {@code Lexer} for the passed input text
      *
@@ -29,6 +31,7 @@ public class Lexer {
         data = text.toCharArray();
         token = null;
         currentIndex = 0;
+        state = LexerState.BASIC;
     }
 
     /**
@@ -50,43 +53,65 @@ public class Lexer {
             current = data[currentIndex++];
 
         } while (current == '\n' || current == '\r' || current == '\t' || Character.isWhitespace(current));
-
         tokenValue = "";
-        while (Character.isLetter((current)) || escaped || ((Character) current).equals('\\')) {
-            if (((Character) current).equals('\\') && !escaped) {
-                escaped = true;
-                if (isDone()) throw new LexerException("Invalid escape ending!");
-                current = data[currentIndex++];
-                if (Character.isLetter(current))
-                    throw new LexerException("Invalid escape sequence! Cannot escape a letter.");
-                continue;
+        switch (state) {
+            case BASIC -> {
+                while (Character.isLetter((current)) || escaped || ((Character) current).equals('\\')) {
+                    if (((Character) current).equals('\\') && !escaped) {
+                        escaped = true;
+                        if (isDone()) throw new LexerException("Invalid escape ending!");
+                        current = data[currentIndex++];
+                        if (Character.isLetter(current))
+                            throw new LexerException("Invalid escape sequence! Cannot escape a letter.");
+                        continue;
+                    }
+                    escaped = false;
+                    tokenValue += Character.toString(current);
+                    if(isDone()) break;
+                    current = data[currentIndex++];
+                }
+                ;
+                if (!tokenValue.equals("")) {
+                    if (!isDone()) currentIndex--;
+                    return token = new Token(TokenType.WORD, tokenValue);
+                }
+
+
+                while (Character.isDigit((current))) {
+                    tokenValue += Character.toString(current);
+                    if (isDone()) break;
+                    current = data[currentIndex++];
+                }
+                ;
+
+                if (!tokenValue.equals("")) {
+                    try {
+                        if (!isDone()) currentIndex--;
+                        return new Token(TokenType.NUMBER, Long.valueOf(tokenValue));
+                    } catch (NumberFormatException e) {
+                        throw new LexerException(e.getMessage());
+                    }
+                }
+
+                return token = new Token(TokenType.SYMBOL, current);
             }
-            escaped = false;
-            tokenValue += Character.toString(current);
-            current = data[currentIndex++];
-        };
-        if (!tokenValue.equals("")) {
-            currentIndex--;
-            return token = new Token(TokenType.WORD, tokenValue);
+            case EXTENDED -> {
+                if (current == '#') {
+                    return token = new Token(TokenType.SYMBOL, current);
+                }
+                while (!Character.isWhitespace(current) && current != '#') {
+                    tokenValue += current;
+                    if (isDone()) break;
+                    current = data[currentIndex++];
+                }
+                currentIndex--;
+                return token = new Token(TokenType.WORD, tokenValue);
+            }
+
+
         }
 
-
-        while (Character.isDigit((current))) {
-            tokenValue += Character.toString(current);
-            if (isDone()) break;
-            current = data[currentIndex++];
-        };
-
-        if (!tokenValue.equals("")) {
-            try {
-                currentIndex --;
-                return new Token(TokenType.NUMBER, Long.valueOf(tokenValue));
-            } catch(NumberFormatException e){
-                throw new LexerException(e.getMessage());
-            }
-        }
-
-        return new Token(TokenType.SYMBOL, current);
+        return null;
     }
 
     /**
@@ -98,6 +123,16 @@ public class Lexer {
         return token;
     }
 
+    public void setState(LexerState newState) {
+        Objects.requireNonNull(newState);
+        state = newState;
+    }
+
+    /**
+     * Checks if {@code currentIndex} reached data array upper bound.
+     *
+     * @return true if currentIndex equals {@code data} array {@code length}, otherwise false
+     */
     private boolean isDone() {
         if (currentIndex == data.length) {
             return true;
