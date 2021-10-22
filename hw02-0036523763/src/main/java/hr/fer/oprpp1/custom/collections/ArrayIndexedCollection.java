@@ -231,6 +231,7 @@ public class ArrayIndexedCollection implements List {
      *
      * @param index index of object which should be returned
      * @return object at the provided index
+     * @throws IndexOutOfBoundsException if provided index is invalid
      */
     public Object get(int index) {
         if (!isInBounds(index)) throw new IndexOutOfBoundsException();

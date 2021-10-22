@@ -2,8 +2,9 @@ package hr.fer.oprpp.hw02.prob1;
 
 import java.util.Objects;
 
+
 /**
- * Simple lexical analyzer, supplies the user with methods that convert input data into tokens.
+ * Simple lexical analyzer, supplies the client with methods that convert input data into tokens.
  */
 public class Lexer {
     /**
@@ -137,6 +138,7 @@ public class Lexer {
      * Checks if {@code currentIndex} reached data array upper bound.
      *
      * @return true if currentIndex equals {@code data} array {@code length}, otherwise false
+     * @throws LexerException if text was tokenized
      */
     private boolean isDone() {
         if (currentIndex == data.length) {

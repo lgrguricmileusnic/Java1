@@ -7,6 +7,9 @@ import hr.fer.oprpp.hw02.prob1.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 
 public class Prob1Test {
@@ -321,6 +324,11 @@ public class Prob1Test {
 		checkToken(lexer.nextToken(), new Token(TokenType.EOF, null));
 		
 	}
+	@Test
+	private void testExtra1() {
+		String text = readExample(1);
+
+	}
 	
 	private void checkToken(Token actual, Token expected) {
 			String msg = "Token are not equal.";
@@ -328,6 +336,16 @@ public class Prob1Test {
 			assertEquals(expected.getValue(), actual.getValue(), msg);
 	}
 
+	private String readExample(int n) {
+		try(InputStream is = this.getClass().getClassLoader().getResourceAsStream("extra/primjer"+n+".txt")) {
+			if(is==null) throw new RuntimeException("Datoteka extra/primjer"+n+".txt je nedostupna.");
+			byte[] data = is.readAllBytes();
+			String text = new String(data, StandardCharsets.UTF_8);
+			return text;
+		} catch(IOException ex) {
+			throw new RuntimeException("Greška pri čitanju datoteke.", ex);
+		}
+	}
 
 
 }
