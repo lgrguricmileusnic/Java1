@@ -2,6 +2,7 @@ package hr.fer.oprpp1.custom.scripting.lexer;
 
 
 import hr.fer.oprpp.hw02.prob1.LexerException;
+
 import java.util.Objects;
 
 /**
@@ -46,11 +47,11 @@ public class SmartScriptLexer {
     public Token nextToken() {
         isDone();
         String tokenValue = "";
+        Character current = data[currentIndex];
         switch (state) {
-            case TEXT -> {
-                Character current = data[currentIndex];
+            case TAG -> {
                 while (current == '\n' || current == '\r' || current == '\t' || Character.isWhitespace(current)) {
-                    if(isDone()) {
+                    if (isDone()) {
                         currentIndex++;
                         return token = new Token(TokenType.EOF, null);
                     }
@@ -59,13 +60,13 @@ public class SmartScriptLexer {
 
                 while (Character.isLetter(current)) {
                     tokenValue += current;
-                    if(isDone()) break;
+                    if (isDone()) break;
                     current = data[++currentIndex];
                 }
                 if (!tokenValue.isEmpty()) return token = new Token(TokenType.WORD, tokenValue);
 
-                if(current.equals('-') && !isDone()){
-                    if(Character.isDigit(data[currentIndex + 1])){
+                if (current.equals('-') && !isDone()) {
+                    if (Character.isDigit(data[currentIndex + 1])) {
                         tokenValue += current;
                         current = data[++currentIndex];
                     }
@@ -73,10 +74,10 @@ public class SmartScriptLexer {
                 boolean isDouble = false;
                 while (Character.isDigit(current)) {
                     tokenValue += current;
-                    if(isDone()) break;
+                    if (isDone()) break;
                     current = data[++currentIndex];
-                    if(current.equals('.') && !isDone() && !isDouble) { // posljednji uvijet sprijecava prihvacanje vise decimalnih tocki
-                        if(Character.isDigit(data[currentIndex + 1])){
+                    if (current.equals('.') && !isDone() && !isDouble) { // posljednji uvijet sprijecava prihvacanje vise decimalnih tocki
+                        if (Character.isDigit(data[currentIndex + 1])) {
                             tokenValue += current;
                             current = data[++currentIndex];
                             isDouble = true;
@@ -84,36 +85,56 @@ public class SmartScriptLexer {
                     }
                 }
                 if (!tokenValue.isEmpty()) {
-                    if(isDouble) {
+                    if (isDouble) {
                         return token = new Token(TokenType.NUMBER, Double.valueOf(tokenValue));
                     } else {
                         return token = new Token(TokenType.NUMBER, Integer.valueOf(tokenValue));
                     }
                 }
 
-                if(current.equals('\\')) {
-                    tokenValue += current;
-                    if(isDone()) throw new LexerException("Invalid escape sequence: \\");
-                    current = data[++currentIndex];
-                    if(!current.equals('\\') && !current.equals('{')) throw new LexerException("Invalid escape sequence: \\" + current);
-                    tokenValue += current;
-                    currentIndex++;
-                    return token = new Token(TokenType.SYMBOL, tokenValue);
-                }
-
-                if (current.equals('{') && ((Character) data[currentIndex + 1]).equals('$')) {
-                    currentIndex++;
-                    return new Token(TokenType.MARKER, "{$");
-                }
-
                 currentIndex++;
                 return new Token(TokenType.SYMBOL, current);
-
             }
-            case TAG -> {
+            case TEXT -> {
+                if (current.equals('{')) {
+                    if (!isDone()) {
+                        if (((Character) data[currentIndex + 1]).equals('$')) {
+                            currentIndex = currentIndex + 2;
+                            return new Token(TokenType.MARKER, "{$");
+                        }
+                    }
+                }
 
+                if (isDone()) {
+                    currentIndex++; // increments index out of bounds, so next call can throw error
+                    return token = new Token(TokenType.EOF, null);
+                }
+
+                while (true) {
+                    if (current.equals('\\')) {
+                        tokenValue += current;
+                        if (isDone()) throw new LexerException("Invalid escape sequence: \\");
+                        current = data[++currentIndex];
+                        if (!current.equals('\\') && !current.equals('{'))
+                            throw new LexerException("Invalid escape sequence: \\" + current);
+                        tokenValue += current;
+                        if (isDone()) break;
+                        current = data[++currentIndex];
+                        continue;
+                    }
+                    if (current.equals('{') && !isDone()) {
+                        if (((Character) data[currentIndex + 1]).equals('$')) {
+                            break;
+                        }
+                    }
+
+                    tokenValue += current;
+                    if (isDone()) break;
+                    current = data[++currentIndex];
+                }
             }
-            case STRING -> {}
+            case STRING -> {
+            }
         }
 
     }

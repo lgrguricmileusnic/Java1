@@ -128,7 +128,10 @@ public class Lexer {
         return token;
     }
 
-
+    /**
+     * Changes the lexer state to {@code newState}.
+     * @param newState state this lexer will change to
+     */
     public void setState(LexerState newState) {
         Objects.requireNonNull(newState);
         state = newState;
