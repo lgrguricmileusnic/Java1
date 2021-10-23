@@ -26,4 +26,12 @@ public class ElementString extends Element{
     public String asText() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ElementString) {
+            return this.asText().equals(((ElementString) obj).asText());
+        }
+        return false;
+    }
 }

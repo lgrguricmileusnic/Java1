@@ -23,4 +23,20 @@ public class ElementConstantInteger extends Element{
     public String asText() {
         return Integer.toString(value);
     }
+
+    /**
+     * Gets double value of this element.
+     * @return double value of this element
+     */
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ElementConstantInteger) {
+            return ((ElementConstantInteger) obj).getValue() == getValue();
+        }
+        return false;
+    }
 }

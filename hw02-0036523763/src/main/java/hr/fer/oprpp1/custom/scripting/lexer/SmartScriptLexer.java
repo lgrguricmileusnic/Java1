@@ -124,7 +124,7 @@ public class SmartScriptLexer {
                 for (Character operator : new Character[]{'+', '-', '/', '*', '^'}) {
                     if (current.equals(operator)) {
                         currentIndex++;
-                        return token = new Token(TokenType.OPERATOR, current);
+                        return token = new Token(TokenType.OPERATOR, String.valueOf(current));
                     }
                 }
                 throw new LexerException("Illegal character inside tag: " + current);
@@ -168,14 +168,21 @@ public class SmartScriptLexer {
                 return token = new Token(TokenType.TEXT, tokenValue);
             }
             case STRING -> {
-                if (current.equals('"')) return token = new Token(TokenType.SPECIAL, '"');
+                if (current.equals('"')) {
+                    currentIndex++;
+                    return token = new Token(TokenType.SPECIAL, '"');
+                }
                 while (true) {
                     if (current.equals('\\')) {
                         if (isDone()) throw new LexerException("Invalid escape sequence: \\");
                         current = data[++currentIndex];
-                        if (!current.equals('\\') && !current.equals('"'))
-                            throw new LexerException("Invalid escape sequence: \\" + current);
-                        tokenValue += current;
+                        switch(current) {
+                            case '\\', '"' -> tokenValue += current;
+                            case 'n' -> tokenValue += '\n';
+                            case 'r' -> tokenValue += '\r';
+                            case 't' -> tokenValue += '\t';
+                            default -> throw new LexerException("Invalid escape sequence: \\" + current);
+                        }
                         if (isDone()) break;
                         current = data[++currentIndex];
                         continue;
@@ -230,9 +237,9 @@ public class SmartScriptLexer {
      * @return true if currentIndex equals {@code data} array {@code length}, otherwise false
      */
     private boolean isDone() {
-        if (currentIndex == data.length) {
+        if (currentIndex == data.length - 1) {
             return true;
-        } else if (currentIndex > data.length) throw new LexerException("End of field reached!");
+        } else if (currentIndex >= data.length) throw new LexerException("End of field reached!");
         return false;
     }
 

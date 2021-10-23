@@ -49,6 +49,9 @@ public class Token {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Token) {
+            if(this.value == null && ((Token) obj).value == null) {
+                return this.type.equals(((Token) obj).type);
+            }
             return this.type.equals(((Token) obj).type) && this.value.equals(((Token) obj).value);
         }
         return false;

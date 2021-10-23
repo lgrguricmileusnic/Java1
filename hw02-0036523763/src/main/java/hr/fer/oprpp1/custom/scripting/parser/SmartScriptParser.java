@@ -19,19 +19,27 @@ public class SmartScriptParser {
     private SmartScriptLexer lexer;
     private ObjectStack stack;
     private Token currentToken;
+    private DocumentNode documentNode;
 
     public SmartScriptParser(String documentBody) {
         lexer = new SmartScriptLexer(documentBody);
         stack = new ObjectStack();
-    }
-
-    public DocumentNode parse() {
-        DocumentNode documentNode = new DocumentNode();
-
+        documentNode = new DocumentNode();
         stack.push(documentNode);
         lexer.setState(LexerState.TEXT);
+        parse();
+    }
 
-        currentToken = lexer.nextToken();
+    public DocumentNode getDocumentNode() {
+        return documentNode;
+    }
+
+    private void parse() {
+        try {
+            currentToken = lexer.nextToken();
+        } catch (LexerException e) {
+            throw new SmartScriptParserException(e.getMessage());
+        }
         while (!currentToken.equals(new Token(TokenType.EOF, null))) {
             switch (currentToken.getType()) {
                 case TEXT -> {
@@ -41,11 +49,21 @@ public class SmartScriptParser {
                     String marker = (String) currentToken.getValue();
                     if (marker.equals("{$")) {
                         lexer.setState(LexerState.TAG);
-                        currentToken = lexer.nextToken();
+                        try {
+                            currentToken = lexer.nextToken();
+                        } catch (LexerException e) {
+                            throw new SmartScriptParserException(e.getMessage());
+                        }
                         if (currentToken.getType().equals(TokenType.VARIABLE)) {
                             if (((String) currentToken.getValue()).equalsIgnoreCase("for")) {
-                                ((Node) stack.peek()).addChildNode(parseForLoopNode());
-                            } else {
+                                ForLoopNode forLoopNode = parseForLoopNode();
+                                ((Node) stack.peek()).addChildNode(forLoopNode);
+                                stack.push(forLoopNode);
+
+                            } else if (((String) currentToken.getValue()).equalsIgnoreCase("end")) {
+                                if(!lexer.nextToken().equals(new Token(TokenType.SPECIAL, "$}"))) throw new SmartScriptParserException("Invalid END tag!");
+                                stack.pop();
+                            } else{
 //                                String tagContent = "";
 //                                tagContent += marker;
 //                                while(!currentToken.equals(new Token(TokenType.SPECIAL, "$}"))) {
@@ -62,6 +80,11 @@ public class SmartScriptParser {
 //                                ((Node) stack.peek()).addChildNode(new TextNode(tagContent));
                             }
                         } else if (currentToken.equals(new Token(TokenType.SPECIAL, "="))) {
+                            try {
+                                currentToken = lexer.nextToken();
+                            } catch (LexerException e) {
+                                throw new SmartScriptParserException(e.getMessage());
+                            }
                             ArrayIndexedCollection elements = new ArrayIndexedCollection();
                             while (!currentToken.equals(new Token(TokenType.SPECIAL, "$}"))) {
                                 switch (currentToken.getType()) {
@@ -70,7 +93,11 @@ public class SmartScriptParser {
                                     case SPECIAL -> {
                                         if(currentToken.getValue().equals("\"") && !currentToken.getValue().equals("$}")) {
                                             lexer.setState(LexerState.STRING);
-                                            currentToken = lexer.nextToken();
+                                            try {
+                                                currentToken = lexer.nextToken();
+                                            } catch (LexerException e) {
+                                                throw new SmartScriptParserException(e.getMessage());
+                                            }
                                             elements.add(new ElementString((String) currentToken.getValue()));
                                             lexer.nextToken(); //skips closing "
                                             lexer.setState(LexerState.TAG);
@@ -82,21 +109,32 @@ public class SmartScriptParser {
                                     case OPERATOR -> elements.add(new ElementOperator((String) currentToken.getValue()));
                                     case VARIABLE -> elements.add(new ElementVariable((String) currentToken.getValue()));
                                 }
+                                try {
+                                    currentToken = lexer.nextToken();
+                                } catch (LexerException e) {
+                                    throw new SmartScriptParserException(e.getMessage());
+                                }
                             }
-                            ((Node) stack.peek()).addChildNode(new EchoNode((Element[]) elements.toArray()));
-                        } else if (((String) currentToken.getValue()).equalsIgnoreCase("END")) {
-                            if(!lexer.nextToken().equals(new Token(TokenType.SPECIAL, "$}"))) throw new SmartScriptParserException("Invalid END tag");
-                            stack.pop();
+                            Element[] elementsArray = new Element[elements.size()];
+                            Object[] helperArray = elements.toArray();
+                            for (int i = 0; i < elements.size(); i++) {
+                                elementsArray[i] = (Element) helperArray[i];
+                            }
+                            ((Node) stack.peek()).addChildNode(new EchoNode(elementsArray));
                         }
                         lexer.setState(LexerState.TEXT);
                     }
                 }
             }
-            currentToken = lexer.nextToken();
+            try {
+                currentToken = lexer.nextToken();
+            } catch (LexerException e) {
+                currentToken = new Token(TokenType.EOF, null);
+            }
         }
         if(stack.size() != 1) throw new SmartScriptParserException("Invalid document structure");
         try {
-            return (DocumentNode) stack.pop();
+            stack.pop();
         } catch (EmptyStackException e) {
             throw new SmartScriptParserException("Too many END tags");
         }
@@ -107,10 +145,14 @@ public class SmartScriptParser {
         ArrayIndexedCollection forParams = new ArrayIndexedCollection(4);
         if (!lexer.nextToken().getType().equals(TokenType.VARIABLE))
             throw new LexerException("For loop first argument is not a variable");
-        forParams.add(lexer.getToken());
-        currentToken = lexer.nextToken();
+        forParams.add(new ElementVariable((String) lexer.getToken().getValue()));
+        try {
+            currentToken = lexer.nextToken();
+        } catch (LexerException e) {
+            throw new SmartScriptParserException(e.getMessage());
+        }
         TokenType type;
-        while (forParams.size() < 5 || currentToken.equals(new Token(TokenType.SPECIAL, "$}"))) {
+        while (forParams.size() < 5 && !currentToken.equals(new Token(TokenType.SPECIAL, "$}"))) {
             type = currentToken.getType();
             if (type.equals(TokenType.DOUBLE) || type.equals(TokenType.INTEGER) || type.equals(TokenType.FUNCTION) || type.equals(TokenType.VARIABLE)) {
                 switch (type) {
@@ -121,7 +163,11 @@ public class SmartScriptParser {
                 }
             } else if (currentToken.equals(new Token(TokenType.SPECIAL, "\""))) {
                 lexer.setState(LexerState.STRING);
-                currentToken = lexer.nextToken();
+                try {
+                    currentToken = lexer.nextToken();
+                } catch (LexerException e) {
+                    throw new SmartScriptParserException(e.getMessage());
+                }
                 String value = (String) currentToken.getValue();
 //                switch (currentToken.getType()) {
 //                    case DOUBLE -> forParams.add(new ElementConstantDouble((Double) currentToken.getValue()));
@@ -148,7 +194,11 @@ public class SmartScriptParser {
             } else {
                 throw new SmartScriptParserException("Invalid for loop argument: " + currentToken.getValue());
             }
-            currentToken = lexer.nextToken();
+            try {
+                currentToken = lexer.nextToken();
+            } catch (LexerException e) {
+                throw new SmartScriptParserException(e.getMessage());
+            }
             lexer.setState(LexerState.TAG);
         }
 

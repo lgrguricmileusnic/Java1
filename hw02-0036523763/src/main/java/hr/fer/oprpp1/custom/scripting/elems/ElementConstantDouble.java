@@ -26,4 +26,20 @@ public class ElementConstantDouble extends Element{
     public String asText() {
         return Double.toString(value);
     }
+
+    /**
+     * Gets double value of this element.
+     * @return double value of this element
+     */
+    public double getValue() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ElementConstantDouble) {
+            return this.getValue() == ((ElementConstantDouble) obj).getValue();
+        }
+        return false;
+    }
 }

@@ -1,4 +1,167 @@
 -------------------------------------------------------------------------------
 Test set: hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest
 -------------------------------------------------------------------------------
-Tests run: 33, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest
+Tests run: 33, Failures: 26, Errors: 0, Skipped: 0, Time elapsed: 0 sec <<< FAILURE! - in hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testCreatingCollectionFromCollection()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testCreatingCollectionFromCollection(ArrayIndexedCollectionTest.java:44)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testToArray()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.toArray()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testToArray(ArrayIndexedCollectionTest.java:49)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testSizeShouldChangeWhenAddingElements()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.add(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testSizeShouldChangeWhenAddingElements(ArrayIndexedCollectionTest.java:65)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingValues()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <null> but was: <hr.fer.oprpp1.custom.collections.ArrayIndexedCollection@311d617d>
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingValues(ArrayIndexedCollectionTest.java:76)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testContainsValue()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.contains(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testContainsValue(ArrayIndexedCollectionTest.java:88)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testDoesNotContainValue()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.contains(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testDoesNotContainValue(ArrayIndexedCollectionTest.java:93)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemoveContainedElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemoveContainedElement(ArrayIndexedCollectionTest.java:99)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testShouldRemoveOneOfMultipleEqualElements()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testShouldRemoveOneOfMultipleEqualElements(ArrayIndexedCollectionTest.java:107)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingNonExistingElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingNonExistingElement(ArrayIndexedCollectionTest.java:119)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingFromEmptyArray()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.clear()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingFromEmptyArray(ArrayIndexedCollectionTest.java:126)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroRemoveMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroRemoveMethod(ArrayIndexedCollectionTest.java:134)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.remove(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexLessThanZeroRemoveMethod$5(ArrayIndexedCollectionTest.java:134)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundRemoveMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundRemoveMethod(ArrayIndexedCollectionTest.java:139)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.remove(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexCrossedUpperBoundRemoveMethod$6(ArrayIndexedCollectionTest.java:139)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testClear()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.clear()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testClear(ArrayIndexedCollectionTest.java:144)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testGetElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.toArray()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testGetElement(ArrayIndexedCollectionTest.java:150)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroGetMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroGetMethod(ArrayIndexedCollectionTest.java:158)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.get(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexLessThanZeroGetMethod$7(ArrayIndexedCollectionTest.java:158)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundGetMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundGetMethod(ArrayIndexedCollectionTest.java:163)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.get(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexCrossedUpperBoundGetMethod$8(ArrayIndexedCollectionTest.java:163)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroInsertMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroInsertMethod(ArrayIndexedCollectionTest.java:168)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.insert(Object, int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexLessThanZeroInsertMethod$9(ArrayIndexedCollectionTest.java:168)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundInsertMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundInsertMethod(ArrayIndexedCollectionTest.java:173)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.insert(Object, int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexCrossedUpperBoundInsertMethod$10(ArrayIndexedCollectionTest.java:173)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtLastIndex()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtLastIndex(ArrayIndexedCollectionTest.java:178)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtArrayStart()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtArrayStart(ArrayIndexedCollectionTest.java:187)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertElementInMiddleOfArray()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.add(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertElementInMiddleOfArray(ArrayIndexedCollectionTest.java:200)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNonExistingElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNonExistingElement(ArrayIndexedCollectionTest.java:221)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfExistingElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfExistingElement(ArrayIndexedCollectionTest.java:226)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNull()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNull(ArrayIndexedCollectionTest.java:231)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIllegalInitialCapacityInTwoArgumentConstructor()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIllegalInitialCapacityInTwoArgumentConstructor(ArrayIndexedCollectionTest.java:39)
+
+hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingElementWhenCollectionIsFull()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingElementWhenCollectionIsFull(ArrayIndexedCollectionTest.java:82)
+

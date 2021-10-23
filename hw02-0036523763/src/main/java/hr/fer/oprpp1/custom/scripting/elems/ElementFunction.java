@@ -26,4 +26,12 @@ public class ElementFunction extends Element{
     public String asText() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ElementFunction) {
+            return this.asText().equals(((ElementFunction) obj).asText());
+        }
+        return false;
+    }
 }

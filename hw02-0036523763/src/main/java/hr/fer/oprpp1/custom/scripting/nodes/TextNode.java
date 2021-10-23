@@ -24,4 +24,18 @@ public class TextNode extends Node{
     public String getText() {
         return text;
     }
+
+
+    @Override
+    public String toString() {
+        return text;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof TextNode) {
+            return this.text.equals(((TextNode) obj).getText());
+        }
+        return false;
+    }
 }

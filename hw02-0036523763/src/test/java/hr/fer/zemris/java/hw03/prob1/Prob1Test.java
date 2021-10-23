@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 import hr.fer.oprpp.hw02.prob1.*;
+import hr.fer.oprpp1.custom.scripting.nodes.DocumentNode;
+import hr.fer.oprpp1.custom.scripting.nodes.EchoNode;
+import hr.fer.oprpp1.custom.scripting.nodes.TextNode;
+import hr.fer.oprpp1.custom.scripting.parser.SmartScriptParser;
+import hr.fer.oprpp1.custom.scripting.parser.SmartScriptParserException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -303,6 +308,8 @@ public class Prob1Test {
 		assertEquals(TokenType.EOF, lexer.nextToken().getType(), "Input had no content. Lexer should generated only EOF token.");
 	}
 
+
+
 	@Test
 	public void testMultipartInput() {
 		// Test input which has parts which are tokenized by different rules...
@@ -324,11 +331,7 @@ public class Prob1Test {
 		checkToken(lexer.nextToken(), new Token(TokenType.EOF, null));
 		
 	}
-	@Test
-	private void testExtra1() {
-		String text = readExample(1);
 
-	}
 	
 	private void checkToken(Token actual, Token expected) {
 			String msg = "Token are not equal.";
@@ -336,16 +339,6 @@ public class Prob1Test {
 			assertEquals(expected.getValue(), actual.getValue(), msg);
 	}
 
-	private String readExample(int n) {
-		try(InputStream is = this.getClass().getClassLoader().getResourceAsStream("extra/primjer"+n+".txt")) {
-			if(is==null) throw new RuntimeException("Datoteka extra/primjer"+n+".txt je nedostupna.");
-			byte[] data = is.readAllBytes();
-			String text = new String(data, StandardCharsets.UTF_8);
-			return text;
-		} catch(IOException ex) {
-			throw new RuntimeException("Greška pri čitanju datoteke.", ex);
-		}
-	}
 
 
 }

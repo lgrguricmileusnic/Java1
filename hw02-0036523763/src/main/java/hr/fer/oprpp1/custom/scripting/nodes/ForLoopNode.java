@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Node representation of a for loop tag.
  */
-public class ForLoopNode extends Node{
+public class ForLoopNode extends Node {
     private final ElementVariable variable;
     private final Element startExpression;
     private final Element endExpression;
@@ -16,10 +16,11 @@ public class ForLoopNode extends Node{
 
     /**
      * Constructor which initialises all data members (stepExpression can be null).
-     * @param variable for loop variable
+     *
+     * @param variable        for loop variable
      * @param startExpression for loop start
-     * @param endExpression for loop end
-     * @param stepExpression for loop step
+     * @param endExpression   for loop end
+     * @param stepExpression  for loop step
      */
     public ForLoopNode(ElementVariable variable, Element startExpression, Element endExpression, Element stepExpression) {
         Objects.requireNonNull(variable);
@@ -33,6 +34,7 @@ public class ForLoopNode extends Node{
 
     /**
      * Gets for loop variable
+     *
      * @return for loop variable
      */
     public ElementVariable getVariable() {
@@ -41,6 +43,7 @@ public class ForLoopNode extends Node{
 
     /**
      * Gets for loop start expression.
+     *
      * @return for loop start expression
      */
     public Element getStartExpression() {
@@ -49,6 +52,7 @@ public class ForLoopNode extends Node{
 
     /**
      * Gets for loop end expression
+     *
      * @return for loop end expression
      */
     public Element getEndExpression() {
@@ -57,9 +61,42 @@ public class ForLoopNode extends Node{
 
     /**
      * Gets for loop step expression
+     *
      * @return for loop step expression
      */
     public Element getStepExpression() {
         return stepExpression;
+    }
+
+    /**
+     * Returns a string representation of this node
+     *
+     * @return string representation of this node
+     */
+    @Override
+    public String toString() {
+        String output = "";
+        output += "{$ FOR " + getVariable().asText() + " " + getStartExpression().asText() + " " + getEndExpression().asText() + " " + getStepExpression().asText() + " $}";
+        for (int i = 0; i < numberOfChildren(); i++) {
+            output += getChild(i).toString();
+        }
+        output += "{$END$}";
+        return output;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ForLoopNode) {
+            if (((ForLoopNode) obj).numberOfChildren() == numberOfChildren()) {
+                for (int i = 0; i < numberOfChildren(); i++) {
+                    if (!this.getChild(i).equals(((ForLoopNode) obj).getChild(i))) return false;
+                }
+                return this.endExpression.equals(((ForLoopNode) obj).getEndExpression()) &&
+                        this.startExpression.equals(((ForLoopNode) obj).getStartExpression()) &&
+                        this.stepExpression.equals(((ForLoopNode) obj).getStepExpression()) &&
+                        this.variable.equals(((ForLoopNode) obj).getVariable());
+            }
+        }
+        return false;
     }
 }

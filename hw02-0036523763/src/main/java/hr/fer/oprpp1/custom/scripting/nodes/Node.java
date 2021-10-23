@@ -25,6 +25,7 @@ public class Node {
      * @return number of children
      */
     public int numberOfChildren() {
+        if(childNodes == null) return 0;
         return childNodes.size();
     }
 

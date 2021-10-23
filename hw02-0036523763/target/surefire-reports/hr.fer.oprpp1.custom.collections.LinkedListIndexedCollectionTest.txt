@@ -1,4 +1,157 @@
 -------------------------------------------------------------------------------
 Test set: hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest
 -------------------------------------------------------------------------------
-Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s - in hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest
+Tests run: 29, Failures: 24, Errors: 0, Skipped: 0, Time elapsed: 0.017 sec <<< FAILURE! - in hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testCreatingCollectionFromCollection()  Time elapsed: 0.005 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <null> but was: <hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection@4cdf35a9>
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testCreatingCollectionFromCollection(LinkedListIndexedCollectionTest.java:34)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testToArray()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.toArray()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testToArray(LinkedListIndexedCollectionTest.java:39)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testSizeShouldChangeWhenAddingElements()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.add(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testSizeShouldChangeWhenAddingElements(LinkedListIndexedCollectionTest.java:56)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testAddingValues()  Time elapsed: 0.001 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <null> but was: <hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection@7dc5e7b4>
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testAddingValues(LinkedListIndexedCollectionTest.java:67)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testContainsValue()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.contains(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testContainsValue(LinkedListIndexedCollectionTest.java:72)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testDoesNotContainValue()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.contains(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testDoesNotContainValue(LinkedListIndexedCollectionTest.java:77)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testRemoveContainedElement()  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testRemoveContainedElement(LinkedListIndexedCollectionTest.java:83)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testShouldRemoveOneOfMultipleEqualElements()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testShouldRemoveOneOfMultipleEqualElements(LinkedListIndexedCollectionTest.java:91)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testRemovingNonExistingElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
+	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testRemovingNonExistingElement(LinkedListIndexedCollectionTest.java:103)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testRemovingFromEmptyArray()  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.clear()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testRemovingFromEmptyArray(LinkedListIndexedCollectionTest.java:110)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexLessThanZeroRemoveMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexLessThanZeroRemoveMethod(LinkedListIndexedCollectionTest.java:118)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.remove(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.lambda$testIndexLessThanZeroRemoveMethod$2(LinkedListIndexedCollectionTest.java:118)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexCrossedUpperBoundRemoveMethod()  Time elapsed: 0.001 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexCrossedUpperBoundRemoveMethod(LinkedListIndexedCollectionTest.java:123)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.remove(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.lambda$testIndexCrossedUpperBoundRemoveMethod$3(LinkedListIndexedCollectionTest.java:123)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testClear()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.clear()" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testClear(LinkedListIndexedCollectionTest.java:128)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testGetElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.add(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testGetElement(LinkedListIndexedCollectionTest.java:134)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexLessThanZeroGetMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexLessThanZeroGetMethod(LinkedListIndexedCollectionTest.java:148)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.get(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.lambda$testIndexLessThanZeroGetMethod$4(LinkedListIndexedCollectionTest.java:148)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexCrossedUpperBoundGetMethod()  Time elapsed: 0.001 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexCrossedUpperBoundGetMethod(LinkedListIndexedCollectionTest.java:153)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.get(int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.lambda$testIndexCrossedUpperBoundGetMethod$5(LinkedListIndexedCollectionTest.java:153)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexLessThanZeroInsertMethod()  Time elapsed: 0.001 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexLessThanZeroInsertMethod(LinkedListIndexedCollectionTest.java:158)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.insert(Object, int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.lambda$testIndexLessThanZeroInsertMethod$6(LinkedListIndexedCollectionTest.java:158)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexCrossedUpperBoundInsertMethod()  Time elapsed: 0 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexCrossedUpperBoundInsertMethod(LinkedListIndexedCollectionTest.java:163)
+Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.insert(Object, int)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.lambda$testIndexCrossedUpperBoundInsertMethod$7(LinkedListIndexedCollectionTest.java:163)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	... 15 more
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testInsertAtLastIndex()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "collection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.<init>(LinkedListIndexedCollection.java:149)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testInsertAtLastIndex(LinkedListIndexedCollectionTest.java:168)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testInsertAtArrayStart()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "collection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.<init>(LinkedListIndexedCollection.java:149)
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testInsertAtArrayStart(LinkedListIndexedCollectionTest.java:177)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testInsertElementInMiddleOfArray()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.add(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testInsertElementInMiddleOfArray(LinkedListIndexedCollectionTest.java:190)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexOfNonExistingElement()  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.indexOf(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexOfNonExistingElement(LinkedListIndexedCollectionTest.java:203)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexOfExistingElement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.indexOf(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexOfExistingElement(LinkedListIndexedCollectionTest.java:208)
+
+hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexOfNull()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection.indexOf(Object)" because "this.testCollection" is null
+	at hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest.testIndexOfNull(LinkedListIndexedCollectionTest.java:213)
+

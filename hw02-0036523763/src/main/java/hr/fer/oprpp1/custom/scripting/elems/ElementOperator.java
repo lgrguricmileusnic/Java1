@@ -26,4 +26,12 @@ public class ElementOperator extends Element{
     public String asText() {
         return symbol;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ElementOperator) {
+            return this.asText().equals(((ElementOperator) obj).asText());
+        }
+        return false;
+    }
 }
