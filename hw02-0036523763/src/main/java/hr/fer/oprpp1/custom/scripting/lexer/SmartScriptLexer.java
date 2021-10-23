@@ -58,12 +58,28 @@ public class SmartScriptLexer {
                     current = data[++currentIndex];
                 }
 
-                while (Character.isLetter(current)) {
-                    tokenValue += current;
-                    if (isDone()) break;
-                    current = data[++currentIndex];
+                if (Character.isLetter(current)) {
+                    while (Character.isLetter(current) || Character.isDigit(current) || current.equals('_')) {
+                        tokenValue += current;
+                        if (isDone()) break;
+                        current = data[++currentIndex];
+                    }
                 }
-                if (!tokenValue.isEmpty()) return token = new Token(TokenType.WORD, tokenValue);
+                if (!tokenValue.isEmpty()) return token = new Token(TokenType.VARIABLE, tokenValue);
+
+                if (current.equals('@')) {
+                    if (isDone()) throw new LexerException("Invalid function name: reached EOF after @");
+                    current = data[++currentIndex];
+                    if (!Character.isLetter(current))
+                        throw new LexerException("Invalid function name: must start with a letter");
+                    while (Character.isLetter(current) || Character.isDigit(current) || current.equals('_')) {
+                        tokenValue += current;
+                        if (isDone()) break;
+                        current = data[++currentIndex];
+                    }
+
+                    return token = new Token(TokenType.FUNCTION, tokenValue);
+                }
 
                 if (current.equals('-') && !isDone()) {
                     if (Character.isDigit(data[currentIndex + 1])) {
@@ -76,7 +92,7 @@ public class SmartScriptLexer {
                     tokenValue += current;
                     if (isDone()) break;
                     current = data[++currentIndex];
-                    if (current.equals('.') && !isDone() && !isDouble) { // posljednji uvijet sprijecava prihvacanje vise decimalnih tocki
+                    if (current.equals('.') && !isDone() && !isDouble) {
                         if (Character.isDigit(data[currentIndex + 1])) {
                             tokenValue += current;
                             current = data[++currentIndex];
@@ -86,33 +102,50 @@ public class SmartScriptLexer {
                 }
                 if (!tokenValue.isEmpty()) {
                     if (isDouble) {
-                        return token = new Token(TokenType.NUMBER, Double.valueOf(tokenValue));
+                        return token = new Token(TokenType.DOUBLE, Double.valueOf(tokenValue));
                     } else {
-                        return token = new Token(TokenType.NUMBER, Integer.valueOf(tokenValue));
+                        return token = new Token(TokenType.INTEGER, Integer.valueOf(tokenValue));
                     }
                 }
+                if (current.equals('"') || current.equals('=')) {
+                    currentIndex++;
+                    return token = new Token(TokenType.SPECIAL, current.toString());
+                }
 
-                currentIndex++;
-                return new Token(TokenType.SYMBOL, current);
-            }
-            case TEXT -> {
-                if (current.equals('{')) {
+                if (current.equals('$')) {
                     if (!isDone()) {
-                        if (((Character) data[currentIndex + 1]).equals('$')) {
+                        if (((Character) data[currentIndex + 1]).equals('}')) {
                             currentIndex = currentIndex + 2;
-                            return new Token(TokenType.MARKER, "{$");
+                            return token = new Token(TokenType.SPECIAL, "$}");
                         }
                     }
                 }
 
+                for (Character operator : new Character[]{'+', '-', '/', '*', '^'}) {
+                    if (current.equals(operator)) {
+                        currentIndex++;
+                        return token = new Token(TokenType.OPERATOR, current);
+                    }
+                }
+                throw new LexerException("Illegal character inside tag: " + current);
+            }
+            case TEXT -> {
                 if (isDone()) {
-                    currentIndex++; // increments index out of bounds, so next call can throw error
+                    currentIndex++; // increments index to out of bounds, so next call of nextToken can throw error
                     return token = new Token(TokenType.EOF, null);
+                }
+
+                if (current.equals('{')) {
+                    if (!isDone()) {
+                        if (((Character) data[currentIndex + 1]).equals('$')) {
+                            currentIndex = currentIndex + 2;
+                            return token = new Token(TokenType.SPECIAL, "{$");
+                        }
+                    }
                 }
 
                 while (true) {
                     if (current.equals('\\')) {
-                        tokenValue += current;
                         if (isDone()) throw new LexerException("Invalid escape sequence: \\");
                         current = data[++currentIndex];
                         if (!current.equals('\\') && !current.equals('{'))
@@ -132,8 +165,45 @@ public class SmartScriptLexer {
                     if (isDone()) break;
                     current = data[++currentIndex];
                 }
+                return token = new Token(TokenType.TEXT, tokenValue);
             }
             case STRING -> {
+                if (current.equals('"')) return token = new Token(TokenType.SPECIAL, '"');
+                while (true) {
+                    if (current.equals('\\')) {
+                        if (isDone()) throw new LexerException("Invalid escape sequence: \\");
+                        current = data[++currentIndex];
+                        if (!current.equals('\\') && !current.equals('"'))
+                            throw new LexerException("Invalid escape sequence: \\" + current);
+                        tokenValue += current;
+                        if (isDone()) break;
+                        current = data[++currentIndex];
+                        continue;
+                    }
+
+                    if (current.equals('"')) break;
+
+                    tokenValue += current;
+                    if (isDone()) {
+                        throw new LexerException("String not terminated!");
+                    }
+                    current = data[++currentIndex];
+                }
+//                if (tokenValue.contains(".")) {
+//                    try {
+//                        return token = new Token(TokenType.DOUBLE, Double.parseDouble(tokenValue));
+//                    } catch (NumberFormatException e) {
+//                        return token = new Token(TokenType.TEXT, tokenValue);
+//                    }
+//                }
+//                try {
+//                    return token = new Token(TokenType.INTEGER, Integer.parseInt(tokenValue));
+//                } catch (NumberFormatException ignored) {}
+
+                return token = new Token(TokenType.STRING, tokenValue);
+            }
+            default -> {
+                return null;
             }
         }
 

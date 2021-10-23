@@ -1,6 +1,7 @@
 package hr.fer.oprpp1.custom.scripting.lexer;
 
 
+import java.util.HashMap;
 
 /**
  * Represents a lexical unit (token), storing its type and value.
@@ -39,5 +40,17 @@ public class Token {
      */
     public TokenType getType() {
         return type;
+    }
+
+    /**
+     * Indicates whether some other Token is "equal to" this one.
+     * @return true if equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Token) {
+            return this.type.equals(((Token) obj).type) && this.value.equals(((Token) obj).value);
+        }
+        return false;
     }
 }

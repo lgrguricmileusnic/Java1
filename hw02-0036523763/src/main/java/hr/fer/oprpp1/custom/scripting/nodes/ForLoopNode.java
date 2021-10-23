@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Node representation of a for loop tag.
  */
-public class ForLoopNode {
+public class ForLoopNode extends Node{
     private final ElementVariable variable;
     private final Element startExpression;
     private final Element endExpression;

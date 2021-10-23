@@ -1,7 +1,7 @@
 package hr.fer.oprpp.hw02.prob1;
 
 /**
- * Unchecked exception, thrown to indicate that an invalid token was passed to the {@code Lexer}.
+ * Unchecked exception, thrown to indicate that there was a problem during {@code Lexer} runtime.
  */
 public class LexerException extends RuntimeException {
     /**
