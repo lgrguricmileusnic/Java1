@@ -27,6 +27,19 @@ public class ElementVariable extends Element{
         return name;
     }
 
+    /**
+     * Gets variable name.
+     * @return variable name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof ElementVariable) {

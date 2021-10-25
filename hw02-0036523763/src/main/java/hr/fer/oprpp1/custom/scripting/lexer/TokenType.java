@@ -9,7 +9,7 @@ public enum TokenType {
     DOUBLE,
     INTEGER,
     STRING,
-    VARIABLE,
+    NAMETYPEVAR,
     FUNCTION,
     OPERATOR,
     SPECIAL // {$ , $} , "

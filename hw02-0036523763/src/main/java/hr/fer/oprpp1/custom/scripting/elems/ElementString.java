@@ -7,7 +7,7 @@ public class ElementString extends Element{
     /**
      * value of this string
      */
-    private final String value;
+    private String value;
 
     /**
      * Constructor which sets the value of this string.
@@ -24,9 +24,31 @@ public class ElementString extends Element{
      */
     @Override
     public String asText() {
-        return value;
+        String formattedOutput = "";
+        Character current;
+        for (int i = 0; i < value.length(); i++) {
+            current = value.charAt(i);
+            if(current == '"') {
+                formattedOutput += "\\" + current;
+            } else {
+                formattedOutput += current;
+            }
+        }
+        return '"' + formattedOutput + '"';
     }
 
+    /**
+     * Gets value of this element.
+     * @return element value
+     */
+    public String getValue() {
+        return value;
+    }
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof ElementString) {

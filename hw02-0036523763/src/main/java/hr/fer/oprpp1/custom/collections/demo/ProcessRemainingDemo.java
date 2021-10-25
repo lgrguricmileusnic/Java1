@@ -4,6 +4,9 @@ import hr.fer.oprpp1.custom.collections.ArrayIndexedCollection;
 import hr.fer.oprpp1.custom.collections.Collection;
 import hr.fer.oprpp1.custom.collections.ElementsGetter;
 
+/**
+ * Demo displays {@code ElementsGetter.processRemaining} method functionality.
+ */
 public class ProcessRemainingDemo {
     public static void main(String[] args) {
         Collection col = new ArrayIndexedCollection(); col.add("Ivo");

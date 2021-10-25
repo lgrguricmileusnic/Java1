@@ -5,12 +5,19 @@ import hr.fer.oprpp1.custom.scripting.parser.SmartScriptParser;
 import hr.fer.oprpp1.custom.scripting.parser.SmartScriptParserException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * A command-line application which takes one argument, a path to the document which will be parsed.
+ * Parses the document using {@code SmartScriptTester} and prints it "reassembled" to the command-line.
+ */
 public class SmartScriptTester {
+    /**
+     * Main function of this command-line application
+     * @param args command-line arguments, first argument should be a path to the document which will be parsed
+     * @throws IOException if there was a problem with reading the file
+     */
     public static void main(String[] args) throws IOException {
         String docBody = Files.readString(Paths.get(args[0]));
         SmartScriptParser parser = null;

@@ -43,7 +43,8 @@ public class Token {
     }
 
     /**
-     * Indicates whether some other Token is "equal to" this one.
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj object that is being tested
      * @return true if equal, false otherwise
      */
     @Override

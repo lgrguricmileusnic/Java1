@@ -5,6 +5,9 @@ import hr.fer.oprpp1.custom.collections.Collection;
 import hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection;
 import hr.fer.oprpp1.custom.collections.List;
 
+/**
+ * Displays {@code List} interface methods functionality.
+ */
 public class ListDemo {
     public static void main(String[] args) {
         List col1 = new ArrayIndexedCollection();

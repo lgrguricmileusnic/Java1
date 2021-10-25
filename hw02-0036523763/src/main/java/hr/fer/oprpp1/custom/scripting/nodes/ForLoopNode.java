@@ -21,6 +21,7 @@ public class ForLoopNode extends Node {
      * @param startExpression for loop start
      * @param endExpression   for loop end
      * @param stepExpression  for loop step
+     * @throws NullPointerException if any paramater except {@code stepExpression} is null
      */
     public ForLoopNode(ElementVariable variable, Element startExpression, Element endExpression, Element stepExpression) {
         Objects.requireNonNull(variable);
@@ -76,7 +77,9 @@ public class ForLoopNode extends Node {
     @Override
     public String toString() {
         String output = "";
-        output += "{$ FOR " + getVariable().asText() + " " + getStartExpression().asText() + " " + getEndExpression().asText() + " " + getStepExpression().asText() + " $}";
+        String stepExpressionString = "";
+        if(getStepExpression() != null) stepExpressionString = getStepExpression().asText() + " ";
+        output += "{$ FOR " + getVariable().asText() + " " + getStartExpression().asText() + " " + getEndExpression().asText() + " " + stepExpressionString + "$}";
         for (int i = 0; i < numberOfChildren(); i++) {
             output += getChild(i).toString();
         }
@@ -84,6 +87,12 @@ public class ForLoopNode extends Node {
         return output;
     }
 
+    /**
+     * Indicates if the passed object is a {@code ForLoopNode} whose arguments and content are identical to
+     * this {@code ForLoopNode}
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ForLoopNode) {

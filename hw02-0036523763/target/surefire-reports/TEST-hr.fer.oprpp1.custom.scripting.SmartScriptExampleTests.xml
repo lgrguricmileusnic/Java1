@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0.005" tests="29" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.039" tests="13" errors="3" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -55,33 +55,32 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testSizeShouldChangeWhenAddingElements" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testAddingNullValue" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexLessThanZeroInsertMethod" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexLessThanZeroGetMethod" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testToArray" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testCreatingCollectionFromCollection" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexOfExistingElement" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testGetElement" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexCrossedUpperBoundInsertMethod" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testClear" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testRemovingNonExistingElement" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testInsertElementInMiddleOfArray" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexCrossedUpperBoundGetMethod" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testInsertAtArrayStart" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testContainsValue" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexOfNonExistingElement" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testShouldRemoveOneOfMultipleEqualElements" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testAddingValues" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0.001"/>
-  <testcase name="testInsertAtLastIndex" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testToArrayForEmptyCollection" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexOfNull" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexLessThanZeroRemoveMethod" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testDoesNotContainValue" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testRemoveContainedElement" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testIndexCrossedUpperBoundRemoveMethod" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testRemovingFromEmptyArray" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testPassedCollectionIsNull" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
-  <testcase name="testInsertIntoEmptyArray" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0.001"/>
-  <testcase name="testDefaultConstructor" classname="hr.fer.oprpp1.custom.collections.LinkedListIndexedCollectionTest" time="0"/>
+  <testcase name="testExtra1" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.011"/>
+  <testcase name="testExtra2" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0"/>
+  <testcase name="testExtra3" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0"/>
+  <testcase name="testExtra4" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.001"/>
+  <testcase name="testExtra5" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0"/>
+  <testcase name="testExtra6" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.002"/>
+  <testcase name="testExtra7" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.001"/>
+  <testcase name="testExtra8" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.001"/>
+  <testcase name="testExtra9" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0"/>
+  <testcase name="testDocument1" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.008"/>
+  <testcase name="testDocument2" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.004">
+    <error message="Datoteka extra/document2.txt je nedostupna." type="java.lang.RuntimeException">java.lang.RuntimeException: Datoteka extra/document2.txt je nedostupna.
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.readExampleFromResources(SmartScriptExampleTests.java:153)
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.testDocument2(SmartScriptExampleTests.java:106)
+</error>
+  </testcase>
+  <testcase name="testDocument3" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0">
+    <error message="Datoteka extra/document3.txt je nedostupna." type="java.lang.RuntimeException">java.lang.RuntimeException: Datoteka extra/document3.txt je nedostupna.
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.readExampleFromResources(SmartScriptExampleTests.java:153)
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.testDocument3(SmartScriptExampleTests.java:118)
+</error>
+  </testcase>
+  <testcase name="testDocument4" classname="hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests" time="0.004">
+    <error message="Datoteka extra/document4.txt je nedostupna." type="java.lang.RuntimeException">java.lang.RuntimeException: Datoteka extra/document4.txt je nedostupna.
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.readExampleFromResources(SmartScriptExampleTests.java:153)
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.testDocument4(SmartScriptExampleTests.java:130)
+</error>
+  </testcase>
 </testsuite>

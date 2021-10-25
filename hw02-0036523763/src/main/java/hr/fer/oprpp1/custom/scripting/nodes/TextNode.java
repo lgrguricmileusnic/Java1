@@ -26,11 +26,22 @@ public class TextNode extends Node{
     }
 
 
+    /**
+     * Gets string representation of this node.
+     * @return string representation of this node
+     */
     @Override
     public String toString() {
         return text;
     }
 
+
+    /**
+     * Indicates if the passed object is a {@code TextNode} whose content is identical to
+     * this {@code TextNode}.
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof TextNode) {

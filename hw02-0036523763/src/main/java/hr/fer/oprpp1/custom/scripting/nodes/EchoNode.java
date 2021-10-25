@@ -11,33 +11,49 @@ import java.util.HashMap;
  * Echo node representation.
  */
 public class EchoNode extends Node{
-
+    /**
+     * {@code EchoNode} elements storage
+     */
     private final Element[] elements;
 
+    /**
+     * Constructs {@code EchoNode} instance and
+     * initialises {@code elements} data member to passed {@code Element} array.
+     * @param elements elements of {@code EchoNode}
+     */
     public EchoNode(Element[] elements){
         this.elements = elements;
     }
 
+    /**
+     * Gets elements of this {@code EchoNode}
+     * @return array of this node's elements
+     */
     public Element[] getElements() {
         return elements;
     }
 
+    /**
+     * Creates string representation of this {@code EchoNode}.
+     * Representation is semantically identical to its original.
+     * @return string representation of this {@code EchoNode}
+     */
     @Override
     public String toString() {
         String output = "{$= ";
         for (int i = 0; i < elements.length; i++) {
-            if (elements[i] instanceof ElementString) {
-                output += '"' + elements[i].asText() + '"';
-            } else if (elements[i] instanceof ElementFunction) {
-                output += '@' + elements[i].asText();
-            } else {
-                output += elements[i].asText();
-            }
+            output += elements[i].asText();
             output += ' ';
         }
         return output + "$}";
     }
 
+    /**
+     * Indicates if the passed object is a {@code EchoNode} whose content is identical to
+     * this {@code EchoNode}
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof EchoNode) {
@@ -45,8 +61,8 @@ public class EchoNode extends Node{
                 for (int i = 0; i < elements.length ; i++) {
                     if(!Arrays.equals(elements,((EchoNode) obj).getElements())) return false;
                 }
+                return true;
             }
-            return true;
         }
         return false;
     }

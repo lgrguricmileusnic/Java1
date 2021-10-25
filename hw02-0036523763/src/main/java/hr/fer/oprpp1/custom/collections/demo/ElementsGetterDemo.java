@@ -1,13 +1,17 @@
 package hr.fer.oprpp1.custom.collections.demo;
 
+import hr.fer.oprpp1.custom.collections.ArrayIndexedCollection;
 import hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection;
 import hr.fer.oprpp1.custom.collections.Collection;
 import hr.fer.oprpp1.custom.collections.ElementsGetter;
 
+/**
+ * Demo displays {@code ElementsGetter.getNextElement} method.
+ */
 public class ElementsGetterDemo {
     public static void main(String[] args) {
         Collection col1 = new LinkedListIndexedCollection();
-        Collection col2 = new LinkedListIndexedCollection();
+        Collection col2 = new ArrayIndexedCollection();
         col1.add("Ivo");
         col1.add("Ana");
         col1.add("Jasna");

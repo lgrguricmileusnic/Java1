@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests
+-------------------------------------------------------------------------------
+Tests run: 13, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.039 s <<< FAILURE! - in hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests
+testDocument2  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.RuntimeException: Datoteka extra/document2.txt je nedostupna.
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.readExampleFromResources(SmartScriptExampleTests.java:153)
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.testDocument2(SmartScriptExampleTests.java:106)
+
+testDocument3  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: Datoteka extra/document3.txt je nedostupna.
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.readExampleFromResources(SmartScriptExampleTests.java:153)
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.testDocument3(SmartScriptExampleTests.java:118)
+
+testDocument4  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.RuntimeException: Datoteka extra/document4.txt je nedostupna.
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.readExampleFromResources(SmartScriptExampleTests.java:153)
+	at hr.fer.oprpp1.custom.scripting.SmartScriptExampleTests.testDocument4(SmartScriptExampleTests.java:130)
+

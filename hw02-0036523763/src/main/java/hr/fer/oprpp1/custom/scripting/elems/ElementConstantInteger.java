@@ -32,6 +32,12 @@ public class ElementConstantInteger extends Element{
         return value;
     }
 
+
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof ElementConstantInteger) {

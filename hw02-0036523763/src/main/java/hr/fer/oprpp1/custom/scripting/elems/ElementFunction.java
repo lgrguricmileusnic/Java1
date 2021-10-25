@@ -11,22 +11,35 @@ public class ElementFunction extends Element{
 
     /**
      * Constructor that sets this function's name.
-     * @param name
+     * @param name function name
      */
     public ElementFunction(String name) {
         this.name = name;
     }
 
     /**
-     * Gets the name of this function.
+     * Gets the string representation of this function.
      *
-     * @return string representation of this element
+     * @return string representation of this function
      */
     @Override
     public String asText() {
+        return '@' + name;
+    }
+
+    /**
+     * Gets function name.
+     * @return function name
+     */
+    public String getName() {
         return name;
     }
 
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj object that is being tested
+     * @return true if equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof ElementFunction) {

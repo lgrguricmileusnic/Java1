@@ -2,6 +2,9 @@ package hr.fer.oprpp1.custom.collections.demo;
 
 import hr.fer.oprpp1.custom.collections.Tester;
 
+/**
+ * Demo displays {@code Tester} functionality.
+ */
 public class TesterDemo {
     public static void main(String[] args) {
         Tester t = new EvenIntegerTester();

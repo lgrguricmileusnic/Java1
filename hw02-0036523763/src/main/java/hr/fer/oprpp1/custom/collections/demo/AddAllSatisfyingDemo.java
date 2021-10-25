@@ -4,7 +4,18 @@ import hr.fer.oprpp1.custom.collections.ArrayIndexedCollection;
 import hr.fer.oprpp1.custom.collections.Collection;
 import hr.fer.oprpp1.custom.collections.LinkedListIndexedCollection;
 
+/**
+ * Demo for the {@code addAllSatisfying} method of classes
+ * {@code LinkedListIndexedCollection} and {@code ArrayIndexedCollection}.
+ */
 public class AddAllSatisfyingDemo {
+    /**
+     * Main method adds even and odd integers to {@code col1} and 12 to {@code col2}.
+     * Calling {@code addAllSatisfying} on {@code col2} with {@code col1} and {@code EvenIntegerTester}
+     * as arguments should add all even integers from {@code col1} to {@code col2}.
+     * Desired result is 12, 2, 4, 6
+     * @param args main takes no arguments
+     */
     public static void main(String[] args) {
         Collection col1 = new LinkedListIndexedCollection();
         Collection col2 = new ArrayIndexedCollection();

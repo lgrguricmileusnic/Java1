@@ -45,43 +45,50 @@ public class SmartScriptLexer {
      * @throws LexerException if a problem occurs
      */
     public Token nextToken() {
-        isDone();
+        if(isDone()) {
+            currentIndex++;
+            return token = new Token(TokenType.EOF, null);
+        }
         String tokenValue = "";
         Character current = data[currentIndex];
         switch (state) {
             case TAG -> {
                 while (current == '\n' || current == '\r' || current == '\t' || Character.isWhitespace(current)) {
+                    currentIndex++;
                     if (isDone()) {
                         currentIndex++;
                         return token = new Token(TokenType.EOF, null);
                     }
-                    current = data[++currentIndex];
+                    current = data[currentIndex];
                 }
 
                 if (Character.isLetter(current)) {
                     while (Character.isLetter(current) || Character.isDigit(current) || current.equals('_')) {
                         tokenValue += current;
+                        currentIndex++;
                         if (isDone()) break;
-                        current = data[++currentIndex];
+                        current = data[currentIndex];
                     }
                 }
-                if (!tokenValue.isEmpty()) return token = new Token(TokenType.VARIABLE, tokenValue);
+                if (!tokenValue.isEmpty()) return token = new Token(TokenType.NAMETYPEVAR, tokenValue);
 
                 if (current.equals('@')) {
+                    currentIndex++;
                     if (isDone()) throw new LexerException("Invalid function name: reached EOF after @");
-                    current = data[++currentIndex];
+                    current = data[currentIndex];
                     if (!Character.isLetter(current))
                         throw new LexerException("Invalid function name: must start with a letter");
                     while (Character.isLetter(current) || Character.isDigit(current) || current.equals('_')) {
                         tokenValue += current;
+                        currentIndex++;
                         if (isDone()) break;
-                        current = data[++currentIndex];
+                        current = data[currentIndex];
                     }
 
                     return token = new Token(TokenType.FUNCTION, tokenValue);
                 }
 
-                if (current.equals('-') && !isDone()) {
+                if (current.equals('-') && currentIndex < data.length - 1) {
                     if (Character.isDigit(data[currentIndex + 1])) {
                         tokenValue += current;
                         current = data[++currentIndex];
@@ -90,9 +97,10 @@ public class SmartScriptLexer {
                 boolean isDouble = false;
                 while (Character.isDigit(current)) {
                     tokenValue += current;
+                    currentIndex++;
                     if (isDone()) break;
-                    current = data[++currentIndex];
-                    if (current.equals('.') && !isDone() && !isDouble) {
+                    current = data[currentIndex];
+                    if (current.equals('.') && currentIndex < data.length - 1 && !isDouble) { //last condition makes sure there is only one decimal separator
                         if (Character.isDigit(data[currentIndex + 1])) {
                             tokenValue += current;
                             current = data[++currentIndex];
@@ -113,7 +121,7 @@ public class SmartScriptLexer {
                 }
 
                 if (current.equals('$')) {
-                    if (!isDone()) {
+                    if (currentIndex < data.length - 1) {
                         if (((Character) data[currentIndex + 1]).equals('}')) {
                             currentIndex = currentIndex + 2;
                             return token = new Token(TokenType.SPECIAL, "$}");
@@ -130,9 +138,13 @@ public class SmartScriptLexer {
                 throw new LexerException("Illegal character inside tag: " + current);
             }
             case TEXT -> {
-                if (isDone()) {
-                    currentIndex++; // increments index to out of bounds, so next call of nextToken can throw error
-                    return token = new Token(TokenType.EOF, null);
+                while (current == '\n' || current == '\r' || current == '\t' || Character.isWhitespace(current)) {
+                    currentIndex++;
+                    if (isDone()) {
+                        currentIndex++;
+                        return token = new Token(TokenType.EOF, null);
+                    }
+                    current = data[currentIndex];
                 }
 
                 if (current.equals('{')) {
@@ -146,13 +158,15 @@ public class SmartScriptLexer {
 
                 while (true) {
                     if (current.equals('\\')) {
+                        currentIndex++;
                         if (isDone()) throw new LexerException("Invalid escape sequence: \\");
-                        current = data[++currentIndex];
+                        current = data[currentIndex];
                         if (!current.equals('\\') && !current.equals('{'))
                             throw new LexerException("Invalid escape sequence: \\" + current);
                         tokenValue += current;
+                        currentIndex++;
                         if (isDone()) break;
-                        current = data[++currentIndex];
+                        current = data[currentIndex];
                         continue;
                     }
                     if (current.equals('{') && !isDone()) {
@@ -162,8 +176,9 @@ public class SmartScriptLexer {
                     }
 
                     tokenValue += current;
+                    currentIndex++;
                     if (isDone()) break;
-                    current = data[++currentIndex];
+                    current = data[currentIndex];
                 }
                 return token = new Token(TokenType.TEXT, tokenValue);
             }
@@ -174,8 +189,9 @@ public class SmartScriptLexer {
                 }
                 while (true) {
                     if (current.equals('\\')) {
+                        currentIndex++;
                         if (isDone()) throw new LexerException("Invalid escape sequence: \\");
-                        current = data[++currentIndex];
+                        current = data[currentIndex];
                         switch(current) {
                             case '\\', '"' -> tokenValue += current;
                             case 'n' -> tokenValue += '\n';
@@ -183,29 +199,21 @@ public class SmartScriptLexer {
                             case 't' -> tokenValue += '\t';
                             default -> throw new LexerException("Invalid escape sequence: \\" + current);
                         }
+                        currentIndex++;
                         if (isDone()) break;
-                        current = data[++currentIndex];
+                        current = data[currentIndex];
                         continue;
                     }
 
                     if (current.equals('"')) break;
 
                     tokenValue += current;
+                    currentIndex++;
                     if (isDone()) {
                         throw new LexerException("String not terminated!");
                     }
-                    current = data[++currentIndex];
+                    current = data[currentIndex];
                 }
-//                if (tokenValue.contains(".")) {
-//                    try {
-//                        return token = new Token(TokenType.DOUBLE, Double.parseDouble(tokenValue));
-//                    } catch (NumberFormatException e) {
-//                        return token = new Token(TokenType.TEXT, tokenValue);
-//                    }
-//                }
-//                try {
-//                    return token = new Token(TokenType.INTEGER, Integer.parseInt(tokenValue));
-//                } catch (NumberFormatException ignored) {}
 
                 return token = new Token(TokenType.STRING, tokenValue);
             }
@@ -225,7 +233,10 @@ public class SmartScriptLexer {
         return token;
     }
 
-
+    /**
+     * Changes lexer state to passed state.
+     * @param newState desired {@code LexerState}
+     */
     public void setState(LexerState newState) {
         Objects.requireNonNull(newState);
         state = newState;
@@ -237,9 +248,9 @@ public class SmartScriptLexer {
      * @return true if currentIndex equals {@code data} array {@code length}, otherwise false
      */
     private boolean isDone() {
-        if (currentIndex == data.length - 1) {
+        if (currentIndex == data.length) {
             return true;
-        } else if (currentIndex >= data.length) throw new LexerException("End of field reached!");
+        } else if (currentIndex > data.length) throw new LexerException("End of field reached!");
         return false;
     }
 

@@ -1,259 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0" tests="33" errors="0" skipped="0" failures="26">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0.007" tests="33" errors="0" skipped="0" failures="0">
   <properties>
-    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
-    <property name="java.vm.version" value="17+0"/>
-    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/17/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="maven.multiModuleProjectDirectory" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763"/>
-    <property name="java.vm.vendor" value="Homebrew"/>
-    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
-    <property name="guice.disable.misplaced.annotation.check" value="true"/>
-    <property name="path.separator" value=":"/>
-    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
-    <property name="user.country" value="HR"/>
-    <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763"/>
-    <property name="java.vm.compressedOopsMode" value="Zero based"/>
-    <property name="java.runtime.version" value="17+0"/>
-    <property name="os.arch" value="aarch64"/>
-    <property name="java.io.tmpdir" value="/var/folders/g2/yss8rx9j3ms58xpj_nxj99bw0000gn/T/"/>
-    <property name="line.separator" value="&#10;"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/opt/homebrew/Cellar/maven/3.8.3/libexec/bin/m2.conf"/>
-    <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.library.path" value="/Users/lovrogrguricmileusnic/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
-    <property name="maven.conf" value="/opt/homebrew/Cellar/maven/3.8.3/libexec/conf"/>
-    <property name="jdk.debug" value="release"/>
-    <property name="java.class.version" value="61.0"/>
-    <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="11.6"/>
-    <property name="library.jansi.path" value="/opt/homebrew/Cellar/maven/3.8.3/libexec/lib/jansi-native"/>
-    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
-    <property name="user.home" value="/Users/lovrogrguricmileusnic"/>
-    <property name="user.timezone" value="Europe/Zagreb"/>
-    <property name="file.encoding" value="UTF-8"/>
     <property name="java.specification.version" value="17"/>
-    <property name="user.name" value="lovrogrguricmileusnic"/>
-    <property name="java.class.path" value="/opt/homebrew/Cellar/maven/3.8.3/libexec/boot/plexus-classworlds-2.6.0.jar"/>
-    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/test-classes:/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/classes:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test -e"/>
-    <property name="java.home" value="/opt/homebrew/Cellar/openjdk/17/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="HR"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/17/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/surefire/surefirebooter14486835265692900037.jar /Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/surefire 2021-10-24T11-49-41_277-jvmRun1 surefire15661320848799421870tmp surefire_0737118858848194023tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/test-classes:/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/classes:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar:/Users/lovrogrguricmileusnic/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/lovrogrguricmileusnic"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.vm.info" value="mixed mode, sharing"/>
-    <property name="java.version" value="17"/>
-    <property name="native.encoding" value="UTF-8"/>
-    <property name="java.vendor" value="Homebrew"/>
-    <property name="sun.stderr.encoding" value="UTF-8"/>
-    <property name="maven.home" value="/opt/homebrew/Cellar/maven/3.8.3/libexec"/>
-    <property name="file.separator" value="/"/>
     <property name="java.version.date" value="2021-09-14"/>
-    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
-    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
-    <property name="sun.cpu.endian" value="little"/>
-    <property name="java.vendor.version" value="Homebrew"/>
-    <property name="sun.stdout.encoding" value="UTF-8"/>
-    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk/17/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763/target/surefire/surefirebooter14486835265692900037.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="17+0"/>
+    <property name="user.name" value="lovrogrguricmileusnic"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="11.6"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/lovrogrguricmileusnic/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/g2/yss8rx9j3ms58xpj_nxj99bw0000gn/T/"/>
+    <property name="java.version" value="17"/>
+    <property name="user.dir" value="/Users/lovrogrguricmileusnic/Documents/FER/3. godina/OPRPP/FER_OPPRP1_HWS/hw02-0036523763"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/lovrogrguricmileusnic/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="17+0"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testPassedCollectionIsNull" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testCreatingCollectionFromCollection" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException
-	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testCreatingCollectionFromCollection(ArrayIndexedCollectionTest.java:44)
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testToArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.toArray()&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.toArray()" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testToArray(ArrayIndexedCollectionTest.java:49)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testToArrayForEmptyCollection" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingNullValue" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testSizeShouldChangeWhenAddingElements" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.add(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.add(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testSizeShouldChangeWhenAddingElements(ArrayIndexedCollectionTest.java:65)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingValues" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="expected: &lt;null&gt; but was: &lt;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection@311d617d&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: <null> but was: <hr.fer.oprpp1.custom.collections.ArrayIndexedCollection@311d617d>
-	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
-	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingValues(ArrayIndexedCollectionTest.java:76)
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testContainsValue" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.contains(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.contains(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testContainsValue(ArrayIndexedCollectionTest.java:88)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testDoesNotContainValue" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.contains(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.contains(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testDoesNotContainValue(ArrayIndexedCollectionTest.java:93)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemoveContainedElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)&quot; because &quot;other&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
-	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemoveContainedElement(ArrayIndexedCollectionTest.java:99)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testShouldRemoveOneOfMultipleEqualElements" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)&quot; because &quot;other&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
-	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testShouldRemoveOneOfMultipleEqualElements(ArrayIndexedCollectionTest.java:107)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingNonExistingElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)&quot; because &quot;other&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
-	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingNonExistingElement(ArrayIndexedCollectionTest.java:119)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingFromEmptyArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.clear()&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.clear()" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testRemovingFromEmptyArray(ArrayIndexedCollectionTest.java:126)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroRemoveMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IndexOutOfBoundsException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroRemoveMethod(ArrayIndexedCollectionTest.java:134)
-Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.remove(int)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexLessThanZeroRemoveMethod$5(ArrayIndexedCollectionTest.java:134)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
-	... 15 more
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundRemoveMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IndexOutOfBoundsException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundRemoveMethod(ArrayIndexedCollectionTest.java:139)
-Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.remove(int)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexCrossedUpperBoundRemoveMethod$6(ArrayIndexedCollectionTest.java:139)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
-	... 15 more
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testClear" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.clear()&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.clear()" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testClear(ArrayIndexedCollectionTest.java:144)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testGetElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.toArray()&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.toArray()" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testGetElement(ArrayIndexedCollectionTest.java:150)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroGetMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IndexOutOfBoundsException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroGetMethod(ArrayIndexedCollectionTest.java:158)
-Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.get(int)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexLessThanZeroGetMethod$7(ArrayIndexedCollectionTest.java:158)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
-	... 15 more
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundGetMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IndexOutOfBoundsException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundGetMethod(ArrayIndexedCollectionTest.java:163)
-Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.get(int)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexCrossedUpperBoundGetMethod$8(ArrayIndexedCollectionTest.java:163)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
-	... 15 more
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroInsertMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IndexOutOfBoundsException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexLessThanZeroInsertMethod(ArrayIndexedCollectionTest.java:168)
-Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.insert(Object, int)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexLessThanZeroInsertMethod$9(ArrayIndexedCollectionTest.java:168)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
-	... 15 more
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundInsertMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Unexpected exception type thrown ==&gt; expected: &lt;java.lang.IndexOutOfBoundsException&gt; but was: &lt;java.lang.NullPointerException&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IndexOutOfBoundsException> but was: <java.lang.NullPointerException>
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3082)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexCrossedUpperBoundInsertMethod(ArrayIndexedCollectionTest.java:173)
-Caused by: java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.insert(Object, int)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.lambda$testIndexCrossedUpperBoundInsertMethod$10(ArrayIndexedCollectionTest.java:173)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
-	... 15 more
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtLastIndex" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException
-	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtLastIndex(ArrayIndexedCollectionTest.java:178)
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtArrayStart" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException
-	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertAtArrayStart(ArrayIndexedCollectionTest.java:187)
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertElementInMiddleOfArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.add(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.add(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertElementInMiddleOfArray(ArrayIndexedCollectionTest.java:200)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertIntoEmptyArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNonExistingElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNonExistingElement(ArrayIndexedCollectionTest.java:221)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfExistingElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfExistingElement(ArrayIndexedCollectionTest.java:226)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNull" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)&quot; because &quot;this.testCollection&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.indexOf(Object)" because "this.testCollection" is null
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIndexOfNull(ArrayIndexedCollectionTest.java:231)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIllegalInitialCapacity" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testPassedCollectionIsNullInTwoArgumentConstructor" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIllegalInitialCapacityInTwoArgumentConstructor" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException
-	at java.base/java.util.Objects.requireNonNull(Objects.java:208)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollection.<init>(ArrayIndexedCollection.java:111)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testIllegalInitialCapacityInTwoArgumentConstructor(ArrayIndexedCollectionTest.java:39)
-]]></failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingElementWhenCollectionIsFull" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0">
-    <failure message="Cannot invoke &quot;hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)&quot; because &quot;other&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke "hr.fer.oprpp1.custom.collections.Collection.forEach(hr.fer.oprpp1.custom.collections.Processor)" because "other" is null
-	at hr.fer.oprpp1.custom.collections.Collection.addAll(Collection.java:85)
-	at hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testAddingElementWhenCollectionIsFull(ArrayIndexedCollectionTest.java:82)
-</failure>
-  </testcase>
-  <testcase name="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest.testInsertIntoFullArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testSizeShouldChangeWhenAddingElements" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testAddingNullValue" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexLessThanZeroInsertMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexLessThanZeroGetMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testToArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testCreatingCollectionFromCollection" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexOfExistingElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testGetElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexCrossedUpperBoundInsertMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testClear" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testRemovingNonExistingElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testInsertElementInMiddleOfArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testInsertIntoFullArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexCrossedUpperBoundGetMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0.001"/>
+  <testcase name="testInsertAtArrayStart" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIllegalInitialCapacityInTwoArgumentConstructor" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testContainsValue" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexOfNonExistingElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testShouldRemoveOneOfMultipleEqualElements" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testAddingValues" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testInsertAtLastIndex" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testToArrayForEmptyCollection" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexOfNull" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testAddingElementWhenCollectionIsFull" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexLessThanZeroRemoveMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0.001"/>
+  <testcase name="testDoesNotContainValue" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testRemoveContainedElement" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIllegalInitialCapacity" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testIndexCrossedUpperBoundRemoveMethod" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testRemovingFromEmptyArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testPassedCollectionIsNull" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testPassedCollectionIsNullInTwoArgumentConstructor" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
+  <testcase name="testInsertIntoEmptyArray" classname="hr.fer.oprpp1.custom.collections.ArrayIndexedCollectionTest" time="0"/>
 </testsuite>

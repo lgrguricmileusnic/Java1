@@ -4,6 +4,10 @@ import hr.fer.oprpp1.custom.collections.ArrayIndexedCollection;
 import hr.fer.oprpp1.custom.collections.Collection;
 import hr.fer.oprpp1.custom.collections.ElementsGetter;
 
+/**
+ * Demo displays ElementsGetter detecting concurrent modification during its use and throwing a
+ * {@link java.util.ConcurrentModificationException};
+ */
 public class ElementsGetterDemo2 {
 
     public static void main(String[] args) {
