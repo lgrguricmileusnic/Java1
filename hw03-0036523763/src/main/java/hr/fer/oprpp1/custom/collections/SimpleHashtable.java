@@ -251,7 +251,7 @@ public class SimpleHashtable<K, V> implements Iterable<SimpleHashtable.TableEntr
 
             entry = entry.next;
         }
-        boolean needsReallocation = calculateLoadFactor() >= MAX_LOAD_FACTOR;
+        boolean needsReallocation = calculateLoadFactor() >= MAX_LOAD_FACTOR; //calculate before adding new element
         entry.next = new TableEntry<>(key, value);
         modificationCount++;
         size++;

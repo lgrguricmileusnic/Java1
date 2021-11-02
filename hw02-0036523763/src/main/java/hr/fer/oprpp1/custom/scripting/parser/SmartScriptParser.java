@@ -151,7 +151,7 @@ public class SmartScriptParser {
                 }
 
                 String value = (String) currentToken.getValue();
-                // Uncomment if parser has to check if string consists only of numeric characters
+                // Uncomment if parser has to check whether string consists only of numeric characters
 //                if (value.contains(".")) {
 //                    try {
 //                         Double.parseDouble(value);
