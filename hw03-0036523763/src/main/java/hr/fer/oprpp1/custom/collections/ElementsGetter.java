@@ -22,7 +22,7 @@ public interface ElementsGetter<T> {
      * Processes the remaining elements with passed {@code Processor}
      * @param p {@code Processor} to be used for processing
      */
-    default void processRemaining(Processor<T> p) {
+    default void processRemaining(Processor<? super T> p) {
         while(this.hasNextElement()) {
             p.process(getNextElement());
         }

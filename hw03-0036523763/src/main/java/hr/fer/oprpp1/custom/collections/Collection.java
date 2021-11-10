@@ -10,8 +10,6 @@ package hr.fer.oprpp1.custom.collections;
 
 public interface Collection<T> {
 
-
-
     /**
      * Checks if collection is empty.
      *
@@ -64,7 +62,7 @@ public interface Collection<T> {
      *
      * @param processor processor used to process collection elements
      */
-    default void forEach(Processor<T> processor) {
+    default void forEach(Processor<? super T> processor) {
         ElementsGetter<T> elementsGetter = createElementsGetter();
         while(elementsGetter.hasNextElement()) {
             processor.process(elementsGetter.getNextElement());
@@ -76,10 +74,10 @@ public interface Collection<T> {
      *
      * @param other collection from which the elements will be added.
      */
-    default <U extends T> void addAll(Collection<U> other) {
-        class addCollectionProcessor implements Processor<U> {
+    default void addAll(Collection<? extends T> other) {
+        class addCollectionProcessor implements Processor<T> {
             @Override
-            public void process(U value) {
+            public void process(T value) {
                 add(value);
             }
         }
@@ -102,9 +100,9 @@ public interface Collection<T> {
      * @param col collection whose elements will be tested
      * @param tester tester which should be satisfied
      */
-    default <U extends T> void addAllSatisfying(Collection<U> col, Tester<U> tester) {
-        ElementsGetter<U> elementsGetter = col.createElementsGetter();
-        U element;
+    default void addAllSatisfying(Collection<? extends T> col, Tester<? super T> tester) {
+        ElementsGetter<? extends T> elementsGetter = col.createElementsGetter();
+        T element;
         while(elementsGetter.hasNextElement()) {
             element = elementsGetter.getNextElement();
             if (tester.test(element)){

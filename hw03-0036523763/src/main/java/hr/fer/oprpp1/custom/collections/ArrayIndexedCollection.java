@@ -1,9 +1,7 @@
 package hr.fer.oprpp1.custom.collections;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Implementation of a collection with non-null elements and allowed duplicates.
@@ -19,7 +17,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
     /**
      * Object array used to store the collection in memory.
      */
-    private T[] elements;
+    private Object[] elements;
 
     /**
      * number of modifications made to this collection since its creation
@@ -87,7 +85,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
      */
     public ArrayIndexedCollection() {
         this.size = 0;
-        this.elements = (T[]) new Object[16];
+        this.elements = new Object[16];
     }
 
     /**
@@ -100,7 +98,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
             throw new IllegalArgumentException("Initial capacity must be greater than 0.");
         }
         this.size = 0;
-        this.elements = (T[])new Object[initialCapacity];
+        this.elements = new Object[initialCapacity];
     }
 
     /**
@@ -110,7 +108,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
      */
     public ArrayIndexedCollection(Collection<? extends T> other) {
         Objects.requireNonNull(other);
-        elements = (T[]) new Object[other.size()];
+        elements = new Object[other.size()];
         addAll(other);
     }
 
@@ -125,7 +123,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
         this(initialCapacity);
         Objects.requireNonNull(other);
         if (initialCapacity < other.size()) {
-            elements = (T[]) new Object[other.size()];
+            elements = new Object[other.size()];
         }
         size = other.size();
     }
@@ -211,7 +209,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
      * @return array filled with elements from this collection
      */
     @Override
-    public T[] toArray() {
+    public Object[] toArray() {
         return Arrays.copyOf(elements, size);
     }
 
@@ -236,7 +234,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
      */
     public T get(int index) {
         if (!isInBounds(index)) throw new IndexOutOfBoundsException();
-        return elements[index];
+        return (T) elements[index];
     }
 
     /**
@@ -251,7 +249,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
             return;
         }
         if (!isInBounds(position)) throw new IndexOutOfBoundsException();
-        T[] helperArray = Arrays.copyOf(elements, size);
+        Object[] helperArray = Arrays.copyOf(elements, size);
         clear();
         if (position != 0) {
             elements = Arrays.copyOfRange(helperArray, 0, position);
@@ -259,7 +257,7 @@ public class ArrayIndexedCollection<T> implements List<T> {
         }
         add(value);
         for (int i = position; i < helperArray.length; i++) {
-            add(helperArray[i]);
+            add((T) helperArray[i]);
         }
         modificationCount++;
     }

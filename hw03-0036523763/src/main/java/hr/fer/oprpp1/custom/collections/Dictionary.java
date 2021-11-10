@@ -84,14 +84,12 @@ public class Dictionary<K, V> {
      */
     public V put(K key, V value){
         Objects.requireNonNull(key);
-        KeyValuePair<K,V> newKeyValuePair = new KeyValuePair(key, value);
         KeyValuePair<K,V> oldKeyValuePair = getKeyValuePair(key);
         if(oldKeyValuePair == null) {
-            collection.add(newKeyValuePair);
+            collection.add(new KeyValuePair<>(key,value));
             return null;
         }
-        collection.remove(oldKeyValuePair);
-        collection.add(newKeyValuePair);
+        oldKeyValuePair.value = value;
         return oldKeyValuePair.value;
     };
 
