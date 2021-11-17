@@ -1,12 +1,39 @@
 package hr.fer.oprpp1.hw04.db;
 
+/**
+ * Class containing concrete {@code IComparisonOperator} strategy implementations.
+ */
 public class ComparisonOperators {
+    /**
+     * Operator less than <
+     */
     public static final IComparisonOperator LESS = (v1, v2) -> v2.compareTo(v1) < 0;
+    /**
+     * Operator less than or equals <=
+     */
     public static final IComparisonOperator LESS_OR_EQUALS = (v1, v2) -> v2.compareTo(v1) <= 0;
+    /**
+     * Operator greater than >
+     */
     public static final IComparisonOperator GREATER = (v1, v2) -> v2.compareTo(v1) > 0;
+    /**
+     * Operator greater than or equals <
+     */
     public static final IComparisonOperator GREATER_OR_EQUALS = (v1, v2) -> v2.compareTo(v1) >= 0;
+    /**
+     * Operator equals =
+     */
     public static final IComparisonOperator EQUALS = (v1, v2) -> v1.compareTo(v2) == 0;
+    /**
+     * Operator not equal !=
+     */
     public static final IComparisonOperator NOT_EQUALS = (v1, v2) -> v1.compareTo(v2) != 0;
+    /**
+     * Operator LIKE
+     * Satisfied if operands are equal or if the first operand matches the pattern specified by the second operand.
+     * Only one wildcard character (*) in a pattern is allowed.
+     * Wildcard represents any string of characters (including empty strings).
+     */
     public static final IComparisonOperator LIKE = (v1, v2) -> {
         int n = (int) v2.chars().filter((c) -> c =='*').count();
         if (n == 0) return v1.equals(v2);

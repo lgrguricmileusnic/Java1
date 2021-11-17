@@ -38,8 +38,8 @@ public class ComparisonOperatorsTest {
 
     @Test
     public void testNOT_EQUALSOperator() {
-        assertTrue(ComparisonOperators.EQUALS.satisfied("xyz","xyz"));
-        assertFalse(ComparisonOperators.EQUALS.satisfied("xyz", "abc"));
+        assertFalse(ComparisonOperators.NOT_EQUALS.satisfied("xyz","xyz"));
+        assertTrue(ComparisonOperators.NOT_EQUALS.satisfied("xyz", "abc"));
     }
 
     @Test
