@@ -50,4 +50,14 @@ public class ComparisonOperators {
         }
 
     };
+
+    public static IComparisonOperator getComparisonOperator(String type) {
+        if(type.equals("<")) return LESS;
+        if(type.equals(">")) return GREATER;
+        if(type.equals("<=")) return LESS_OR_EQUALS;
+        if(type.equals(">=")) return GREATER_OR_EQUALS;
+        if(type.equals("=")) return EQUALS;
+        if(type.equals("!=")) return NOT_EQUALS;
+        throw new IllegalArgumentException("Unknown operator type: " + type);
+    }
 }
