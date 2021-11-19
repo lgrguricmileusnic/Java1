@@ -51,6 +51,11 @@ public class ComparisonOperators {
 
     };
 
+    /**
+     * Gets comparison operator by their query language representation.
+     * @param type operator
+     * @return {@code IComparisonOperator} for the passed operator.
+     */
     public static IComparisonOperator getComparisonOperator(String type) {
         if(type.equals("<")) return LESS;
         if(type.equals(">")) return GREATER;
@@ -58,6 +63,7 @@ public class ComparisonOperators {
         if(type.equals(">=")) return GREATER_OR_EQUALS;
         if(type.equals("=")) return EQUALS;
         if(type.equals("!=")) return NOT_EQUALS;
+        if(type.equals("LIKE")) return LIKE;
         throw new IllegalArgumentException("Unknown operator type: " + type);
     }
 }

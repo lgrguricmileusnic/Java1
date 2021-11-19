@@ -33,15 +33,16 @@ public class QueryParser {
         lexer = new QueryLexer(query);
         lexer.setState(LexerState.BASIC);
         this.query = new ArrayList<ConditionalExpression>();
-        parse(query);
+        parse();
+
+
     }
 
     /**
      * Parses passed query
-     * @param query query to be parsed
      * @throws QueryParserException if there is a problem with query syntax or another error occured during parsing.
      */
-    public void parse(String query) {
+    public void parse() {
         Token expressionTokensArray[] = new Token[3];
         IFieldValueGetter valueGetter;
         IComparisonOperator operator;
@@ -57,6 +58,8 @@ public class QueryParser {
                     throw new QueryParserException("Error during parsing value or pattern");
                 lexer.setState(LexerState.BASIC);
                 expressionTokensArray[2] = lexer.getToken();
+                if (lexer.nextToken().getType() != TokenType.DOUBLE_QUOTES)
+                    throw new QueryParserException("Value or pattern must be in double quotes");
             } catch (LexerException e) {
                 throw new QueryParserException("Missing rest of expression after: " + lexer.getToken().getValue());
             }

@@ -91,7 +91,7 @@ public class QueryLexer {
                             currentIndex++;
                             return token =  new Token(TokenType.OPERATOR, current + "=");
                         }
-                        return token =  new Token(TokenType.OPERATOR, current);
+                        return token =  new Token(TokenType.OPERATOR, Character.toString(current));
                     }
                     case '!' -> {
                         if(isDone()) throw new LexerException("Invalid character: !");
@@ -106,7 +106,7 @@ public class QueryLexer {
                         return token =  new Token(TokenType.OPERATOR, "=");}
                     case '"' -> {
                         currentIndex++;
-                        return token =  new Token(TokenType.DOUBLE_QUOTES, '"');}
+                        return token =  new Token(TokenType.DOUBLE_QUOTES, "\"");}
                 }
 
                 throw new LexerException("Invalid character: " + current);
