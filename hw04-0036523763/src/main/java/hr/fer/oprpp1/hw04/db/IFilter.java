@@ -8,6 +8,7 @@ package hr.fer.oprpp1.hw04.db;
 public interface IFilter {
     /**
      * Returns true if {@code StudentRecord} should be accepted.
+     *
      * @param record student record
      * @return true if {@code record} should be accpeted, false otherwise
      */

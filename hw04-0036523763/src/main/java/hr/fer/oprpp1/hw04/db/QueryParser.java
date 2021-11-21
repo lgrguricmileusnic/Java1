@@ -2,9 +2,7 @@ package hr.fer.oprpp1.hw04.db;
 
 import hr.fer.oprpp1.hw04.db.lexer.*;
 import hr.fer.oprpp1.hw04.db.parser.QueryParserException;
-import hr.fer.oprpp1.hw04.db.parser.QueryParserState;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +23,7 @@ public class QueryParser {
 
     /**
      * Constructs {@code QueryParser} instance and begins parsing passed query.
+     *
      * @param query query to be parsed
      * @throws NullPointerException if passed query is null
      */
@@ -34,12 +33,11 @@ public class QueryParser {
         lexer.setState(LexerState.BASIC);
         this.query = new ArrayList<ConditionalExpression>();
         parse();
-
-
     }
 
     /**
      * Parses passed query
+     *
      * @throws QueryParserException if there is a problem with query syntax or another error occured during parsing.
      */
     public void parse() {
@@ -50,39 +48,33 @@ public class QueryParser {
         while (true) {
             try {
                 expressionTokensArray[0] = lexer.nextToken();
+                if (expressionTokensArray[0].getType() != TokenType.FIELD)
+                    throw new QueryParserException("Invalid expression, expression must specify one of the available fields!");
+
                 expressionTokensArray[1] = lexer.nextToken();
-                if (lexer.nextToken().getType() != TokenType.DOUBLE_QUOTES)
-                    throw new QueryParserException("Value or pattern must be in double quotes");
-                lexer.setState(LexerState.STRING);
-                if (lexer.nextToken().getType() != TokenType.STRING)
-                    throw new QueryParserException("Error during parsing value or pattern");
-                lexer.setState(LexerState.BASIC);
-                expressionTokensArray[2] = lexer.getToken();
-                if (lexer.nextToken().getType() != TokenType.DOUBLE_QUOTES)
-                    throw new QueryParserException("Value or pattern must be in double quotes");
+                if (expressionTokensArray[1].getType() != TokenType.OPERATOR)
+                    throw new QueryParserException("Invalid expression, expected operator, received: " + lexer.getToken().getValue());
+
+                expressionTokensArray[2] = parseStringLiteral();
             } catch (LexerException e) {
-                throw new QueryParserException("Missing rest of expression after: " + lexer.getToken().getValue());
+                if (lexer.getToken() != null)
+                    throw new QueryParserException("Invalid expression");
+                throw new QueryParserException(e.getMessage());
             }
-            if (expressionTokensArray[0].getType() != TokenType.FIELD)
-                throw new QueryParserException("Invalid expression, expression must specify one of the available fields!");
+
             valueGetter = FieldValueGetters.getFieldValueGetter((String) expressionTokensArray[0].getValue());
 
-            if (expressionTokensArray[1].getType() != TokenType.OPERATOR)
-                throw new QueryParserException("Invalid expression, expected operator, received: " + lexer.getToken().getValue());
             operator = ComparisonOperators.getComparisonOperator((String) expressionTokensArray[1].getValue());
 
-            if (expressionTokensArray[2].getType() != TokenType.STRING)
-                throw new QueryParserException("Invalid expression, expected string or pattern, received: " + lexer.getToken().getValue());
             operand = (String) expressionTokensArray[2].getValue();
             this.query.add(new ConditionalExpression(valueGetter, operator, operand));
 
-            if(lexer.nextToken().getType() == TokenType.EOF) {
-                break;
-            } else if(lexer.getToken().getType() != TokenType.LOGICAL) {
-                throw new QueryParserException("Expected AND, recieved: " + (String) lexer.getToken().getValue());
-            };
+            try {
+                if (lexer.nextToken().getType() == TokenType.EOF) break;
+            } catch (LexerException e) {
+                throw new QueryParserException("Expected AND, received: " + lexer.getToken().getValue());
+            }
         }
-
     }
 
     /**
@@ -91,7 +83,8 @@ public class QueryParser {
      * @return true if direct, false otherwise
      */
     boolean isDirectQuery() {
-        return query.size() == 1 && query.get(0).getFieldGetter().equals(FieldValueGetters.JMBAG);
+        return query.size() == 1 && query.get(0).getFieldGetter().equals(FieldValueGetters.JMBAG) &&
+                query.get(0).getComparisonOperator().equals(ComparisonOperators.EQUALS);
     }
 
     /**
@@ -112,5 +105,22 @@ public class QueryParser {
      */
     List<ConditionalExpression> getQuery() {
         return query;
+    }
+
+    /**
+     * Parses string literal and returns its token representation.
+     */
+    private Token parseStringLiteral() {
+        Token literal;
+        if (lexer.nextToken().getType() != TokenType.DOUBLE_QUOTES)
+            throw new QueryParserException("Value or pattern must be in double quotes");
+        lexer.setState(LexerState.STRING);
+        if (lexer.nextToken().getType() != TokenType.STRING)
+            throw new QueryParserException("Error during parsing value or pattern");
+        lexer.setState(LexerState.BASIC);
+        literal = lexer.getToken();
+        if (lexer.nextToken().getType() != TokenType.DOUBLE_QUOTES)
+            throw new QueryParserException("Value or pattern must be in double quotes");
+        return literal;
     }
 }

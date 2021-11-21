@@ -6,26 +6,26 @@ public class ComparisonOperatorsTest {
 
     @Test
     public void testLESSOperator() {
-        assertFalse(ComparisonOperators.LESS.satisfied("abc","xyz"));
-        assertTrue(ComparisonOperators.LESS.satisfied("xyz", "abc"));
+        assertTrue(ComparisonOperators.LESS.satisfied("abc","xyz"));
+        assertFalse(ComparisonOperators.LESS.satisfied("xyz", "abc"));
     }
     @Test
     public void testLESS_OR_EQUALSOperator() {
-        assertFalse(ComparisonOperators.LESS_OR_EQUALS.satisfied("abc","xyz"));
-        assertTrue(ComparisonOperators.LESS_OR_EQUALS.satisfied("xyz", "abc"));
+        assertTrue(ComparisonOperators.LESS_OR_EQUALS.satisfied("abc","xyz"));
+        assertFalse(ComparisonOperators.LESS_OR_EQUALS.satisfied("xyz", "abc"));
         assertTrue(ComparisonOperators.LESS_OR_EQUALS.satisfied("xyz", "xyz"));
 
     }
 
     @Test
     public void testGREATEROperator() {
-        assertTrue(ComparisonOperators.GREATER.satisfied("abc","xyz"));
-        assertFalse(ComparisonOperators.GREATER.satisfied("xyz", "abc"));
+        assertFalse(ComparisonOperators.GREATER.satisfied("abc","xyz"));
+        assertTrue(ComparisonOperators.GREATER.satisfied("xyz", "abc"));
     }
     @Test
     public void testGREATER_OR_EQUALSOperator() {
-        assertTrue(ComparisonOperators.GREATER_OR_EQUALS.satisfied("abc","xyz"));
-        assertFalse(ComparisonOperators.GREATER_OR_EQUALS.satisfied("xyz", "abc"));
+        assertFalse(ComparisonOperators.GREATER_OR_EQUALS.satisfied("abc","xyz"));
+        assertTrue(ComparisonOperators.GREATER_OR_EQUALS.satisfied("xyz", "abc"));
         assertTrue(ComparisonOperators.GREATER_OR_EQUALS.satisfied("xyz", "xyz"));
 
     }
@@ -51,6 +51,8 @@ public class ComparisonOperatorsTest {
         assertTrue(ComparisonOperators.LIKE.satisfied("xyz","*xyz"));
         assertTrue(ComparisonOperators.LIKE.satisfied("aaaaaxyz","*xyz"));
         assertFalse(ComparisonOperators.LIKE.satisfied("AAA","AA*AA"));
+
+        assertFalse(ComparisonOperators.LIKE.satisfied("Jaksa","J*p"));
 
     }
 }

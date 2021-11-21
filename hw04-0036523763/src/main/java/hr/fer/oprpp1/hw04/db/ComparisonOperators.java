@@ -7,19 +7,19 @@ public class ComparisonOperators {
     /**
      * Operator less than <
      */
-    public static final IComparisonOperator LESS = (v1, v2) -> v2.compareTo(v1) < 0;
+    public static final IComparisonOperator LESS = (v1, v2) -> v2.compareTo(v1) > 0;
     /**
      * Operator less than or equals <=
      */
-    public static final IComparisonOperator LESS_OR_EQUALS = (v1, v2) -> v2.compareTo(v1) <= 0;
+    public static final IComparisonOperator LESS_OR_EQUALS = (v1, v2) -> v2.compareTo(v1) >= 0;
     /**
      * Operator greater than >
      */
-    public static final IComparisonOperator GREATER = (v1, v2) -> v2.compareTo(v1) > 0;
+    public static final IComparisonOperator GREATER = (v1, v2) -> v2.compareTo(v1) < 0;
     /**
      * Operator greater than or equals <
      */
-    public static final IComparisonOperator GREATER_OR_EQUALS = (v1, v2) -> v2.compareTo(v1) >= 0;
+    public static final IComparisonOperator GREATER_OR_EQUALS = (v1, v2) -> v2.compareTo(v1) <= 0;
     /**
      * Operator equals =
      */
@@ -46,7 +46,7 @@ public class ComparisonOperators {
             return v1.endsWith(v2.substring(1));
         } else {
             String[] splitV2 = v2.split("\\*");
-            return v1.startsWith(splitV2[0]) && v2.endsWith(splitV2[1]) && v1.length() >= v2.length() - 1;
+            return v1.startsWith(splitV2[0]) && v1.endsWith(splitV2[1]) && v1.length() >= v2.length() - 1;
         }
 
     };

@@ -7,6 +7,7 @@ package hr.fer.oprpp1.hw04.db;
 public interface IFieldValueGetter {
     /**
      * Gets the value of a specific field from the passed record.
+     *
      * @param record record from which the value will be extracted
      * @return field value
      */

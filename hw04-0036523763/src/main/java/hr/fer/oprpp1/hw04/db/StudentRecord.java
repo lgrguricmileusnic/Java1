@@ -26,26 +26,24 @@ public class StudentRecord {
 
     /**
      * Constructs a {@code StudentRecord} instance with passed attributes.
-     * @param jmbag student's jmbag
-     * @param lastName student's last name
-     * @param firstName student's first name
+     *
+     * @param jmbag      student's jmbag
+     * @param lastName   student's last name
+     * @param firstName  student's first name
      * @param finalGrade student's final grade
-     * @throws NullPointerException if any of the passed params is null
+     * @throws NullPointerException     if any of the passed params is null
      * @throws IllegalArgumentException if final grade isn't in range [1,5]
      */
     public StudentRecord(String jmbag, String lastName, String firstName, int finalGrade) {
-        Objects.requireNonNull(jmbag);
-        Objects.requireNonNull(lastName);
-        Objects.requireNonNull(firstName);
-        if(finalGrade > 5 || finalGrade < 1) throw new IllegalArgumentException("Final grade must be an integer in range [1,5]");
-        this.jmbag = jmbag;
-        this.lastName = lastName;
-        this.firstName = firstName;
+        this.jmbag = Objects.requireNonNull(jmbag);
+        this.lastName = Objects.requireNonNull(lastName);
+        this.firstName = Objects.requireNonNull(firstName);
         this.finalGrade = finalGrade;
     }
 
     /**
      * Gets student JMBAG
+     *
      * @return jmbag
      */
     public String getJmbag() {
@@ -54,6 +52,7 @@ public class StudentRecord {
 
     /**
      * Gets student's last name
+     *
      * @return last name
      */
     public String getLastName() {
@@ -62,13 +61,16 @@ public class StudentRecord {
 
     /**
      * Gets student's first name
+     *
      * @return first name
      */
     public String getFirstName() {
         return firstName;
     }
+
     /**
      * Gets student's final grade
+     *
      * @return final grade
      */
     public int getFinalGrade() {
@@ -78,6 +80,7 @@ public class StudentRecord {
     /**
      * Tests if the passed object is equal to this {@code StudentRecord}.
      * Two {@code StudentRecord} instances are equal if their {@code jmbag}s are equal.
+     *
      * @param o the object that is being tested
      * @return true if equal, false otherwise
      */
@@ -91,6 +94,7 @@ public class StudentRecord {
 
     /**
      * Returns a hash code value for this {@code StudentRecord} instance based of its jmbag.
+     *
      * @return hash code value for this object
      */
     @Override

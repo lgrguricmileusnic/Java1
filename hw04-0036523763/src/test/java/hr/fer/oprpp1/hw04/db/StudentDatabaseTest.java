@@ -46,4 +46,28 @@ public class StudentDatabaseTest {
     public void testFilterAlwaysTrue() {
         assertEquals(list, database.filter((record) -> true));
     }
+
+    @Test
+    public void testDuplicateJMBAGs() {
+        list = new ArrayList<>();
+        list.add(new StudentRecord("0036523763", "Antolis", "Ana", 5));
+        list.add(new StudentRecord("0036523762", "Marcec", "Filip", 5));
+        list.add(new StudentRecord("0036523762", "Dragusica", "Nina", 5));
+        list.add(new StudentRecord("0036523761", "Grguric Mileusnic", "Lovro", 5));
+
+        assertThrows(IllegalArgumentException.class, () -> new StudentDatabase(list));
+    }
+
+    @Test
+    public void testIllegalGrade() {
+        list = new ArrayList<>();
+        list.add(new StudentRecord("0036523763", "Antolis", "Ana", 5));
+        list.add(new StudentRecord("0036523762", "Marcec", "Filip", 6));
+        assertThrows(IllegalArgumentException.class, () -> new StudentDatabase(list));
+
+        list = new ArrayList<>();
+        list.add(new StudentRecord("0036523763", "Antolis", "Ana", 0));
+        list.add(new StudentRecord("0036523762", "Marcec", "Filip", 2));
+        assertThrows(IllegalArgumentException.class, () -> new StudentDatabase(list));
+    }
 }

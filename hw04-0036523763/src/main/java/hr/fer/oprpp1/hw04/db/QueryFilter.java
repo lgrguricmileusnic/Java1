@@ -16,6 +16,7 @@ public class QueryFilter implements IFilter {
     /**
      * Constructs {@code QueryFilter} instance with passed {@code List} of conditional expressions which will be used
      * for filtering
+     *
      * @param query {@code List} of conditional expressions which form a query
      */
     public QueryFilter(List<ConditionalExpression> query) {
@@ -24,6 +25,7 @@ public class QueryFilter implements IFilter {
 
     /**
      * Returns true if passed record satisfies all conditional expressions from {@code query}
+     *
      * @param record student record
      * @return true if passed record satisfies all conditional expressions from {@code query}, false otherwise
      */

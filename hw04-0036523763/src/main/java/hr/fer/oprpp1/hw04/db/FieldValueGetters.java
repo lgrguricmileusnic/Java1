@@ -1,4 +1,5 @@
 package hr.fer.oprpp1.hw04.db;
+
 /**
  * Class containing concrete {@code IComparisonOperator} strategy implementations.
  */
@@ -16,10 +17,16 @@ public class FieldValueGetters {
      */
     public static final IFieldValueGetter JMBAG = (record -> record.getJmbag());
 
+    /**
+     * Gets field value getter by field name.
+     *
+     * @param type field name
+     * @return {@code IFieldValueGetter} for the passed field.
+     */
     public static IFieldValueGetter getFieldValueGetter(String type) {
-        if(type.equals("firstName")) return FIRST_NAME;
-        if(type.equals("lastName")) return LAST_NAME;
-        if(type.equals("jmbag")) return JMBAG;
+        if (type.equals("firstName")) return FIRST_NAME;
+        if (type.equals("lastName")) return LAST_NAME;
+        if (type.equals("jmbag")) return JMBAG;
         throw new IllegalArgumentException("Unknown IFieldValueGetter");
     }
 }

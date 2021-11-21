@@ -16,7 +16,8 @@ public class Token {
 
     /**
      * Constructs a {@code Token} with passed {@code type} and {@code value}.
-     * @param type type of token
+     *
+     * @param type  type of token
      * @param value token value
      */
     public Token(TokenType type, Object value) {
@@ -26,6 +27,7 @@ public class Token {
 
     /**
      * {@code Token value} getter
+     *
      * @return value of this token
      */
     public Object getValue() {
@@ -34,6 +36,7 @@ public class Token {
 
     /**
      * {@code Token type} getter
+     *
      * @return type of this token
      */
     public TokenType getType() {
@@ -42,13 +45,14 @@ public class Token {
 
     /**
      * Indicates whether some other object is "equal to" this one.
+     *
      * @param obj object that is being tested
      * @return true if equal, false otherwise
      */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Token) {
-            if(this.value == null && ((Token) obj).value == null) {
+            if (this.value == null && ((Token) obj).value == null) {
                 return this.type.equals(((Token) obj).type);
             }
             return this.type.equals(((Token) obj).type) && this.value.equals(((Token) obj).value);

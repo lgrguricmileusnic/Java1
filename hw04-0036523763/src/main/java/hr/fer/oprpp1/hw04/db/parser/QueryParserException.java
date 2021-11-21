@@ -1,7 +1,7 @@
 package hr.fer.oprpp1.hw04.db.parser;
 
 /**
- * Unchecked exception, thrown to indicate that an invalid token was passed to the {@code SmartScriptParser}.
+ * Unchecked exception, thrown to indicate that an invalid token was passed to the {@code QueryParser}.
  */
 public class QueryParserException extends RuntimeException {
     /**
@@ -12,7 +12,7 @@ public class QueryParserException extends RuntimeException {
     }
 
     /**
-     * Constructs an {@code SmartScriptParserException} with a specified detail message.
+     * Constructs an {@code QueryParserException} with a specified detail message.
      *
      * @param message the detail message
      */
@@ -21,7 +21,7 @@ public class QueryParserException extends RuntimeException {
     }
 
     /**
-     * Constructs an {@code SmartScriptParserException} with a specified detail message and cause.
+     * Constructs an {@code QueryParserException} with a specified detail message and cause.
      *
      * @param message the detail message
      * @param cause   the cause
@@ -31,7 +31,7 @@ public class QueryParserException extends RuntimeException {
     }
 
     /**
-     * Constructs an {@code SmartScriptParserException} with the specified cause.
+     * Constructs an {@code QueryParserException} with the specified cause.
      *
      * @param cause the cause
      */
