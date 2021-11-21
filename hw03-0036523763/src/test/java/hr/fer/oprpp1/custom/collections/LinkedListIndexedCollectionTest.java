@@ -213,4 +213,25 @@ public class LinkedListIndexedCollectionTest {
         assertEquals(-1, testCollection.indexOf(null));
     }
 
+    @Test
+    public void testAddAllSatisfyingAlwaysFalse() {
+        LinkedListIndexedCollection<Integer> a = new LinkedListIndexedCollection<>();
+        a.addAllSatisfying(testCollection, (x) -> x < 0 );
+        assertTrue(a.isEmpty());
+    }
+
+    @Test
+    public void testAddAllSatisfyingAlwaysTrue() {
+        LinkedListIndexedCollection<Integer> a = new LinkedListIndexedCollection<>();
+        a.addAllSatisfying(testCollection, (x) -> x >= 0 );
+        assertEquals(3, a.size());
+    }
+
+    @Test
+    public void testAddAllSatisfyingSomeTrue() {
+        LinkedListIndexedCollection<Integer> a = new LinkedListIndexedCollection<>();
+        a.addAllSatisfying(testCollection, (x) -> x > 0 );
+        assertEquals(2, a.size());
+    }
+
 }

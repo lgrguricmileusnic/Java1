@@ -230,4 +230,25 @@ public class ArrayIndexedCollectionTest {
     public void testIndexOfNull() {
         assertEquals(-1, testCollection.indexOf(null));
     }
+
+    @Test
+    public void testAddAllSatisfyingAlwaysFalse() {
+        ArrayIndexedCollection<Integer> a = new ArrayIndexedCollection<>(3);
+        a.addAllSatisfying(testCollection, (x) -> x < 0 );
+        assertTrue(a.isEmpty());
+    }
+
+    @Test
+    public void testAddAllSatisfyingAlwaysTrue() {
+        ArrayIndexedCollection<Integer> a = new ArrayIndexedCollection<>(3);
+        a.addAllSatisfying(testCollection, (x) -> x >= 0 );
+        assertEquals(3, a.size());
+    }
+
+    @Test
+    public void testAddAllSatisfyingSomeTrue() {
+        ArrayIndexedCollection<Integer> a = new ArrayIndexedCollection<>(3);
+        a.addAllSatisfying(testCollection, (x) -> x > 0 );
+        assertEquals(2, a.size());
+    }
 }
