@@ -15,7 +15,7 @@ public class RecordFormatter {
      * @return records formatted by rows as a list of strings
      */
     public static List<String> format(List<StudentRecord> records) {
-        int columnWidths[] = new int[2];
+        int[] columnWidths = new int[2];
         List<String> formattedOutput = new ArrayList<>();
         if (records.size() == 0) {
             formattedOutput.add("Records selected: 0");

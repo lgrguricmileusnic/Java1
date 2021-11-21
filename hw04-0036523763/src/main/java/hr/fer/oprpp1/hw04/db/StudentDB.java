@@ -51,6 +51,7 @@ public class StudentDB {
         StudentDatabase database = new StudentDatabase(recordList);
 
         String input;
+        String command;
         List<StudentRecord> records;
         List<String> output;
         Scanner scanner = new Scanner(System.in);
@@ -61,8 +62,9 @@ public class StudentDB {
                 System.out.println("Goodbye!");
                 return;
             }
-            if (!input.startsWith("query")) {
-                System.out.println("Unknown command: " + input.split(" ")[0]);
+            command = input.split(" ")[0];
+            if (!command.equals("query")) {
+                System.out.println("Unknown command: " + command);
                 continue;
             }
             input = input.replaceFirst("query", "");
@@ -91,6 +93,7 @@ public class StudentDB {
         }
         if (parser.isDirectQuery()) {
             ArrayList<StudentRecord> oneRecord = new ArrayList<>();
+            System.out.println("Using index for record retrieval.");
             StudentRecord record = database.forJMBAG(parser.getQueriedJMBAG());
             if (record != null) oneRecord.add(record);
             return oneRecord;
