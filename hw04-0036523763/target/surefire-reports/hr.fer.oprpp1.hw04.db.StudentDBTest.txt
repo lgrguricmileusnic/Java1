@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: hr.fer.oprpp1.hw04.db.StudentDBTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in hr.fer.oprpp1.hw04.db.StudentDBTest
