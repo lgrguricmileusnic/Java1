@@ -7,30 +7,30 @@ class UtilTest {
 
     @Test
     void testHexToByte() {
-        assertArrayEquals(new byte[] {1, -82, 34}, Util.hexToByte("01ae22"));
+        assertArrayEquals(new byte[] {1, -82, 34}, Util.hextobyte("01ae22"));
     }
 
     @Test
     void testByteToHex() {
-        assertEquals(Util.byteToHex(new byte[] {1, -82, 34}), "01ae22");
+        assertEquals(Util.bytetohex(new byte[] {1, -82, 34}), "01ae22");
     }
 
     @Test
     void testNonHexCharacter() {
-        assertThrows(IllegalArgumentException.class, () -> Util.hexToByte("k0"));
+        assertThrows(IllegalArgumentException.class, () -> Util.hextobyte("k0"));
     }
 
     @Test
     void testNonHexString() {
-        assertThrows(IllegalArgumentException.class, () -> Util.hexToByte("aee"));
+        assertThrows(IllegalArgumentException.class, () -> Util.hextobyte("aee"));
     }
 
     @Test
     void testEmptyHexString() {
-        assertArrayEquals(new byte[]{}, Util.hexToByte(""));
+        assertArrayEquals(new byte[]{}, Util.hextobyte(""));
     }
     @Test
     void testEmptyByteArray() {
-        assertEquals("", Util.byteToHex(new byte[]{}));
+        assertEquals("", Util.bytetohex(new byte[]{}));
     }
 }
