@@ -38,7 +38,7 @@ public class HexdumpShellCommand implements ShellCommand {
      */
     @Override
     public String getCommandName() {
-        return null;
+        return name;
     }
 
     /**
@@ -48,6 +48,6 @@ public class HexdumpShellCommand implements ShellCommand {
      */
     @Override
     public List<String> getCommandDescription() {
-        return null;
+        return desc;
     }
 }

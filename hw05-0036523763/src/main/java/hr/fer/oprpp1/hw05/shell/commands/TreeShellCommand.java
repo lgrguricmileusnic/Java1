@@ -11,11 +11,12 @@ public class TreeShellCommand implements ShellCommand {
     /**
      * command name
      */
-    String name = "help";
+    String name = "tree";
     /**
      * command description
      */
-    List<String> desc = Arrays.asList("Help command can be used to find more information on the specified command and its usage.",
+    List<String> desc = Arrays.asList(
+            "Help command can be used to find more information on the specified command and its usage.",
             "Using help without any arguments prints a list of all available commands.");
 
     
@@ -38,7 +39,7 @@ public class TreeShellCommand implements ShellCommand {
      */
     @Override
     public String getCommandName() {
-        return null;
+        return name;
     }
 
     /**
@@ -48,6 +49,6 @@ public class TreeShellCommand implements ShellCommand {
      */
     @Override
     public List<String> getCommandDescription() {
-        return null;
+        return desc;
     }
 }

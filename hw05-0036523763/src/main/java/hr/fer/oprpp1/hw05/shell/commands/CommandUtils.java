@@ -1,16 +1,24 @@
 package hr.fer.oprpp1.hw05.shell.commands;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommandUtils {
-    public static List<Path> parsePathArguments(String arguments) {
-        List<Path> paths = new ArrayList<>();
+    public static List<String> parseArguments(String arguments) {
+        List<String> args = new ArrayList<>();
         int i = 0;
         boolean insideString = false;
-        String currentPath = "";
+        String currentArg = "";
 
         arguments = arguments.strip();
         Character c;
@@ -22,18 +30,21 @@ public class CommandUtils {
                         i++;
                         c = arguments.charAt(i);
                         if(c.equals('\'') || c.equals('"')){
-                            currentPath += c;
+                            currentArg += c;
                         } else {
-                            currentPath += '\\' + c;
+                            currentArg += '\\' + c;
                         }
                     }else if(c.equals('"')) {
                         insideString = false;
                         if(i < arguments.length() - 1) { //ako ima još znakova, provjeri da nakon navodnika ide razmak
                             if(arguments.charAt(i + 1) != ' ') throw new IllegalArgumentException("Invalid path format");
                         }
-                        paths.add(Paths.get(currentPath));
+                        if(!currentArg.isEmpty()) {
+                            args.add(currentArg);
+                            currentArg="";
+                        }
                     }else {
-                        currentPath += c;
+                        currentArg += c;
                     }
                 }catch(IndexOutOfBoundsException e) {
                     throw new IllegalArgumentException("Double quotes not closed");
@@ -42,23 +53,31 @@ public class CommandUtils {
             else {
                 c = arguments.charAt(i);
                 if(c.equals(' ') || c.equals('\t')){
-                    if(!currentPath.isEmpty()) paths.add(Paths.get(currentPath));
-                    currentPath = "";
+                    if(!currentArg.isEmpty()) args.add(currentArg);
+                    currentArg = "";
                 }
                 else if(c.equals('"')){
-                    if (!currentPath.isEmpty()) {
-                        throw new IllegalArgumentException("Invalid path: " + currentPath + '"');
+                    if (!currentArg.isEmpty()) {
+                        throw new IllegalArgumentException("Invalid path: " + currentArg + '"');
                     }
                     insideString = true;
                 }
                 else {
-                    currentPath += c;
+                    currentArg += c;
                 }
             }
             i++;
         }
         if (insideString) throw new IllegalArgumentException("Double quotes not closed.");
-        if (!currentPath.isEmpty()) paths.add(Paths.get(currentPath));
-        return paths;
+        if (!currentArg.isEmpty()) args.add(currentArg);
+        return args;
+    }
+
+    public static String formatPathDateAndTime(Path path) throws IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        BasicFileAttributeView faView = Files.getFileAttributeView(path, BasicFileAttributeView.class, LinkOption.NOFOLLOW_LINKS );
+        BasicFileAttributes attributes = faView.readAttributes();
+        FileTime fileTime = attributes.creationTime();
+        return sdf.format(new Date(fileTime.toMillis()));
     }
 }

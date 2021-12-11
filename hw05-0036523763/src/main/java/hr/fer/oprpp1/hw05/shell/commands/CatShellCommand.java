@@ -2,9 +2,15 @@ package hr.fer.oprpp1.hw05.shell.commands;
 
 import hr.fer.oprpp1.hw05.shell.Environment;
 import hr.fer.oprpp1.hw05.shell.ShellCommand;
+import hr.fer.oprpp1.hw05.shell.ShellIOException;
 import hr.fer.oprpp1.hw05.shell.ShellStatus;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,17 +39,45 @@ public class CatShellCommand implements ShellCommand {
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {
-        List<Path> paths;
+        List<String> args;
         try{
-            paths = CommandUtils.parsePathArguments(arguments);
+            args = CommandUtils.parseArguments(arguments);
         }catch (IllegalArgumentException e) {
             env.writeln(e.getMessage());
             return ShellStatus.CONTINUE;
         }
-        if(paths.size() > 2 || paths.size() < 1) {
-            env.writeln("Invalid usage. Use command help for more information");
+        if(args.size() > 2 || args.size() < 1) {
+            env.writeln("Invalid number of arguments. Use command help for more information.");
             return ShellStatus.CONTINUE;
         }
+        Charset charset = Charset.defaultCharset();
+        if (args.size() == 2) {
+            charset = Charset.availableCharsets().get(args.get(1));
+            if (charset == null) {
+                env.writeln("Invalid charset.");
+                return ShellStatus.CONTINUE;
+            }
+        }
+        Path path = Paths.get(args.get(0));
+        if(!Files.isRegularFile(path)) {
+            env.writeln(args.get(0) + " is not a file.");
+            return ShellStatus.CONTINUE;
+        }
+        BufferedReader is;
+        try {
+            is = Files.newBufferedReader(path, charset);
+            char[] buff = new char[100];
+            int r;
+            while(true) {
+                r = is.read(buff);
+                if(r < 1) break;
+                env.write(String.valueOf(buff, 0, r));
+            }
+            env.writeln("");
+        } catch (IOException e) {
+            throw new ShellIOException("Unable to read file.");
+        }
+
         return ShellStatus.CONTINUE;
     }
 
