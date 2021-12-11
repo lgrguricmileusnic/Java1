@@ -1,10 +1,13 @@
 package hr.fer.oprpp1.hw05.shell;
 
+import hr.fer.oprpp1.hw05.shell.commands.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Environment implementation for MyShell
@@ -26,7 +29,25 @@ public class MyShellEnvironment implements Environment{
     /**
      * underlying map storing all available commands and their {@code ShellCommand} representations for this shell
      */
-    private SortedMap<String,ShellCommand> commands;
+    private final SortedMap<String,ShellCommand> commands;
+
+    public MyShellEnvironment() {
+        commands = new TreeMap<>();
+        promptSymbol = '>';
+        morelinesSymbol = '\\';
+        multilineSymbol = '|';
+        commands.put("symbol", new SymbolShellCommand());
+        commands.put("help", new HelpShellCommand());
+        commands.put("charsets", new CharsetsShellCommand());
+        commands.put("exit", new ExitShellCommand());
+        commands.put("cat", new CatShellCommand());
+        commands.put("tree", new TreeShellCommand());
+        commands.put("copy", new CopyShellCommand());
+        commands.put("mkdir", new MkdirShellCommand());
+        commands.put("hexdump", new HexdumpShellCommand());
+        commands.put("ls", new LsShellCommand());
+
+    }
 
     /**
      * Reads line from input.
