@@ -1,12 +1,16 @@
 package hr.fer.oprpp1.hw05.shell;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Represents symbol command, used for changing prompt, multiline and morelines symbols.
  */
 public class SymbolShellCommand implements ShellCommand {
+    List<String> desc = Arrays.asList("Command used for changing prompt, multiline and morelines symbols.\n",
+            "\nusage: symbol [PROMPT|MORELINES|MULTILINE] <new symbol>");
+    String name = "symbol";
     /**
      * Executes command.
      *
@@ -16,7 +20,11 @@ public class SymbolShellCommand implements ShellCommand {
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {
-        return null;
+        String[] args = arguments.split(" ");
+        if(args.length != 2) {
+            throw new IllegalArgumentException("Invalid usage. Use help <command_name> to see appropriate usage.");
+        }
+        args[]
     }
 
     /**
@@ -36,9 +44,6 @@ public class SymbolShellCommand implements ShellCommand {
      */
     @Override
     public List<String> getCommandDescription() {
-        List<String> desc = new ArrayList<>();
-        desc.add("Command used for changing prompt, multiline and morelines symbols.\n");
-        desc.add("\nusage: symbol [PROMPT|MORELINES|MULTILINE] <new symbol>")
         return desc;
     }
 }
