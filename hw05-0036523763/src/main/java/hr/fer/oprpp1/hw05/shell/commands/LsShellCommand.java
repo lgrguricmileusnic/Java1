@@ -2,7 +2,6 @@ package hr.fer.oprpp1.hw05.shell.commands;
 
 import hr.fer.oprpp1.hw05.shell.Environment;
 import hr.fer.oprpp1.hw05.shell.ShellCommand;
-import hr.fer.oprpp1.hw05.shell.ShellIOException;
 import hr.fer.oprpp1.hw05.shell.ShellStatus;
 
 import java.io.IOException;
@@ -12,6 +11,9 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * {@code ShellCommand} implementation of ls command.
+ */
 public class LsShellCommand implements ShellCommand {
     /**
      * command name
@@ -26,29 +28,31 @@ public class LsShellCommand implements ShellCommand {
             "third and forth columns contain date and time of creation",
             "usage: ls <directory>");
 
-    
+
     /**
      * Executes command.
+     * Command lists all files in specified directory.
+     * If directory path contains spaces, it should be surrounded in quotes to allow for proper parsing.
      *
      * @param env       command environment
      * @param arguments command arguments
-     * @return shell status
+     * @return shell status {@code CONTINUE}
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {
-        List<String> args = CommandUtils.parseArguments(arguments);
-        if(args.size() != 1) {
+        List<String> args = CommandUtils.parsePathArguments(arguments);
+        if (args.size() != 1) {
             env.writeln("Invalid number of arguments. Use command help for more information.");
             return ShellStatus.CONTINUE;
         }
         Path p = Paths.get(args.get(0));
-        if(!Files.isDirectory(p)) {
+        if (!Files.isDirectory(p)) {
             env.writeln(args.get(0) + " is not a directory.");
             return ShellStatus.CONTINUE;
         }
         try {
             List<Path> list = Files.list(p).toList();
-            for(Path path : list){
+            for (Path path : list) {
                 String line = Files.isDirectory(path) ? "d" : "-";
                 line += Files.isReadable(path) ? "r" : "-";
                 line += Files.isWritable(path) ? "w" : "-";
@@ -59,7 +63,7 @@ public class LsShellCommand implements ShellCommand {
                 env.writeln(line);
             }
         } catch (IOException e) {
-            throw new ShellIOException("Unable to list files in directory.");
+            env.writeln("Unable to list files in specified directory.");
         }
         return ShellStatus.CONTINUE;
     }

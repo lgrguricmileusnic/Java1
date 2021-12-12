@@ -27,6 +27,7 @@ import java.util.Scanner;
 public class Crypto {
     /**
      * Main function of this command-line application
+     *
      * @param args command-line arguments
      */
     public static void main(String[] args) {
@@ -34,7 +35,7 @@ public class Crypto {
             System.out.println("Option expected (checksha, encrypt, decrypt)");
             return;
         }
-        switch (args[0]){
+        switch (args[0]) {
             case "checksha" -> {
                 if (args.length < 2) {
                     System.out.println("File not specified");
@@ -50,7 +51,7 @@ public class Crypto {
                 Path p = Paths.get(args[1]);
 
                 String actualHash = calculateSHA256(p);
-                if(actualHash.equalsIgnoreCase(expectedHash)) {
+                if (actualHash.equalsIgnoreCase(expectedHash)) {
                     System.out.println("Digesting completed. Digest of " + p + " matches expected digest.");
                 } else {
                     System.out.println("Digesting completed. Digest of " + p + " does not match expected digest." +
@@ -80,14 +81,16 @@ public class Crypto {
 
                 try {
                     cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-                } catch (NoSuchAlgorithmException | NoSuchPaddingException ignore) {};
+                } catch (NoSuchAlgorithmException | NoSuchPaddingException ignore) {
+                }
                 try {
                     cipher.init(args[0].equals("encrypt") ? Cipher.ENCRYPT_MODE : Cipher.DECRYPT_MODE, keySpec, paramSpec);
-                } catch (InvalidAlgorithmParameterException | InvalidKeyException ignore) {};
+                } catch (InvalidAlgorithmParameterException | InvalidKeyException ignore) {
+                }
 
                 Path in = Paths.get(args[1]);
                 Path out = Paths.get(args[2]);
-                processCipher(cipher,in,out);
+                processCipher(cipher, in, out);
                 System.out.println((args[0].equals("encrypt") ? "Encryption" : "Decryption") + " completed. " +
                         "Generated file " + args[2] + " based on file " + args[1] + ".");
             }
@@ -96,9 +99,10 @@ public class Crypto {
 
     /**
      * Helper function which handles encryption and decryption of files using the AES algorithm.
+     *
      * @param cipher {@code Cipher} object to be used for processing the input file
-     * @param in {@code Path} representation of input file
-     * @param out {@code Path} representation of output file
+     * @param in     {@code Path} representation of input file
+     * @param out    {@code Path} representation of output file
      */
     private static void processCipher(Cipher cipher, Path in, Path out) {
         try (InputStream is = Files.newInputStream(in);
@@ -109,7 +113,7 @@ public class Crypto {
                 os.write(cipher.update(buffer, 0, r));
             }
             try {
-                 os.write(cipher.doFinal());
+                os.write(cipher.doFinal());
             } catch (IllegalBlockSizeException | BadPaddingException ignore) {
                 System.out.println("A problem occurred during encrypting/decrypting.");
                 System.exit(1);
@@ -123,6 +127,7 @@ public class Crypto {
 
     /**
      * Helper function used for calculating SHA-256 digest of the input file.
+     *
      * @param p {@code Path} representation of input file
      * @return hex representation of calculated SHA-256 digest
      */

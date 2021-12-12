@@ -9,7 +9,8 @@ import java.util.List;
 public interface ShellCommand {
     /**
      * Executes command.
-     * @param env command environment
+     *
+     * @param env       command environment
      * @param arguments command arguments
      * @return shell status
      */
@@ -17,12 +18,14 @@ public interface ShellCommand {
 
     /**
      * Gets command name.
+     *
      * @return command name
      */
     String getCommandName();
 
     /**
      * Gets command description.
+     *
      * @return command description.
      */
     List<String> getCommandDescription();

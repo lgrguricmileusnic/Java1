@@ -7,6 +7,9 @@ import hr.fer.oprpp1.hw05.shell.ShellStatus;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * {@code ShellCommand} representation of exit command.
+ */
 public class ExitShellCommand implements ShellCommand {
     /**
      * command name
@@ -19,10 +22,11 @@ public class ExitShellCommand implements ShellCommand {
 
     /**
      * Executes command.
+     * Terminates shell.
      *
      * @param env       command environment
      * @param arguments command arguments
-     * @return shell status
+     * @return shell status {@code TERMINATE}
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {

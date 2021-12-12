@@ -12,7 +12,7 @@ import java.util.TreeMap;
 /**
  * Environment implementation for MyShell
  */
-public class MyShellEnvironment implements Environment{
+public class MyShellEnvironment implements Environment {
     /**
      * Prompt symbol for MyShell
      */
@@ -29,7 +29,7 @@ public class MyShellEnvironment implements Environment{
     /**
      * underlying map storing all available commands and their {@code ShellCommand} representations for this shell
      */
-    private final SortedMap<String,ShellCommand> commands;
+    private final SortedMap<String, ShellCommand> commands;
 
     public MyShellEnvironment() {
         commands = new TreeMap<>();

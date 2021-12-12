@@ -1,7 +1,6 @@
 package hr.fer.oprpp1.hw05.shell;
 
 
-
 /**
  * Unchecked exception, thrown to indicate that there was a problem during {@code Shell} runtime.
  */

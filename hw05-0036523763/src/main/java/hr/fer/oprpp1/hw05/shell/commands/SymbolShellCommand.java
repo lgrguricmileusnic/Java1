@@ -16,27 +16,30 @@ public class SymbolShellCommand implements ShellCommand {
     List<String> desc = Arrays.asList("Command used for changing prompt, multiline and morelines symbols.",
             "usage: symbol [PROMPT|MORELINES|MULTILINE] <new symbol>");
     String name = "symbol";
+
     /**
      * Executes command.
-     * @param env command environment
+     * Command specified environment symbol to the passed symbol.
+     * Arguments should be formatted as {@code [PROMPT|MORELINES|MULTILINE] <new symbol>}.
+     * If new symbol is not passed, information about the current symbol will be printed using passed environment.
+     *
+     * @param env       command environment
      * @param arguments command arguments
-     * @return shell status
-     * @throws IllegalArgumentException if arguments are invalid
+     * @return shell status {@code CONTINUE}
      */
     @Override
-    public ShellStatus executeCommand(Environment env, String arguments){
+    public ShellStatus executeCommand(Environment env, String arguments) {
         String[] args = arguments.split(" ");
-        if(args[0].equals("") || args.length > 2) {
+        if (args[0].equals("") || args.length > 2) {
             env.writeln("Invalid usage. Use help " + name + " to see appropriate usage.");
             return ShellStatus.CONTINUE;
         }
         switch (args[0]) {
             case "PROMPT" -> {
-                if(args.length == 1) {
+                if (args.length == 1) {
                     env.writeln("Symbol for PROMPT is '" + env.getPromptSymbol() + "'");
-                }
-                else {
-                    if(args[1].length() > 1) {
+                } else {
+                    if (args[1].length() > 1) {
                         env.writeln("Symbol must be one character long.");
                         return ShellStatus.CONTINUE;
                     }
@@ -45,11 +48,10 @@ public class SymbolShellCommand implements ShellCommand {
                 }
             }
             case "MORELINES" -> {
-                if(args.length == 1) {
+                if (args.length == 1) {
                     env.writeln("Symbol for MORELINES is '" + env.getMorelinesSymbol() + "'");
-                }
-                else {
-                    if(args[1].length() > 1) {
+                } else {
+                    if (args[1].length() > 1) {
                         env.writeln("Symbol must be one character long.");
                         return ShellStatus.CONTINUE;
                     }
@@ -59,11 +61,10 @@ public class SymbolShellCommand implements ShellCommand {
 
             }
             case "MULTILINE" -> {
-                if(args.length == 1) {
+                if (args.length == 1) {
                     env.writeln("Symbol for MULTILINE is '" + env.getMultilineSymbol() + "'");
-                }
-                else {
-                    if(args[1].length() > 1) {
+                } else {
+                    if (args[1].length() > 1) {
                         env.writeln("Symbol must be one character long.");
                         return ShellStatus.CONTINUE;
                     }

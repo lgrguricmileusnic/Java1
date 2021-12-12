@@ -2,7 +2,6 @@ package hr.fer.oprpp1.hw05.shell.commands;
 
 import hr.fer.oprpp1.hw05.shell.Environment;
 import hr.fer.oprpp1.hw05.shell.ShellCommand;
-import hr.fer.oprpp1.hw05.shell.ShellIOException;
 import hr.fer.oprpp1.hw05.shell.ShellStatus;
 
 import java.io.BufferedReader;
@@ -14,39 +13,44 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * {@code ShellCommand} implementation of command cat.
+ */
 public class CatShellCommand implements ShellCommand {
     /**
      * command name
      */
     String name = "cat";
+
     /**
      * command description
      */
-
     List<String> desc = Arrays.asList(
             "Writes file contents to console using specified charset.",
             "If charset is not specified, uses default charset",
             "usage: cat <file> [charset]"
-            );
+    );
 
 
     /**
-     * Executes command.
+     * Executes cat command.
+     * Command prints file contents using passed environment and charset specified from environment input.
+     * If file path contains spaces, it should be surrounded with quotes to allow for proper parsing.
      *
      * @param env       command environment
      * @param arguments command arguments
-     * @return shell status
+     * @return shell status {@code CONTINUE}
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {
         List<String> args;
-        try{
-            args = CommandUtils.parseArguments(arguments);
-        }catch (IllegalArgumentException e) {
+        try {
+            args = CommandUtils.parsePathArguments(arguments);
+        } catch (IllegalArgumentException e) {
             env.writeln(e.getMessage());
             return ShellStatus.CONTINUE;
         }
-        if(args.size() > 2 || args.size() < 1) {
+        if (args.size() > 2 || args.size() < 1) {
             env.writeln("Invalid number of arguments. Use command help for more information.");
             return ShellStatus.CONTINUE;
         }
@@ -59,7 +63,7 @@ public class CatShellCommand implements ShellCommand {
             }
         }
         Path path = Paths.get(args.get(0));
-        if(!Files.isRegularFile(path)) {
+        if (!Files.isRegularFile(path)) {
             env.writeln(args.get(0) + " is not a file.");
             return ShellStatus.CONTINUE;
         }
@@ -68,23 +72,23 @@ public class CatShellCommand implements ShellCommand {
             is = Files.newBufferedReader(path, charset);
             char[] buff = new char[100];
             int r;
-            while(true) {
+            while (true) {
                 r = is.read(buff);
-                if(r < 1) break;
+                if (r < 1) break;
                 env.write(String.valueOf(buff, 0, r));
             }
             env.writeln("");
         } catch (IOException e) {
-            throw new ShellIOException("Unable to read file.");
+            env.writeln("Unable to read file.");
         }
 
         return ShellStatus.CONTINUE;
     }
 
     /**
-     * Gets command name.
+     * Gets cat command name.
      *
-     * @return command name
+     * @return cat command name
      */
     @Override
     public String getCommandName() {
@@ -92,9 +96,9 @@ public class CatShellCommand implements ShellCommand {
     }
 
     /**
-     * Gets command description.
+     * Gets cat command description.
      *
-     * @return command description.
+     * @return cat command description.
      */
     @Override
     public List<String> getCommandDescription() {
