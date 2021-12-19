@@ -1,9 +1,6 @@
 package hr.fer.zemris.math;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ComplexRootedPolynomial {
     private final Complex constant;
@@ -16,7 +13,7 @@ public class ComplexRootedPolynomial {
 
     public Complex apply(Complex z) {
         Complex fValue = constant;
-        for (Complex root: roots) {
+        for (Complex root : roots) {
             fValue = fValue.multiply(z.sub(root));
         }
         return fValue;
@@ -24,8 +21,8 @@ public class ComplexRootedPolynomial {
     // converts this representation to ComplexPolynomial type
     public ComplexPolynomial toComplexPolynom() {
         ComplexPolynomial result = new ComplexPolynomial(constant);
-        for (int i = 0; i < roots.size(); i++) {
-            result = result.multiply(new ComplexPolynomial(roots.get(i).negate(), Complex.ONE));
+        for (Complex root :roots) {
+            result = result.multiply(new ComplexPolynomial(root.negate(), Complex.ONE));
         }
         return result;
     }
@@ -39,20 +36,29 @@ public class ComplexRootedPolynomial {
         return result;
     }
 
-    public int indexOfClosestRootFor(Complex z, double treshold) {
+    public int indexOfClosestRootFor(Complex z, double threshold) {
         double squaredDistance = -1;
         int index = -1;
 
         for (int i = 0; i < roots.size(); i++) {
-            Complex root = roots.get(i);
-            double newSquaredDistance;
-            newSquaredDistance = Math.pow(root.getReal() - z.getReal(), 2) + Math.pow(root.getImaginary() - z.getImaginary(), 2);
-            if (newSquaredDistance < squaredDistance && newSquaredDistance <= treshold * treshold) {
+            if (z.sub(roots.get(i)).module() < threshold) {
                 index = i;
-                squaredDistance = newSquaredDistance;
             }
         }
         return index;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ComplexRootedPolynomial that = (ComplexRootedPolynomial) o;
+        return Objects.equals(constant, that.constant) && Objects.equals(roots, that.roots);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(constant, roots);
     }
 
     public Complex getConstant() {

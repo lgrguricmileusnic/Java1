@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>hr.fer.oprpp1.jmbag0036523763</groupId>
-  <artifactId>hw05-0036523763</artifactId>
+  <artifactId>hw06-0036523763</artifactId>
   <version>1.0</version>
 
-  <name>hw05-0036523763</name>
+  <name>hw06-0036523763</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,6 +30,11 @@
           <version>4.13</version>
           <scope>test</scope>
       </dependency>
+    <dependency>
+      <groupId>hr.fer.zemris.java.fractals</groupId>
+      <artifactId>fractal-viewer</artifactId>
+      <version>1.0</version>
+    </dependency>
   </dependencies>
 
   <build>

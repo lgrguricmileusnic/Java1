@@ -61,7 +61,7 @@ public class MyShellEnvironment implements Environment {
         try {
             return reader.readLine();
         } catch (IOException e) {
-            throw new ShellIOException("Reading from stdin resulted in an error");
+            throw new ShellIOException("Reading from stdin resulted in an exception");
         }
     }
 

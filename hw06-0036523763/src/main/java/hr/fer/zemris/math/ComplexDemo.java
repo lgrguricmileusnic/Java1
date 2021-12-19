@@ -1,5 +1,6 @@
 package hr.fer.zemris.math;
 
+
 public class ComplexDemo {
     public static void main(String[] args) {
         ComplexRootedPolynomial crp = new ComplexRootedPolynomial(

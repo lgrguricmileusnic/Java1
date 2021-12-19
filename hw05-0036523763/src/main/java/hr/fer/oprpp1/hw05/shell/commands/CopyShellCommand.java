@@ -54,11 +54,11 @@ public class CopyShellCommand implements ShellCommand {
             return ShellStatus.CONTINUE;
         }
 
-        if (!Files.isRegularFile(dest)) {
-            if (Files.isDirectory(dest)) {
-                dest = dest.resolve(src.getFileName());
-            }
+
+        if (Files.isDirectory(dest)) {
+            dest = dest.resolve(src.getFileName());
         }
+
         try (InputStream is = Files.newInputStream(src); OutputStream os = Files.newOutputStream(dest)) {
             byte[] buffer = new byte[4096];
             int r;
