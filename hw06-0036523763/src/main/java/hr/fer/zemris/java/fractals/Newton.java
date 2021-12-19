@@ -9,15 +9,28 @@ import hr.fer.zemris.math.ComplexRootedPolynomial;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static hr.fer.zemris.math.utils.ComplexParser.parseComplex;
 
+/**
+ * Newton-Raphson iteration-based fractal viewer entry point.
+ * Instantiates {@code FragmentViewer} window and computes image sequentially.
+ */
 public class Newton {
+    /**
+     * Welcome message
+     */
     private static final String WELCOME_MESSAGE = "Welcome to Newton-Raphson iteration-based fractal viewer.\n" +
             "Please enter at least two roots, one root per line. Enter 'done' when one.";
 
+    /**
+     * Main function of this application.
+     * Parses user input into complex polynomial and starts FractalViewer.
+     * @param args no arguments
+     */
     public static void main(String[] args) {
         System.out.println(WELCOME_MESSAGE);
         Scanner sc = new Scanner(System.in);
@@ -29,7 +42,6 @@ public class Newton {
             if (line.strip().equalsIgnoreCase("done")) break;
             try{
                 roots.add(parseComplex(line));
-                System.out.println(parseComplex(line));
                 rootNo++;
             }catch(NumberFormatException e) {
                 System.out.println(e.getMessage());
@@ -44,25 +56,63 @@ public class Newton {
         FractalViewer.show(new NewtonProducer(complexRootedPolynomial,0.001, 0.002));
     }
 
+    /**
+     * IFractalProducer implementation.
+     * Computes Newton-Rhapson fractal image and passes data to observer
+     */
     public static class NewtonProducer implements IFractalProducer {
+        /**
+         * rooted polynomial
+         */
         private final ComplexRootedPolynomial rootedPolynomial;
+        /**
+         * derived polynomial
+         */
         private final ComplexPolynomial derived;
+        /**
+         * polynomial
+         */
         private final ComplexPolynomial polynomial;
+        /**
+         * convergence threshold
+         */
         private final double convergenceThreshold;
+        /**
+         * root threshold
+         */
         private final double rootThreshold;
 
-        public NewtonProducer(ComplexRootedPolynomial rootedPolynom, double convergenceTreshold, double rootTreshold) {
-            this.rootedPolynomial = rootedPolynom;
-            this.polynomial = rootedPolynom.toComplexPolynom();
+        /**
+         * Constructs NewtonProducer with passed polynomial and thresholds.
+         * @param rootedPolynomial polynomial
+         * @param convergenceThreshold convergence threshold
+         * @param rootThreshold root threshold
+         */
+        public NewtonProducer(ComplexRootedPolynomial rootedPolynomial, double convergenceThreshold, double rootThreshold) {
+            Objects.requireNonNull(rootedPolynomial);
+            this.rootedPolynomial = rootedPolynomial;
+            this.polynomial = rootedPolynomial.toComplexPolynomial();
             this.derived = polynomial.derive();
-            this.convergenceThreshold = convergenceTreshold;
-            this.rootThreshold = rootTreshold;
+            this.convergenceThreshold = convergenceThreshold;
+            this.rootThreshold = rootThreshold;
         }
 
+        /**
+         * Produces fractal image data sequentially and passes it to observer.
+         * @param reMin minimum real part value
+         * @param reMax maximum real part value
+         * @param imMin minimum imaginary part value
+         * @param imMax maximum imaginary part value
+         * @param width window width
+         * @param height window height
+         * @param requestNo request number
+         * @param observer observer
+         * @param cancel cancel flag
+         */
         @Override
         public void produce(double reMin, double reMax, double imMin, double imMax,
                             int width, int height, long requestNo, IFractalResultObserver observer, AtomicBoolean cancel) {
-            System.out.println("Zapocinjem izracun...");
+
             int m = 16 * 16 * 16;
             int offset = 0;
             short[] data = new short[width * height];

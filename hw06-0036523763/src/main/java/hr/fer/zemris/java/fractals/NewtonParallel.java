@@ -16,23 +16,56 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static hr.fer.zemris.math.utils.ComplexParser.parseComplex;
 
+
+/**
+ * Newton-Raphson iteration-based fractal viewer entry point.
+ * Instantiates {@code FragmentViewer} window and computes image using parallelization .
+ */
 public class NewtonParallel {
+    /**
+     * Welcome message
+     */
     private static final String WELCOME_MESSAGE = "Welcome to Newton-Raphson iteration-based fractal viewer.\n" +
             "Please enter at least two roots, one root per line. Enter 'done' when one.";
 
+    /**
+     * convergence threshold
+     */
     static double convergenceThreshold;
+    /**
+     * root threshold
+     */
     static double rootThreshold;
+    /**
+     * rooted polynomial
+     */
     static ComplexRootedPolynomial rootedPolynomial;
+    /**
+     * derived polynomial
+     */
     static ComplexPolynomial derived;
+    /**
+     * polynomial
+     */
     static ComplexPolynomial polynomial;
+    /**
+     * number of workers
+     */
     static int workers;
-    static int k;
+    /**
+     * number of tracks
+     */
+    static int tracks;
 
-
+    /**
+     * Main function of this application.
+     * Parses user input into complex polynomial and starts FractalViewer.
+     * @param args no arguments
+     */
     public static void main(String[] args) {
         int i = 0;
         workers = 0;
-        k = 0;
+        tracks = 0;
         while(i < args.length) {
             String option = args[i];
             if(option.startsWith("-w")){
@@ -59,27 +92,27 @@ public class NewtonParallel {
                     System.exit(1);
                 }
             } else if (option.startsWith("-t")) {
-                if (k != 0){
+                if (tracks != 0){
                     System.out.println("Tracks option specified more than once.");
                     System.exit(1);
                 }
                 try {
-                    k = Integer.parseInt(args[++i]);
+                    tracks = Integer.parseInt(args[++i]);
                 } catch (NumberFormatException | IndexOutOfBoundsException e) {
                     System.out.println("Invalid options");
                     System.exit(1);
                 }
-                if (k < 1) {
+                if (tracks < 1) {
                     System.out.println("Number of tracks must be greater than zero.");
                     System.exit(1);
                 }
             } else if (option.startsWith("--tracks=")) {
-                if (k != 0){
+                if (tracks != 0){
                     System.out.println("Tracks option specified more than once.");
                     System.exit(1);
                 }
                 try {
-                    k = Integer.parseInt(option.substring(option.indexOf('=') + 1));
+                    tracks = Integer.parseInt(option.substring(option.indexOf('=') + 1));
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid options");
                     System.exit(1);
@@ -91,6 +124,7 @@ public class NewtonParallel {
             i++;
         }
         if(workers == 0) workers = Runtime.getRuntime().availableProcessors();
+        if(tracks ==0) tracks = Runtime.getRuntime().availableProcessors() * 4;
         System.out.println(WELCOME_MESSAGE);
         Scanner sc = new Scanner(System.in);
         int rootNo = 0;
@@ -101,7 +135,6 @@ public class NewtonParallel {
             if (line.strip().equalsIgnoreCase("done")) break;
             try{
                 roots.add(parseComplex(line));
-                System.out.println(parseComplex(line));
                 rootNo++;
             }catch(NumberFormatException e) {
                 System.out.println(e.getMessage());
@@ -114,30 +147,83 @@ public class NewtonParallel {
         convergenceThreshold = 0.001;
         rootThreshold = 0.002;
         rootedPolynomial = new ComplexRootedPolynomial(Complex.ONE, roots.toArray(roots.toArray(new Complex[0])));
-        polynomial = rootedPolynomial.toComplexPolynom();
+        polynomial = rootedPolynomial.toComplexPolynomial();
         derived = polynomial.derive();
         FractalViewer.show(new NewtonProducer());
     }
 
+    /**
+     * Runnable which computes one track.
+     */
     public static class PosaoIzracuna implements Runnable {
+        /**
+         * minimum real value
+         */
         double reMin;
+        /**
+         * maximum real value
+         */
         double reMax;
+        /**
+         * minimum imaginary value
+         */
         double imMin;
+        /**
+         * maximum imaginary value
+         */
         double imMax;
+        /**
+         * window width
+         */
         int width;
+        /**
+         * window height
+         */
         int height;
+        /**
+         * track start
+         */
         int yMin;
+        /**
+         * track end
+         */
         int yMax;
+        /**
+         * number of iterations
+         */
         int m;
+        /**
+         * image data array
+         */
         short[] data;
+        /**
+         * cancel flag
+         */
         AtomicBoolean cancel;
 
 
         public static PosaoIzracuna NO_JOB = new PosaoIzracuna();
 
+        /**
+         * default constructor
+         */
         private PosaoIzracuna() {
         }
 
+        /**
+         * Constructs {@code PosaoIzracuna} instance with passed parameters.
+         * @param reMin minimum real part value
+         * @param reMax maximum real part value
+         * @param imMin minimum imaginary part value
+         * @param imMax maximum imaginary part value
+         * @param width window width
+         * @param height window height
+         * @param yMin track start
+         * @param yMax track end
+         * @param m number of tracks
+         * @param data reference to array for storing image data
+         * @param cancel cancel flag
+         */
         public PosaoIzracuna(double reMin, double reMax, double imMin,
                              double imMax, int width, int height, int yMin, int yMax,
                              int m, short[] data, AtomicBoolean cancel) {
@@ -155,11 +241,12 @@ public class NewtonParallel {
             this.cancel = cancel;
         }
 
+        /**
+         * Runs track computation.
+         */
         @Override
         public void run() {
-
             int offset = yMin * width;
-
             for(int y = yMin; y <= yMax && !cancel.get(); ++y) {
                 for(int x = 0; x < width; ++x) {
                     double cre = x / (width-1.0) * (reMax - reMin) + reMin;
@@ -184,29 +271,38 @@ public class NewtonParallel {
         }
     }
 
+    /**
+     * IFractalProducer implementation.
+     * Computes Newton-Rhapson fractal image and passes data to observer
+     */
     public static class NewtonProducer implements IFractalProducer {
 
-
-        public NewtonProducer() {
-        }
-
+        /**
+         * Produces fractal image data using multiple threads and passes it to observer.
+         * @param reMin minimum real part value
+         * @param reMax maximum real part value
+         * @param imMin minimum imaginary part value
+         * @param imMax maximum imaginary part value
+         * @param width window width
+         * @param height window height
+         * @param requestNo request number
+         * @param observer observer
+         * @param cancel cancel flag
+         */
         @Override
         public void produce(double reMin, double reMax, double imMin, double imMax,
                             int width, int height, long requestNo, IFractalResultObserver observer, AtomicBoolean cancel) {
-            System.out.println("Zapocinjem izracun...");
             int m = 16 * 16 * 16;
             short[] data = new short[width * height];
             final int brojTraka;
-            if (k != 0) {
-                 brojTraka = Math.min(k, height);
-            } else {
-                brojTraka = height;
-            }
+            brojTraka = Math.min(tracks, height);
+
 
             int brojYPoTraci = height / brojTraka;
 
             final BlockingQueue<PosaoIzracuna> queue = new LinkedBlockingQueue<>();
-
+            System.out.println("Threads: " + workers);
+            System.out.println("Jobs: " + brojTraka);
             Thread[] radnici = new Thread[workers];
             for (int i = 0; i < radnici.length; i++) {
                 radnici[i] = new Thread(() -> {

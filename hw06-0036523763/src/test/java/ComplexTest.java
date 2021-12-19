@@ -67,7 +67,7 @@ public class ComplexTest {
     }
 
     @Test
-    public void getRealImMagAng() {
+    public void getRealImMag() {
         Complex c = new Complex(3, 4);
         assertEquals(3, c.getReal(), DELTA);
         assertEquals(4, c.getImaginary(), DELTA);

@@ -5,8 +5,6 @@ import hr.fer.zemris.math.ComplexPolynomial;
 import hr.fer.zemris.math.ComplexRootedPolynomial;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class ComplexRootedPolynomialTest {
@@ -20,9 +18,9 @@ public class ComplexRootedPolynomialTest {
     }
 
     @Test
-    public void toComplexPolynom() {
+    public void toComplexPolynomial() {
         ComplexPolynomial polynomial = new ComplexRootedPolynomial(Complex.ONE, new Complex(5, 2), new Complex(3, 4), new
-                Complex(1, 1)).toComplexPolynom();
+                Complex(1, 1)).toComplexPolynomial();
 
         Complex[] factors = polynomial.getFactors().toArray(new Complex[0]);
 

@@ -2,7 +2,15 @@ package hr.fer.zemris.math.utils;
 
 import hr.fer.zemris.math.Complex;
 
+/**
+ * Utility class with method for parsing complex numbers of format a+ib.
+ */
 public class ComplexParser {
+    /**
+     * Parses complex number {@code String} and returns its {@code Complex} representation.
+     * @param text complex number
+     * @return {@code Complex} representation of passed {@code String}
+     */
     public static Complex parseComplex(String text) {
         if (text.isBlank() || text.isEmpty()) throw new NumberFormatException("Invalid input");
         int i = 0;
