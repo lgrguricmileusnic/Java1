@@ -10,6 +10,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * {@code ShellCommand} implemention of tree command.
+ */
 public class TreeShellCommand implements ShellCommand {
     /**
      * command name
@@ -22,17 +25,40 @@ public class TreeShellCommand implements ShellCommand {
             "a recursive directory listing command that produces a depth indented listing of files",
             "usage tree <directory>");
 
+    /**
+     * {@code FileVisitor} implementation for {@code TreeShellCommand}.
+     * Prints file tree, indenting file/directory names by level.
+     */
     private static class TreeShellCommandFileVisitor implements FileVisitor<Path> {
+        /**
+         * level of file (depth)
+         */
         int level;
+        /**
+         * environment used for printing
+         */
         Environment env;
 
+        /**
+         * Constructs {@code TreeShellCommandFileVisitor} with passed {@code Environment}.
+         * Initializes level (depth) to 0.
+         * @param env environment used for printing
+         */
         public TreeShellCommandFileVisitor(Environment env) {
             this.env = env;
             level = 0;
         }
 
+        /**
+         * Invoked before visiting a directory.
+         * Prints directory name appending {@code level} number of indentations before it.
+         * Increments one depth level.
+         * @param dir reference to directory
+         * @param attrs directory attributes
+         * @return {@code FileVisitResult.CONTINUE}
+         */
         @Override
-        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs){
             env.writeln("  ".repeat(level) + "|" + dir.getFileName().toString());
             level++;
             return FileVisitResult.CONTINUE;
@@ -40,15 +66,14 @@ public class TreeShellCommand implements ShellCommand {
 
         /**
          * Invoked for a file in a directory.
-         *
+         * Prints file name appending {@code level} number of indentations before it.
          * @param file  a reference to the file
          * @param attrs the file's basic attributes
          * @return the visit result
-         * @throws IOException if an I/O error occurs
          */
         @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            env.writeln(" ".repeat(level) + "|" + file.getFileName().toString());
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs){
+            env.writeln("  ".repeat(level) + "|" + file.getFileName().toString());
             return FileVisitResult.CONTINUE;
         }
 
@@ -59,17 +84,24 @@ public class TreeShellCommand implements ShellCommand {
          *
          * @param file a reference to the file
          * @param exc  the I/O exception that prevented the file from being visited
-         * @return the visit result
-         * @throws IOException if an I/O error occurs
+         * @return {@code FileVisitResult.TERMINATE}
          */
         @Override
-        public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        public FileVisitResult visitFileFailed(Path file, IOException exc) {
             env.writeln("Failed visitng a file.");
             return FileVisitResult.TERMINATE;
         }
 
+        /**
+         * Invoked after visiting a directory.
+         * Decrements one depth level.
+         * @param dir reference to directory
+         * @param exc null if the iteration of the directory completes without an error;
+         *            otherwise the I/O exception that caused the iteration of the directory to complete prematurely
+         * @return {@code FileVisitResult.CONTINUE}
+         */
         @Override
-        public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
             level--;
             return FileVisitResult.CONTINUE;
         }
@@ -78,10 +110,11 @@ public class TreeShellCommand implements ShellCommand {
 
     /**
      * Executes command.
-     *
+     * Command prints tree of specified directory using passed environment.
+     * If directory path contains spaces, it should be surronded with quotes.
      * @param env       command environment
      * @param arguments command arguments
-     * @return shell status
+     * @return shell status {@code CONTINUE}
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {

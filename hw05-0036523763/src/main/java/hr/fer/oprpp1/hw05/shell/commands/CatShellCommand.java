@@ -4,8 +4,10 @@ import hr.fer.oprpp1.hw05.shell.Environment;
 import hr.fer.oprpp1.hw05.shell.ShellCommand;
 import hr.fer.oprpp1.hw05.shell.ShellStatus;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,19 +69,15 @@ public class CatShellCommand implements ShellCommand {
             env.writeln(args.get(0) + " is not a file.");
             return ShellStatus.CONTINUE;
         }
-        BufferedReader is;
-        try {
-            is = Files.newBufferedReader(path, charset);
-            char[] buff = new char[100];
-            int r;
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(Files.newInputStream(path)), charset))) {
+            String l;
             while (true) {
-                r = is.read(buff);
-                if (r < 1) break;
-                env.write(String.valueOf(buff, 0, r));
+                l = br.readLine();
+                if(l == null) break;
+                env.writeln(l);
             }
-            env.writeln("");
         } catch (IOException e) {
-            env.writeln("Unable to read file.");
+            env.writeln("Unable to cat file.");
         }
 
         return ShellStatus.CONTINUE;

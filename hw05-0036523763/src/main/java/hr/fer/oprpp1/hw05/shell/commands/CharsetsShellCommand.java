@@ -30,7 +30,10 @@ public class CharsetsShellCommand implements ShellCommand {
      */
     @Override
     public ShellStatus executeCommand(Environment env, String arguments) {
-        if (!arguments.equals("")) env.writeln("charsets command takes no arguments");
+        if (!arguments.equals("")) {
+            env.writeln("charsets command takes no arguments");
+            return ShellStatus.CONTINUE;
+        };
         for (String c : Charset.availableCharsets().keySet()) {
             env.writeln(c);
         }

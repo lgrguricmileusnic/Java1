@@ -1,0 +1,19 @@
+α	Α	\a	\A	alpha
+β	Β	\b	\B	beta
+χ	Χ	\c	\C	chi
+δ	Δ	\d	\D	delta
+ε	Ε	\e	\E	epsilon
+φ	Φ	\f	\F	phi
+γ	Γ	\g	\G	gamma
+η	Η	\h	\H	eta
+ι	Ι	\i	\I	iota
+κ	Κ	\k	\K	kappa
+λ	Λ	\l	\L	lambda
+μ	Μ	\m	\M	mu
+ν	Ν	\n	\N	nu
+ο	Ο	\o	\O	omicron
+π	Π	\p	\P	pi
+θ	Θ	\q	\Q	theta
+ρ	Ρ	\r	\R	rho
+σ	Σ	\s	\S	sigma
+τ	Τ	\t
