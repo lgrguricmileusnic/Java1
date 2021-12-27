@@ -1,9 +1,21 @@
 package hr.fer.zemris.java.gui.layouts;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CalcLayout implements LayoutManager2 {
+    private final int gapWidht;
+    private final Map<RCPosition,Component> componentMap;
 
+    public CalcLayout(int gap) {
+        this.gapWidht = gap;
+        componentMap = new HashMap<>();
+    }
+
+    public CalcLayout() {
+        this(0);
+    }
 
     @Override
     public void addLayoutComponent(Component comp, Object constraints) {
