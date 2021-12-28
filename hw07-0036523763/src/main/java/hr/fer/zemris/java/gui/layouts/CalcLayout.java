@@ -52,7 +52,9 @@ public class CalcLayout implements LayoutManager2 {
 
     @Override
     public void layoutContainer(Container parent) {
-        GridLayout
+        Insets parentInsets = parent.getInsets();
+        int availableWidth = parent.getWidth() - parentInsets.left - parentInsets.right;
+        int availableHeight = parent.getHeight() - parentInsets.top - parentInsets.bottom;
     }
 
     @Override
