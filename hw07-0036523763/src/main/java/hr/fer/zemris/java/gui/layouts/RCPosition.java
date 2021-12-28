@@ -6,6 +6,8 @@ public class RCPosition {
     private final int row;
     private final int column;
 
+    public static final RCPosition RCPOSITION1_1 = new RCPosition(1,1);
+    
     public RCPosition(int row, int column) {
         this.row = row;
         this.column = column;
