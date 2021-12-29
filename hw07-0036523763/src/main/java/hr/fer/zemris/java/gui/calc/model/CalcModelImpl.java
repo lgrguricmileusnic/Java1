@@ -1,8 +1,27 @@
 package hr.fer.zemris.java.gui.calc.model;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.DoubleBinaryOperator;
 
 public class CalcModelImpl implements CalcModel{
+    private boolean editable;
+    private short sign;
+    private String currentInput;
+    private Double currentValue;
+    private String frozenValue;
+    private Double activeOperand;
+    private DoubleBinaryOperator pendingOperation;
+    private Set<CalcValueListener> listeners;
+    public CalcModelImpl() {
+        editable = true;
+        sign = 1;
+        currentInput = "";
+        currentValue = 0.0;
+        frozenValue = null;
+        activeOperand = null;
+    }
 
     /**
      * Prijava promatrača koje treba obavijestiti kada se
@@ -13,7 +32,11 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void addCalcValueListener(CalcValueListener l) {
-
+        Objects.requireNonNull(l);
+        if(listeners == null) {
+            listeners = new HashSet<>();
+        }
+        listeners.add(l);
     }
 
     /**
@@ -26,7 +49,11 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void removeCalcValueListener(CalcValueListener l) {
-
+        Objects.requireNonNull(l);
+        if(listeners == null) {
+            return;
+        }
+        listeners.remove(l);
     }
 
     /**
@@ -36,7 +63,7 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public double getValue() {
-        return 0;
+        return currentValue * sign;
     }
 
     /**
@@ -48,7 +75,10 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void setValue(double value) {
-
+        this.currentValue = value;
+        currentInput = String.valueOf(value);
+        freezeValue(currentInput);
+        editable = false;
     }
 
     /**
@@ -60,7 +90,7 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public boolean isEditable() {
-        return false;
+        return editable;
     }
 
     /**
@@ -69,7 +99,10 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void clear() {
-
+        editable = true;
+        currentInput = "";
+        currentValue = 0.0;
+        listeners.forEach(l -> l.valueChanged(this));
     }
 
     /**
@@ -78,7 +111,9 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void clearAll() {
-
+        clear();
+        activeOperand = null;
+        pendingOperation = null;
     }
 
     /**
@@ -88,7 +123,9 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void swapSign() throws CalculatorInputException {
-
+        if(!editable) throw new CalculatorInputException("Model not editable");
+        sign = (short) -sign;
+        listeners.forEach(l -> l.valueChanged(this));
     }
 
     /**
@@ -99,7 +136,12 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void insertDecimalPoint() throws CalculatorInputException {
-
+        if(!editable) throw new CalculatorInputException("Model not editable");
+        if (currentInput.isEmpty()) throw new CalculatorInputException("No digits inputted before decimal point");
+        if(currentInput.contains(".")) throw new CalculatorInputException("Decimal point already present");
+        //if (!Character.isDigit(currentInput.charAt(currentInput.length() - 1))) throw new CalculatorInputException("No digit before decimal point");
+        currentInput += ".";
+        freezeValue(currentInput);
     }
 
     /**
@@ -113,7 +155,20 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void insertDigit(int digit) throws CalculatorInputException, IllegalArgumentException {
-
+        if (!editable) throw new CalculatorInputException("Model not editable.");
+        if(currentInput.equals("0") && digit == 0) return;
+        try{
+            Double temp = Double.parseDouble(currentInput + digit);
+            if(temp.isInfinite() || temp.isNaN()) {
+                throw new CalculatorInputException("Value cannot be represented as a Double");
+            }
+            currentValue = temp;
+        }catch (NumberFormatException e) {
+            throw new CalculatorInputException("Input doesn't match any supported number format: " + currentInput + digit);
+        }
+        if(currentInput.equals("0")) currentInput = "";
+        currentInput = currentInput + digit;
+        freezeValue(currentInput);
     }
 
     /**
@@ -123,7 +178,7 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public boolean isActiveOperandSet() {
-        return false;
+        return activeOperand != null;
     }
 
     /**
@@ -134,7 +189,8 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public double getActiveOperand() throws IllegalStateException {
-        return 0;
+        if(!isActiveOperandSet()) throw new IllegalStateException("Active operand not set");
+        return activeOperand;
     }
 
     /**
@@ -146,7 +202,7 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void setActiveOperand(double activeOperand) {
-
+        this.activeOperand = activeOperand;
     }
 
     /**
@@ -154,7 +210,7 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void clearActiveOperand() {
-
+        activeOperand = null;
     }
 
     /**
@@ -164,7 +220,7 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public DoubleBinaryOperator getPendingBinaryOperation() {
-        return null;
+        return pendingOperation;
     }
 
     /**
@@ -175,6 +231,22 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void setPendingBinaryOperation(DoubleBinaryOperator op) {
+        pendingOperation = op;
+    }
 
+    @Override
+    public void freezeValue(String value) {
+        frozenValue = value;
+        listeners.forEach(l -> l.valueChanged(this));
+    }
+
+    @Override
+    public boolean hasFrozenValue() {
+        return frozenValue != null;
+    }
+
+    @Override
+    public String toString() {
+        return (sign > 0 ? "" : "-") + (hasFrozenValue() ? frozenValue : "0");
     }
 }

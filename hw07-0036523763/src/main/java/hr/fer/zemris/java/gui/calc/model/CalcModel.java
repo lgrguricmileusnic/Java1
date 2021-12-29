@@ -143,5 +143,7 @@ public interface CalcModel {
 	 * @param op zakazana operacija koju treba postaviti; smije biti <code>null</code>
 	 */
 	void setPendingBinaryOperation(DoubleBinaryOperator op);
-	
+
+	void freezeValue(String value);
+	boolean hasFrozenValue();
 }

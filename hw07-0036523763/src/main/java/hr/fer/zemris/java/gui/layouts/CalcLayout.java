@@ -164,9 +164,6 @@ public class CalcLayout implements LayoutManager2 {
 
     private Set<Integer> getUniformRowIndexes(int numberOfRows) {
         switch (numberOfRows) {
-            case 0 -> {
-                return Collections.emptySet();
-            }
             case 1 -> {
                 return Set.of(3);
             }
@@ -180,17 +177,14 @@ public class CalcLayout implements LayoutManager2 {
                 return Set.of(1, 2, 4, 5);
             }
             default -> {
-                throw new IllegalArgumentException("Invalid number of rows");
+                return Collections.emptySet();
             }
         }
     }
 
-    private Set<Integer> getUniformColumnIndexes(int numberOfRows) {
+    private Set<Integer> getUniformColumnIndexes(int numberOfColumns) {
 
-        switch (numberOfRows) {
-            case 0 -> {
-                return Collections.emptySet();
-            }
+        switch (numberOfColumns) {
             case 1 -> {
                 return Set.of(4);
             }
@@ -210,7 +204,7 @@ public class CalcLayout implements LayoutManager2 {
                 return Set.of(1, 2, 3, 5, 6, 7);
             }
             default -> {
-                throw new IllegalArgumentException("Invalid number of columns");
+                return Collections.emptySet();
             }
         }
     }
