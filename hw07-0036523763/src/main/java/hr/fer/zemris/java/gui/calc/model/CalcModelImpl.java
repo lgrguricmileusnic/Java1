@@ -75,10 +75,17 @@ public class CalcModelImpl implements CalcModel{
      */
     @Override
     public void setValue(double value) {
-        this.currentValue = value;
-        currentInput = String.valueOf(value);
-        freezeValue(currentInput);
+        this.currentValue = Math.abs(value);
+        currentInput = String.valueOf(currentValue);
+        if(value < 0) {
+            sign = -1;
+        } else {
+            sign = 1;
+        }
+        sign = (short) (value < 0 ? -1 : 1);
+        freezeValue(String.valueOf(value));
         editable = false;
+        notifyListeners();
     }
 
     /**
@@ -102,7 +109,8 @@ public class CalcModelImpl implements CalcModel{
         editable = true;
         currentInput = "";
         currentValue = 0.0;
-        listeners.forEach(l -> l.valueChanged(this));
+        sign = 1;
+        notifyListeners();
     }
 
     /**
@@ -125,7 +133,8 @@ public class CalcModelImpl implements CalcModel{
     public void swapSign() throws CalculatorInputException {
         if(!editable) throw new CalculatorInputException("Model not editable");
         sign = (short) -sign;
-        listeners.forEach(l -> l.valueChanged(this));
+        freezeValue(null);
+        notifyListeners();
     }
 
     /**
@@ -139,9 +148,9 @@ public class CalcModelImpl implements CalcModel{
         if(!editable) throw new CalculatorInputException("Model not editable");
         if (currentInput.isEmpty()) throw new CalculatorInputException("No digits inputted before decimal point");
         if(currentInput.contains(".")) throw new CalculatorInputException("Decimal point already present");
-        //if (!Character.isDigit(currentInput.charAt(currentInput.length() - 1))) throw new CalculatorInputException("No digit before decimal point");
         currentInput += ".";
-        freezeValue(currentInput);
+        freezeValue(null);
+        notifyListeners();
     }
 
     /**
@@ -168,7 +177,8 @@ public class CalcModelImpl implements CalcModel{
         }
         if(currentInput.equals("0")) currentInput = "";
         currentInput = currentInput + digit;
-        freezeValue(currentInput);
+        freezeValue(null);
+        notifyListeners();
     }
 
     /**
@@ -237,7 +247,6 @@ public class CalcModelImpl implements CalcModel{
     @Override
     public void freezeValue(String value) {
         frozenValue = value;
-        listeners.forEach(l -> l.valueChanged(this));
     }
 
     @Override
@@ -247,6 +256,13 @@ public class CalcModelImpl implements CalcModel{
 
     @Override
     public String toString() {
-        return (sign > 0 ? "" : "-") + (hasFrozenValue() ? frozenValue : "0");
+        if(hasFrozenValue()) return frozenValue;
+        if(currentInput.isEmpty()) return (sign > 0 ? "" : "-") + "0";
+        return (sign > 0 ? "" : "-") + currentInput;
+    }
+
+
+    private void notifyListeners() {
+        listeners.forEach(l -> l.valueChanged(this));
     }
 }
