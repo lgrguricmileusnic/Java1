@@ -146,4 +146,5 @@ public interface CalcModel {
 
 	void freezeValue(String value);
 	boolean hasFrozenValue();
+
 }

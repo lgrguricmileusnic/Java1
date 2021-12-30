@@ -77,13 +77,8 @@ public class CalcModelImpl implements CalcModel{
     public void setValue(double value) {
         this.currentValue = Math.abs(value);
         currentInput = String.valueOf(currentValue);
-        if(value < 0) {
-            sign = -1;
-        } else {
-            sign = 1;
-        }
+        currentInput = stripPointZero(currentInput);
         sign = (short) (value < 0 ? -1 : 1);
-        freezeValue(String.valueOf(value));
         editable = false;
         notifyListeners();
     }
@@ -246,9 +241,21 @@ public class CalcModelImpl implements CalcModel{
 
     @Override
     public void freezeValue(String value) {
+        if(value != null) {
+            value = stripPointZero(value);
+        }
         frozenValue = value;
+        notifyListeners();
     }
 
+    private String stripPointZero(String value) {
+        if(value.contains(".")) {
+            if(value.split("\\.")[1].equals("0")) {
+                value = value.split("\\.")[0];
+            }
+        }
+        return value;
+    }
     @Override
     public boolean hasFrozenValue() {
         return frozenValue != null;
@@ -263,6 +270,7 @@ public class CalcModelImpl implements CalcModel{
 
 
     private void notifyListeners() {
+        if(listeners == null) return;
         listeners.forEach(l -> l.valueChanged(this));
     }
 }

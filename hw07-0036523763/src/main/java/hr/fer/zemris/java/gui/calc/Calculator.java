@@ -7,6 +7,7 @@ import hr.fer.zemris.java.gui.calc.components.buttons.functions.InvertibleFuncti
 import hr.fer.zemris.java.gui.calc.components.buttons.functions.UnaryFunctionButton;
 import hr.fer.zemris.java.gui.calc.model.CalcModel;
 import hr.fer.zemris.java.gui.calc.model.CalcModelImpl;
+import hr.fer.zemris.java.gui.calc.model.CalculatorInputException;
 import hr.fer.zemris.java.gui.layouts.CalcLayout;
 import hr.fer.zemris.java.gui.layouts.CalcLayoutException;
 import hr.fer.zemris.java.gui.layouts.RCPosition;
@@ -21,6 +22,7 @@ public class Calculator extends JFrame {
     private static CalcModel model;
     private static Container contentPane;
     private static Stack<Double> stack;
+    private static boolean justSolved = false;
 
     public Calculator(){
         super();
@@ -61,7 +63,7 @@ public class Calculator extends JFrame {
 
         for(var button : buttons) {
             button.addActionListener(l -> {
-                if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
+                if (model.hasFrozenValue()) throw new CalculatorInputException("Model has frozen value");
                 if(model.getPendingBinaryOperation() != null) {
                     model.setValue(model.getPendingBinaryOperation().applyAsDouble(model.getActiveOperand(), model.getValue()));
                 }
@@ -72,6 +74,54 @@ public class Calculator extends JFrame {
             });
         }
     }
+    private void initFunctions() {
+        List<InvertibleFunctionButton<Double,Double>> buttons = new ArrayList<>(6);
+        buttons.add(new InvertibleFunctionButton<>("sin", "arcsin", Math::sin, Math::asin));
+        buttons.add(new InvertibleFunctionButton<>("log", "10^x", Math::log10, (x) -> Math.pow(10.0, x)));
+        buttons.add(new InvertibleFunctionButton<>("cos", "arccos", Math::cos, Math::acos));
+        buttons.add(new InvertibleFunctionButton<>("ln", "e^x", Math::log, (x) -> Math.pow(Math.E, x)));
+        buttons.add(new InvertibleFunctionButton<>("tan", "arctan", Math::tan, Math::atan));
+        buttons.add(new InvertibleFunctionButton<>("ctg", "arcctg", x -> 1.0 / Math.tan(x), x -> Math.PI / 2 - Math.atan(x)));
+
+        contentPane.add(buttons.get(0), "2,2");
+        contentPane.add(buttons.get(1), "3,1");
+        contentPane.add(buttons.get(2), "3,2");
+        contentPane.add(buttons.get(3), "4,1");
+        contentPane.add(buttons.get(4), "4,2");
+        contentPane.add(buttons.get(5), "5,2");
+
+        for(var b : buttons) {
+            b.addActionListener((l) -> {
+                model.setValue(b.getActiveFunction().apply(model.getValue()));
+            });
+        }
+
+        JCheckBox invCheckbox = new JCheckBox("Inv", false);
+        invCheckbox.setBackground(Color.WHITE);
+        invCheckbox.addChangeListener(l -> {
+            if(invCheckbox.isSelected()) {
+                for(var button : buttons){
+                    button.setInverted(true);
+                }
+            } else {
+                for(var button : buttons){
+                    button.setInverted(false);
+                }
+            }
+        });
+        contentPane.add(invCheckbox, "5,7");
+
+        UnaryFunctionButton<Double, Double> reciprocal = new UnaryFunctionButton<>("1/x", x -> 1/x);
+
+        reciprocal.addActionListener(l -> {
+            if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
+            model.setValue(reciprocal.getFunction().apply(model.getValue()));
+            model.freezeValue(String.valueOf(model.getValue()));
+            model.clear();
+        });
+        contentPane.add(reciprocal, "2,1");
+    }
+
     private void initOther() {
         CalcButton clr = new CalcButton("clr");
         clr.addActionListener(l -> {
@@ -99,6 +149,7 @@ public class Calculator extends JFrame {
         solve.addActionListener(l -> {
             model.setValue(model.getPendingBinaryOperation().applyAsDouble(model.getActiveOperand(), model.getValue()));
             model.setPendingBinaryOperation(null);
+            justSolved = true;
         });
         contentPane.add(solve, "1,6");
     }
@@ -128,52 +179,7 @@ public class Calculator extends JFrame {
         contentPane.add(decimalPoint, "5,5");
     }
 
-    private void initFunctions() {
-        List<InvertibleFunctionButton<Double,Double>> buttons = new ArrayList<>(6);
-        buttons.add(new InvertibleFunctionButton<>("sin", "arcsin", Math::sin, Math::asin));
-        buttons.add(new InvertibleFunctionButton<>("log", "10^x", Math::log10, (x) -> Math.pow(10.0, x)));
-        buttons.add(new InvertibleFunctionButton<>("cos", "arccos", Math::cos, Math::acos));
-        buttons.add(new InvertibleFunctionButton<>("ln", "e^x", Math::log, (x) -> Math.pow(Math.E, x)));
-        buttons.add(new InvertibleFunctionButton<>("tan", "arctan", Math::tan, Math::atan));
-        buttons.add(new InvertibleFunctionButton<>("ctg", "arcctg", x -> 1.0 / Math.tan(x), x -> Math.PI / 2 - Math.atan(x)));
 
-        contentPane.add(buttons.get(0), "2,2");
-        contentPane.add(buttons.get(1), "3,1");
-        contentPane.add(buttons.get(2), "3,2");
-        contentPane.add(buttons.get(3), "4,1");
-        contentPane.add(buttons.get(4), "4,2");
-        contentPane.add(buttons.get(5), "5,2");
-
-        for(var b : buttons) {
-            b.addActionListener((l) -> {
-                if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
-                model.setValue(b.getActiveFunction().apply(model.getValue()));
-            });
-        }
-
-        JCheckBox invCheckbox = new JCheckBox("Inv", false);
-        invCheckbox.setBackground(Color.WHITE);
-        invCheckbox.addChangeListener(l -> {
-            if(invCheckbox.isSelected()) {
-                for(var button : buttons){
-                    button.setInverted(true);
-                }
-            } else {
-                for(var button : buttons){
-                    button.setInverted(false);
-                }
-            }
-        });
-        contentPane.add(invCheckbox, "5,7");
-
-        UnaryFunctionButton<Double, Double> reciprocal = new UnaryFunctionButton<>("1/x", x -> 1/x);
-
-        reciprocal.addActionListener(l -> {
-            if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
-            model.setValue(reciprocal.getFunction().apply(model.getValue()));
-        });
-        contentPane.add(reciprocal, "2,1");
-    }
 
 
     public static void main(String[] args) {
