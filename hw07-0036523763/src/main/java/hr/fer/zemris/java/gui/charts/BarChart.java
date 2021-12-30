@@ -9,9 +9,9 @@ public class BarChart {
     private String yTitle;
     private int ymin;
     private int ymax;
-    private short unitSegment;
+    private int unitSegment;
 
-    public BarChart(List<XYValue> values, String xTitle, String yTitle, int ymin, int ymax, short unitSegment) {
+    public BarChart(List<XYValue> values, String xTitle, String yTitle, int ymin, int ymax, int unitSegment) {
         Objects.requireNonNull(values);
         Objects.requireNonNull(values);
         Objects.requireNonNull(values);
@@ -27,5 +27,29 @@ public class BarChart {
         this.ymin = ymin;
         this.ymax = ymax;
         this.unitSegment = unitSegment;
+    }
+
+    public List<XYValue> getValues() {
+        return values;
+    }
+
+    public String getxTitle() {
+        return xTitle;
+    }
+
+    public String getyTitle() {
+        return yTitle;
+    }
+
+    public int getYmin() {
+        return ymin;
+    }
+
+    public int getYmax() {
+        return ymax;
+    }
+
+    public int getUnitSegment() {
+        return unitSegment;
     }
 }
