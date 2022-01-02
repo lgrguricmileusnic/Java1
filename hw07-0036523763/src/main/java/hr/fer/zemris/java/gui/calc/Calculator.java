@@ -18,11 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Calculator application with {@code Swing} GUI.
+ * Supports various unary functions, stack operations and standard algebra operations.
+ */
 public class Calculator extends JFrame {
+    /**
+     * calculator model
+     */
     private static CalcModel model;
+    /**
+     * GUI main content pane
+     */
     private static Container contentPane;
+    /**
+     * stack
+     */
     private static Stack<Double> stack;
 
+    /**
+     * Constructs {@code Calculator JFrame}, sets title, location, close operation and preferred size.
+     * Initialises stack and GUI.
+     */
     public Calculator(){
         super();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -34,6 +51,9 @@ public class Calculator extends JFrame {
         pack();
     }
 
+    /**
+     * Initialises GUI
+     */
     private void initGUI() {
         contentPane = getContentPane();
         contentPane.setBackground(Color.WHITE);
@@ -47,6 +67,9 @@ public class Calculator extends JFrame {
         initBinaryFunctions();
     }
 
+    /**
+     * Initialises binary function buttons
+     */
     private void initBinaryFunctions() {
         List<DoubleBinaryOperatorCalcButton> buttons = new ArrayList<>(5);
         buttons.add(new DoubleBinaryOperatorCalcButton("/", (a, b) -> a/b));
@@ -73,6 +96,11 @@ public class Calculator extends JFrame {
             });
         }
     }
+
+    /**
+     * Initialises unary function buttons.
+     * e.g. sin log cos ln
+     */
     private void initFunctions() {
         List<InvertibleFunctionCalcButton> buttons = new ArrayList<>(6);
         buttons.add(new InvertibleFunctionCalcButton("sin", "arcsin", Math::sin, Math::asin));
@@ -120,6 +148,9 @@ public class Calculator extends JFrame {
         contentPane.add(reciprocal, "2,1");
     }
 
+    /**
+     * Initialises clear, reset, push, pop and solve (=) buttons
+     */
     private void initOther() {
         CalcButton clr = new CalcButton("clr");
         clr.addActionListener(l -> {
@@ -151,6 +182,9 @@ public class Calculator extends JFrame {
         contentPane.add(solve, "1,6");
     }
 
+    /**
+     * Initialises digit panel, swap and decimal point buttons.
+     */
     private void initInputPanel() {
         int dgt = 9;
         for (int i = 2; i < 5 ; i++) {
@@ -177,8 +211,10 @@ public class Calculator extends JFrame {
     }
 
 
-
-
+    /**
+     * Main function, initialises {@link CalcModelImpl} model and {@code Calculator}.
+     * @param args takes no arguments
+     */
     public static void main(String[] args) {
         model = new CalcModelImpl();
         SwingUtilities.invokeLater(() -> new Calculator().setVisible(true));

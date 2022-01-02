@@ -3,8 +3,14 @@ package hr.fer.zemris.java.gui.prim;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Demo for PrimListModel
+ */
 public class PrimDemo extends JFrame {
 
+    /**
+     * Constructor
+     */
     public PrimDemo() {
         super();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -14,6 +20,9 @@ public class PrimDemo extends JFrame {
         initGUI();
     }
 
+    /**
+     * Initialises GUI
+     */
     public void initGUI() {
         Container contentPane = getContentPane();
         PrimListModel model = new PrimListModel();
@@ -35,6 +44,10 @@ public class PrimDemo extends JFrame {
         contentPane.add(b, BorderLayout.SOUTH);
     }
 
+    /**
+     * Starts PrimDemo
+     * @param args demo takes no arguments
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new PrimDemo().setVisible(true);

@@ -8,8 +8,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo for {@code BarCharComponent}.
+ * Creates a JFrame with a BarCharComponent example.
+ */
 public class BarChartDemo extends JFrame {
-
+    /**
+     * Constructor
+     * @param model bar chart model
+     */
     public BarChartDemo(BarChart model){
         super();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -20,11 +27,20 @@ public class BarChartDemo extends JFrame {
         pack();
     }
 
+    /**
+     * Initialises {@link BarChartComponent} and adds it to the content pane.
+     * @param model
+     */
     private void initGUI(BarChart model) {
         Container cp = getContentPane();
         cp.add(new BarChartComponent(model));
     }
 
+    /**
+     * Creates bar chart model from file specified in {@code args}.
+     * If the model is successfully created, creates window and displays the bar chart.
+     * @param args path to file with bar chart data
+     */
     public static void main(String[] args) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(args[0]));

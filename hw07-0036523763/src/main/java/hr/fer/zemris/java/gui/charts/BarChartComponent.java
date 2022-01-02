@@ -5,15 +5,36 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 
+/**
+ * This {@link JComponent} subclass draws a bar chart using data from the passed model.
+ * The bar chart has titles on both axes, a grid and bars cast shadows.
+ */
 public class BarChartComponent extends JComponent {
-    private BarChart barChart;
+    /**
+     * bar chart model
+     */
+    private final BarChart barChart;
+    /**
+     * spacing constant
+     */
     private static final int SPACING = 5;
+    /**
+     * reserved extra spacing on axes for the arrows
+     */
     private static final int AXIS_SPACING = 10;
 
+    /**
+     * Constructor
+     * @param barChart bar chart model
+     */
     public BarChartComponent(BarChart barChart) {
         this.barChart = barChart;
     }
 
+    /**
+     * Paints the bar chart using the passed {@link Graphics} object
+     * @param g graphics object
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -32,13 +53,13 @@ public class BarChartComponent extends JComponent {
         g2d.setFont(nameFont);
         FontMetrics nameMetrics = g2d.getFontMetrics();
 
-        int maxNumberWidth = nameMetrics.stringWidth(String.valueOf(barChart.getYmax()));
+        int maxNumberWidth = nameMetrics.stringWidth(String.valueOf(barChart.getYMax()));
         //distance from left inset end to the closest character on the y axis
         int baseline = titleMetrics.getHeight() + SPACING;
         int originX = baseline + maxNumberWidth + SPACING;
         int originY = baseline + nameMetrics.getHeight() + SPACING;
 
-        int mYmax = calcNextDivisibleNumber(barChart.getYmax() - barChart.getYmin(), barChart.getUnitSegment());
+        int mYmax = calcNextDivisibleNumber(barChart.getYMax() - barChart.getYMin(), barChart.getUnitSegment());
         int count = mYmax / barChart.getUnitSegment();
         int unitLength = (h - originY - AXIS_SPACING) / count / barChart.getUnitSegment();
         int barWidth = (w - originX - AXIS_SPACING) / barCount;
@@ -48,12 +69,12 @@ public class BarChartComponent extends JComponent {
 
         g2d.setFont(titleFont);
         //draw xTitle
-        g2d.drawString(barChart.getxTitle(), originX + (xAxisLength - titleMetrics.stringWidth(barChart.getxTitle())) / 2, h - titleMetrics.getDescent());
+        g2d.drawString(barChart.getXTitle(), originX + (xAxisLength - titleMetrics.stringWidth(barChart.getXTitle())) / 2, h - titleMetrics.getDescent());
         //draw yTitle
         AffineTransform at = new AffineTransform();
         at.rotate(-Math.PI / 2);
         g2d.setTransform(at);
-        g2d.drawString(barChart.getyTitle(), -(yAxisLength + titleMetrics.stringWidth(barChart.getyTitle())) / 2, titleMetrics.getAscent());
+        g2d.drawString(barChart.getYTitle(), -(yAxisLength + titleMetrics.stringWidth(barChart.getYTitle())) / 2, titleMetrics.getAscent());
         at.rotate(Math.PI / 2);
         g2d.setTransform(at);
 
@@ -117,6 +138,13 @@ public class BarChartComponent extends JComponent {
 
     }
 
+    /**
+     * Calculates next number divisible by passed divisor,
+     * or returns {@code start} if it itself is divisible.
+     * @param start starting number
+     * @param divisor divisor
+     * @return start if its divisible, otherwise the next divisible number.
+     */
     private int calcNextDivisibleNumber(int start, int divisor) {
         if (start % divisor == 0) return start;
         return ((start / divisor) + 1) * divisor;

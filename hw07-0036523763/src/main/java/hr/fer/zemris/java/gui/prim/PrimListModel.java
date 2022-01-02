@@ -5,17 +5,32 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import java.util.*;
 
+/**
+ * {@link ListModel} implementation for displaying lists of primitive numbers.
+ * Supplies the client with method next for calculating and displaying next primitive number.
+ */
 public class PrimListModel implements ListModel<Integer> {
+    /**
+     * Underlying {@link List} storing all calculated primitive numbers to be displayed.
+     */
     private List<Integer> prims;
+    /**
+     * Underlying set of subscribed {@link ListDataListener} objects
+     */
     private Set<ListDataListener> listeners;
 
+    /**
+     * Constructor
+     */
     public PrimListModel() {
         prims = new ArrayList<>();
         prims.add(1);
         listeners = new HashSet<>();
     }
 
-
+    /**
+     * Adds next primitive number to underlying list and notifies subscribed {@link ListDataListener} objects.
+     */
     public void next() {
         int position = prims.size();
 
@@ -25,6 +40,11 @@ public class PrimListModel implements ListModel<Integer> {
         listeners.forEach(l -> l.contentsChanged(listDataEvent));
     }
 
+    /**
+     * Returns next primitive number starting from passed value.
+     * @param start starting value
+     * @return next primitive number
+     */
     private Integer nextPrime(Integer start) {
         int n = start + 1;
         while(true) {

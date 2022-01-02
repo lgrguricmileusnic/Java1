@@ -271,6 +271,10 @@ public class CalcModelImpl implements CalcModel{
         pendingOperation = op;
     }
 
+    /**
+     * Zamrzava predanu vrijednost.
+     * @param value vrijednost koja će biti zamrznuta
+     */
     @Override
     public void freezeValue(String value) {
         if(value != null) {
@@ -280,7 +284,15 @@ public class CalcModelImpl implements CalcModel{
         notifyListeners();
     }
 
+    /**
+     * Uklanja decimalnu točku i sve iza nje ukoliko je necijeli dio jednak nula.
+     * Predani broj mora biti zapisan kao {@link String} objekt.
+     * @param value broj koji će biti formatiran
+     * @return {@link String} prikaz cijelog dijela broja, ukoliko je necijeli dio jednak 0.
+     * @throws NullPointerException ako je predani {@link String} {@code null}
+     */
     private String stripPointZero(String value) {
+        Objects.requireNonNull(value);
         if(value.contains(".")) {
             if(value.split("\\.")[1].equals("0")) {
                 value = value.split("\\.")[0];
@@ -288,11 +300,20 @@ public class CalcModelImpl implements CalcModel{
         }
         return value;
     }
+
+    /**
+     * Provjerava postoji li zamrznuta vrijednost.
+     * @return true ako postoji, inače false
+     */
     @Override
     public boolean hasFrozenValue() {
         return frozenValue != null;
     }
 
+    /**
+     * Vraća {@link String} vrijednost koju treba prikazati.
+     * @return ako postoji zamrznuta vrijednost vraća tu vrijednost, inače vraća trenutnu
+     */
     @Override
     public String toString() {
         if(hasFrozenValue()) return frozenValue;
@@ -300,7 +321,9 @@ public class CalcModelImpl implements CalcModel{
         return (sign > 0 ? "" : "-") + currentInput;
     }
 
-
+    /**
+     * Metoda obavjestava sve pretplacene promatrace.
+     */
     private void notifyListeners() {
         if(listeners == null) return;
         listeners.forEach(l -> l.valueChanged(this));
