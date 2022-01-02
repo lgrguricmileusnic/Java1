@@ -1,23 +1,24 @@
 package hr.fer.zemris.java.gui.layouts;
 
+
+/**
+ * {@code CalcLayoutException} is a {@link RuntimeException} which should be thrown
+ *  when a problem occurs when using {@link CalcLayout}.
+ */
 public class CalcLayoutException extends RuntimeException{
+
+    /**
+     * Constructor
+     */
     public CalcLayoutException() {
         super();
     }
 
+    /**
+     * Constructor with message
+     * @param message message
+     */
     public CalcLayoutException(String message) {
         super(message);
-    }
-
-    public CalcLayoutException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public CalcLayoutException(Throwable cause) {
-        super(cause);
-    }
-
-    protected CalcLayoutException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

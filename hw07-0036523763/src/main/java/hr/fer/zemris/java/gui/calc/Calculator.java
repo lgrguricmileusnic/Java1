@@ -2,9 +2,9 @@ package hr.fer.zemris.java.gui.calc;
 
 import hr.fer.zemris.java.gui.calc.components.Display;
 import hr.fer.zemris.java.gui.calc.components.buttons.CalcButton;
-import hr.fer.zemris.java.gui.calc.components.buttons.functions.doubleBinaryOperatorButton;
-import hr.fer.zemris.java.gui.calc.components.buttons.functions.InvertibleFunctionButton;
-import hr.fer.zemris.java.gui.calc.components.buttons.functions.UnaryFunctionButton;
+import hr.fer.zemris.java.gui.calc.components.buttons.functions.DoubleBinaryOperatorCalcButton;
+import hr.fer.zemris.java.gui.calc.components.buttons.functions.InvertibleFunctionCalcButton;
+import hr.fer.zemris.java.gui.calc.components.buttons.functions.UnaryFunctionCalcButton;
 import hr.fer.zemris.java.gui.calc.model.CalcModel;
 import hr.fer.zemris.java.gui.calc.model.CalcModelImpl;
 import hr.fer.zemris.java.gui.calc.model.CalculatorInputException;
@@ -22,7 +22,6 @@ public class Calculator extends JFrame {
     private static CalcModel model;
     private static Container contentPane;
     private static Stack<Double> stack;
-    private static boolean justSolved = false;
 
     public Calculator(){
         super();
@@ -49,12 +48,12 @@ public class Calculator extends JFrame {
     }
 
     private void initBinaryFunctions() {
-        List<doubleBinaryOperatorButton> buttons = new ArrayList<>(5);
-        buttons.add(new doubleBinaryOperatorButton("/", (a, b) -> a/b));
-        buttons.add(new doubleBinaryOperatorButton("*", (a, b) -> a*b));
-        buttons.add(new doubleBinaryOperatorButton("-", (a, b) -> a-b));
-        buttons.add(new doubleBinaryOperatorButton("+", Double::sum));
-        buttons.add(new doubleBinaryOperatorButton("x^n", Math::pow));
+        List<DoubleBinaryOperatorCalcButton> buttons = new ArrayList<>(5);
+        buttons.add(new DoubleBinaryOperatorCalcButton("/", (a, b) -> a/b));
+        buttons.add(new DoubleBinaryOperatorCalcButton("*", (a, b) -> a*b));
+        buttons.add(new DoubleBinaryOperatorCalcButton("-", (a, b) -> a-b));
+        buttons.add(new DoubleBinaryOperatorCalcButton("+", Double::sum));
+        buttons.add(new DoubleBinaryOperatorCalcButton("x^n", Math::pow));
 
         for (int i = 2; i <=5 ; i++) {
             contentPane.add(buttons.get(i - 2), new RCPosition(i,6));
@@ -75,13 +74,13 @@ public class Calculator extends JFrame {
         }
     }
     private void initFunctions() {
-        List<InvertibleFunctionButton<Double,Double>> buttons = new ArrayList<>(6);
-        buttons.add(new InvertibleFunctionButton<>("sin", "arcsin", Math::sin, Math::asin));
-        buttons.add(new InvertibleFunctionButton<>("log", "10^x", Math::log10, (x) -> Math.pow(10.0, x)));
-        buttons.add(new InvertibleFunctionButton<>("cos", "arccos", Math::cos, Math::acos));
-        buttons.add(new InvertibleFunctionButton<>("ln", "e^x", Math::log, (x) -> Math.pow(Math.E, x)));
-        buttons.add(new InvertibleFunctionButton<>("tan", "arctan", Math::tan, Math::atan));
-        buttons.add(new InvertibleFunctionButton<>("ctg", "arcctg", x -> 1.0 / Math.tan(x), x -> Math.PI / 2 - Math.atan(x)));
+        List<InvertibleFunctionCalcButton> buttons = new ArrayList<>(6);
+        buttons.add(new InvertibleFunctionCalcButton("sin", "arcsin", Math::sin, Math::asin));
+        buttons.add(new InvertibleFunctionCalcButton("log", "10^x", Math::log10, (x) -> Math.pow(10.0, x)));
+        buttons.add(new InvertibleFunctionCalcButton("cos", "arccos", Math::cos, Math::acos));
+        buttons.add(new InvertibleFunctionCalcButton("ln", "e^x", Math::log, (x) -> Math.pow(Math.E, x)));
+        buttons.add(new InvertibleFunctionCalcButton("tan", "arctan", Math::tan, Math::atan));
+        buttons.add(new InvertibleFunctionCalcButton("ctg", "arcctg", x -> 1.0 / Math.tan(x), x -> Math.PI / 2 - Math.atan(x)));
 
         contentPane.add(buttons.get(0), "2,2");
         contentPane.add(buttons.get(1), "3,1");
@@ -92,6 +91,7 @@ public class Calculator extends JFrame {
 
         for(var b : buttons) {
             b.addActionListener((l) -> {
+                if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
                 model.setValue(b.getActiveFunction().apply(model.getValue()));
             });
         }
@@ -111,13 +111,11 @@ public class Calculator extends JFrame {
         });
         contentPane.add(invCheckbox, "5,7");
 
-        UnaryFunctionButton<Double, Double> reciprocal = new UnaryFunctionButton<>("1/x", x -> 1/x);
+        UnaryFunctionCalcButton reciprocal = new UnaryFunctionCalcButton("1/x", x -> 1/x);
 
         reciprocal.addActionListener(l -> {
             if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
             model.setValue(reciprocal.getFunction().apply(model.getValue()));
-            model.freezeValue(String.valueOf(model.getValue()));
-            model.clear();
         });
         contentPane.add(reciprocal, "2,1");
     }
@@ -149,7 +147,6 @@ public class Calculator extends JFrame {
         solve.addActionListener(l -> {
             model.setValue(model.getPendingBinaryOperation().applyAsDouble(model.getActiveOperand(), model.getValue()));
             model.setPendingBinaryOperation(null);
-            justSolved = true;
         });
         contentPane.add(solve, "1,6");
     }

@@ -5,15 +5,47 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.DoubleBinaryOperator;
 
+/**
+ * Implementacija {@link CalcModel} sučelja za aplikaciju naredbenog retka {@link hr.fer.zemris.java.gui.calc.Calculator}
+ */
 public class CalcModelImpl implements CalcModel{
+    /**
+     * sprema zastavicu editabilnosti modela
+     */
     private boolean editable;
+    /**
+     * sprema predznak trenutne vrijednosti kao short,
+     * -1 za negativan, 1 za pozitivan
+     */
     private short sign;
+    /**
+     * trenutna unesena vrijednost bez predznaka u obliku {@link String} objekta
+     */
     private String currentInput;
+    /**
+     * trenutna unesena vrijednost bez predznaka
+     */
     private Double currentValue;
+    /**
+     * zamrznuta vrijednost
+     */
     private String frozenValue;
+    /**
+     * aktivni operand
+     */
     private Double activeOperand;
+    /**
+     * zakazana operacija
+     */
     private DoubleBinaryOperator pendingOperation;
+    /**
+     * set promatrača promjena za model
+     */
     private Set<CalcValueListener> listeners;
+
+    /**
+     * Konstruktor, incijalizira trenutnu vrijednost na 0.0, odnosno {@code currentInput} kao prazan {@link String}
+     */
     public CalcModelImpl() {
         editable = true;
         sign = 1;

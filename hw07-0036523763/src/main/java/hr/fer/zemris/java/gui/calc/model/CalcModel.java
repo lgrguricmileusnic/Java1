@@ -144,7 +144,16 @@ public interface CalcModel {
 	 */
 	void setPendingBinaryOperation(DoubleBinaryOperator op);
 
+	/**
+	 * Zamrzava predanu vrijednost.
+	 * @param value vrijednost koja će biti zamrznuta
+	 */
 	void freezeValue(String value);
+
+	/**
+	 * Provjerava postoji li zamrznuta vrijednost
+	 * @return true ako postoji, inače false
+	 */
 	boolean hasFrozenValue();
 
 }
