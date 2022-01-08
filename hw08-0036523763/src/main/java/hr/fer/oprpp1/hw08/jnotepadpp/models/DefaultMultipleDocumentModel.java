@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.function.Consumer;
 
 public class DefaultMultipleDocumentModel extends JTabbedPane implements MultipleDocumentModel {
     List<SingleDocumentModel> documents;
@@ -47,6 +46,7 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     public SingleDocumentModel createNewDocument() {
         SingleDocumentModel doc = new DefaultSingleDocumentModel(null, "");
         documents.add(doc);
+        notifyListeners((l -> l.documentAdded(doc)));
         return doc;
     }
 
@@ -83,6 +83,8 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
         }
         SingleDocumentModel doc = new DefaultSingleDocumentModel(path, text.toString());
         documents.add(doc);
+        this.add(doc.getFilePath().getFileName().toString(), doc.getTextComponent());
+        notifyListeners((l -> l.documentAdded(doc)));
         return doc;
     }
 
@@ -95,6 +97,7 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
      * @param model   model of document which should be saved
      * @param newPath path where the document should be saved
      * @throws NullPointerException if passed {@code model} is null
+     * @throws IllegalArgumentException if specified path is already open
      */
     @Override
     public void saveDocument(SingleDocumentModel model, Path newPath) {
@@ -120,7 +123,9 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
      */
     @Override
     public void closeDocument(SingleDocumentModel model) {
-        documents.remove(model);
+        if(documents.remove(model)){
+            notifyListeners((l -> l.documentRemoved(model)));
+        }
     }
 
     /**
@@ -210,5 +215,11 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
         for(var listener : listeners) {
             notifier.notify(listener);
         }
+    }
+
+    public void setCurrentDocument(SingleDocumentModel document) {
+        SingleDocumentModel prev = this.currentDocument;
+        this.currentDocument = document;
+        notifyListeners((l -> l.currentDocumentChanged(prev, this.currentDocument)));
     }
 }
