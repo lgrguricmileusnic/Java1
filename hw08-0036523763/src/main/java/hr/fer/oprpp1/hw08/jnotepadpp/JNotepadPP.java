@@ -6,6 +6,7 @@ import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.PasteAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.file.*;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.info.ShowStatisticsAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.language.ChangeLanguageAction;
+import hr.fer.oprpp1.hw08.jnotepadpp.actions.tools.ReplaceSelectionAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.components.Clock;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.FormLocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
@@ -128,6 +129,26 @@ public class JNotepadPP extends JFrame {
             editMenu.add(menuItem);
         }
 
+        JMenu toolsMenu = new LJMenu("tools", flp);
+        JMenu changeCaseSubMenu = new LJMenu("change_case", flp);
+        toolsMenu.add(changeCaseSubMenu);
+        List<ReplaceSelectionAction> replaceSelectionActions = new ArrayList<>(3);
+        replaceSelectionActions.add(new ReplaceSelectionAction("upper", flp, documentsModel, String::toUpperCase));
+        replaceSelectionActions.add(new ReplaceSelectionAction("lower", flp, documentsModel, String::toLowerCase));
+        replaceSelectionActions.add(new ReplaceSelectionAction("invert", flp, documentsModel, s -> {
+            StringBuilder sb = new StringBuilder();
+            for(char c : s.toCharArray()) {
+                sb.append(Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c));
+            }
+            return sb.toString();
+        }));
+
+        for (var action : replaceSelectionActions) {
+            JMenuItem menuItem = new JMenuItem();
+            menuItem.setAction(action);
+            changeCaseSubMenu.add(menuItem);
+        }
+
         JMenu infoMenu = new LJMenu("info", flp);
         JMenuItem stats = new JMenuItem();
         stats.setAction(new ShowStatisticsAction(documentsModel, flp));
@@ -147,6 +168,7 @@ public class JNotepadPP extends JFrame {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         menuBar.add(infoMenu);
+        menuBar.add(toolsMenu);
         menuBar.add(languageMenu);
 
         contentPane.add(menuBar, BorderLayout.NORTH);
@@ -201,23 +223,30 @@ public class JNotepadPP extends JFrame {
         statusBar.add(clock);
         contentPane.add(statusBar, BorderLayout.SOUTH);
 
-
         documentsModel.addMultipleDocumentListener(new MultipleDocumentListener() {
             @Override
             public void currentDocumentChanged(SingleDocumentModel previousModel, SingleDocumentModel currentModel) {
-                SingleDocumentModel sdm = documentsModel.getCurrentDocument();
                 String fileName;
-                if (sdm == null || sdm.getFilePath() == null) {
+                if (currentModel == null) {
+                    fileName = "";
+                }else if(currentModel.getFilePath() == null) {
                     fileName = flp.getString("unnamed");
                 } else {
-                    fileName = sdm.getFilePath().getFileName().toString();
+                    fileName = currentModel.getFilePath().getFileName().toString();
                 }
                 frame.setTitle(fileName + " - JNotepad++");
+
                 if(currentModel != null) {
                     currentModel.getTextComponent().addCaretListener(countBar.caretListener);
+                    for(var action : replaceSelectionActions) {
+                        currentModel.getTextComponent().addCaretListener(action.listener);
+                    }
                 }
-                if(previousModel!= null) {
+                if(previousModel != null) {
                     previousModel.getTextComponent().removeCaretListener(countBar.caretListener);
+                    for(var action : replaceSelectionActions) {
+                        previousModel.getTextComponent().removeCaretListener(action.listener);
+                    }
                 }
                 countBar.updateFromModel(currentModel);
             }
@@ -236,7 +265,6 @@ public class JNotepadPP extends JFrame {
 
                         countBar.updateFromModel(model);
                     }
-
                     @Override
                     public void documentFilePathUpdated(SingleDocumentModel model) {
                         int index = documentsModel.getIndexOfDocument(model);
@@ -251,18 +279,15 @@ public class JNotepadPP extends JFrame {
                     public void insertUpdate(DocumentEvent e) {
                         model.setModified(true);
                     }
-
                     @Override
                     public void removeUpdate(DocumentEvent e) {
                         model.setModified(true);
                     }
-
                     @Override
                     public void changedUpdate(DocumentEvent e) {
                         model.setModified(true);
                     }
                 });
-
                 int index = documentsModel.getIndexOfDocument(model);
                 Path filePath = model.getFilePath();
                 String title;
@@ -275,17 +300,13 @@ public class JNotepadPP extends JFrame {
                     title = filePath.getFileName().toString();
                     toolTip = filePath.toString();
                 }
-
                 tabbedPane.setIconAt(index, icons.get("saved"));
                 tabbedPane.setTitleAt(index, title);
                 tabbedPane.setToolTipTextAt(index, toolTip);
-
             }
 
             @Override
-            public void documentRemoved(SingleDocumentModel model) {
-
-            }
+            public void documentRemoved(SingleDocumentModel model) {}
         });
 
         InputMap inputMap = tabbedPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
