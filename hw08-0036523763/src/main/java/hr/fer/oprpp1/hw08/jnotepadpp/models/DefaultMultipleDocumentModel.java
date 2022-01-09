@@ -4,11 +4,13 @@ import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.MultipleDocumentListener;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.MultipleDocumentListenerNotifier;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.List;
 
 public class DefaultMultipleDocumentModel extends JTabbedPane implements MultipleDocumentModel {
     List<SingleDocumentModel> documents;
@@ -25,6 +27,15 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
         documents = new ArrayList<>();
         currentDocument = null;
         listeners =new HashSet<>();
+        this.addChangeListener(e -> {
+            if (getSelectedIndex() < 0) {
+                setCurrentDocument(null);
+                return;
+            }
+            setCurrentDocument(getDocument(getSelectedIndex()));
+            Path p = currentDocument.getFilePath();
+            System.out.println("Current Document: " + (p == null ? "Unnamed" : p.getFileName().toString()));
+        });
     }
 
     /**
@@ -46,6 +57,8 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     public SingleDocumentModel createNewDocument() {
         SingleDocumentModel doc = new DefaultSingleDocumentModel(null, "");
         documents.add(doc);
+        this.addTab("", wrapTextComponent(doc.getTextComponent()));
+        setSelectedIndex(getIndexOfDocument(doc));
         notifyListeners((l -> l.documentAdded(doc)));
         return doc;
     }
@@ -70,20 +83,27 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     @Override
     public SingleDocumentModel loadDocument(Path path) {
         Objects.requireNonNull(path);
+        SingleDocumentModel oldDoc = findForPath(path);
+        if (oldDoc != null) {
+            setSelectedIndex(getIndexOfDocument(oldDoc));
+            return oldDoc;
+        }
+
         StringBuilder text = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(Files.newInputStream(path)), StandardCharsets.UTF_8))) {
             String l;
             while (true) {
                 l = br.readLine();
                 if (l == null) break;
-                text.append(l);
+                text.append(l).append("\n");
             }
         } catch (IOException ignored) {
             return null;
         }
         SingleDocumentModel doc = new DefaultSingleDocumentModel(path, text.toString());
         documents.add(doc);
-        this.add(doc.getFilePath().getFileName().toString(), doc.getTextComponent());
+        addTab("", wrapTextComponent(doc.getTextComponent()));
+        setSelectedIndex(getIndexOfDocument(doc));
         notifyListeners((l -> l.documentAdded(doc)));
         return doc;
     }
@@ -121,6 +141,7 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
      */
     @Override
     public void closeDocument(SingleDocumentModel model) {
+        removeTabAt(getIndexOfDocument(model));
         if(documents.remove(model)){
             notifyListeners((l -> l.documentRemoved(model)));
         }
@@ -218,9 +239,13 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
         }
     }
 
-    public void setCurrentDocument(SingleDocumentModel document) {
+    private void setCurrentDocument(SingleDocumentModel document) {
         SingleDocumentModel prev = this.currentDocument;
         this.currentDocument = document;
         notifyListeners((l -> l.currentDocumentChanged(prev, this.currentDocument)));
+    }
+
+    private JComponent wrapTextComponent(JTextArea comp) {
+        return new JScrollPane(comp);
     }
 }

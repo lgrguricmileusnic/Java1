@@ -32,6 +32,6 @@ public class ShowStatisticsAction extends LocalizableAction {
         int charCount = textArea.getText().length();
         long nonBlankCount = textArea.getText().chars().filter((c) -> !Character.isWhitespace(c)).count();
         String stats = String.format(localizationProvider.getString("stats_string"), charCount, nonBlankCount, lineCount);
-        JOptionPane.showMessageDialog(model.getVisualComponent(),stats,"Statistics",JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(model.getVisualComponent(),stats,"Statistics", JOptionPane.PLAIN_MESSAGE);
     }
 }

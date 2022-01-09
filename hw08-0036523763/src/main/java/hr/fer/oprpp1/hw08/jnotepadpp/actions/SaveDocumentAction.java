@@ -39,13 +39,14 @@ public class SaveDocumentAction extends LocalizableAction {
             }
         }
 
-        try {
-            model.saveDocument(doc,path);
-            doc.setFilePath(path);
-            doc.setModified(false);
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(model.getVisualComponent(),lp.getString("already_open_message"), lp.getString("error"), JOptionPane.ERROR_MESSAGE);
-
-        }
+        SingleDocumentModel other = model.findForPath(path);
+        if (other != null)
+            if (!other.equals(doc)) {
+                JOptionPane.showMessageDialog(model.getVisualComponent(),lp.getString("already_open_message"),"Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        model.saveDocument(doc,path);
+        doc.setFilePath(path);
+        doc.setModified(false);
     }
 }

@@ -7,30 +7,51 @@ import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.components.LJMenu;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.DefaultMultipleDocumentModel;
+import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.SingleDocumentModel;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.MultipleDocumentListener;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.SingleDocumentListener;
+import hr.fer.oprpp1.hw08.jnotepadpp.utils.HelperMethods;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.TextAction;
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class JNotepadPP extends JFrame {
     ILocalizationProvider flp;
+    MultipleDocumentModel documentsModel;
 
     public JNotepadPP() {
         super();
         setTitle("JNotepad++");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        flp = new FormLocalizationProvider(LocalizationProvider.getInstance(),this);
+        documentsModel = new DefaultMultipleDocumentModel();
+        this.addWindowListener(new WindowAdapter() {
+            /**
+             * Invoked when a window is in the process of being closed.
+             * The close operation can be overridden at this point.
+             *
+             * @param e
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(HelperMethods.checkModifiedDocuments(documentsModel, flp)) {
+                    dispose();
+                };
+            }
+        });
+
         setLocation(20, 20);
         setSize(1300, 900);
-        flp = new FormLocalizationProvider(LocalizationProvider.getInstance(),this);
         initGUI();
     }
 
@@ -39,16 +60,18 @@ public class JNotepadPP extends JFrame {
      */
     public void initGUI() {
         Container contentPane = getContentPane();
-        DefaultMultipleDocumentModel tabbedPane = new DefaultMultipleDocumentModel();
         contentPane.setLayout(new BorderLayout());
-        contentPane.add(tabbedPane, BorderLayout.CENTER);
-
+        contentPane.add(documentsModel.getVisualComponent(), BorderLayout.CENTER);
+        JTabbedPane tabbedPane = (JTabbedPane) documentsModel.getVisualComponent();
         JFrame frame = this;
 
-        tabbedPane.addMultipleDocumentListener(new MultipleDocumentListener() {
+        ImageIcon modifiedIcon = HelperMethods.loadIcon("modified", this);
+        ImageIcon savedIcon = HelperMethods.loadIcon("saved", this);
+
+        documentsModel.addMultipleDocumentListener(new MultipleDocumentListener() {
             @Override
             public void currentDocumentChanged(SingleDocumentModel previousModel, SingleDocumentModel currentModel) {
-                SingleDocumentModel sdm = tabbedPane.getCurrentDocument();
+                SingleDocumentModel sdm = documentsModel.getCurrentDocument();
                 String fileName;
                 if(sdm == null || sdm.getFilePath() == null) {
                     fileName = flp.getString("unnamed");
@@ -63,17 +86,17 @@ public class JNotepadPP extends JFrame {
                 model.addSingleDocumentListener(new SingleDocumentListener() {
                     @Override
                     public void documentModifyStatusUpdated(SingleDocumentModel model) {
-                        int index = tabbedPane.getIndexOfDocument(model);
+                        int index = documentsModel.getIndexOfDocument(model);
                         if(model.isModified()) {
-                            tabbedPane.setIconAt(index, loadIcon("modified"));
+                            tabbedPane.setIconAt(index, modifiedIcon);
                         } else {
-                            tabbedPane.setIconAt(index, loadIcon("saved"));
+                            tabbedPane.setIconAt(index, savedIcon);
                         }
                     }
 
                     @Override
                     public void documentFilePathUpdated(SingleDocumentModel model) {
-                        int index = tabbedPane.getIndexOfDocument(model);
+                        int index = documentsModel.getIndexOfDocument(model);
                         tabbedPane.setTitleAt(index, model.getFilePath().getFileName().toString());
                         tabbedPane.setToolTipTextAt(index, model.getFilePath().toString());
                     }
@@ -96,9 +119,12 @@ public class JNotepadPP extends JFrame {
                         model.setModified(true);
                     }
                 });
+
+                int index = documentsModel.getIndexOfDocument(model);
                 Path filePath = model.getFilePath();
                 String title;
                 String toolTip;
+
                 if(filePath == null) {
                     title = flp.getString("unnamed");
                     toolTip = title;
@@ -106,20 +132,16 @@ public class JNotepadPP extends JFrame {
                     title = filePath.getFileName().toString();
                     toolTip = filePath.toString();
                 }
-                tabbedPane.addTab(title, loadIcon("saved"),model.getTextComponent(), toolTip);
-                tabbedPane.setCurrentDocument(model);
-                tabbedPane.setSelectedIndex(tabbedPane.getIndexOfDocument(model));
+
+                tabbedPane.setIconAt(index, savedIcon);
+                tabbedPane.setTitleAt(index, title);
+                tabbedPane.setToolTipTextAt(index,toolTip);
+
             }
 
             @Override
             public void documentRemoved(SingleDocumentModel model) {
-                tabbedPane.removeTabAt(tabbedPane.indexOfComponent(model.getTextComponent()));
-                int newDocIndex = tabbedPane.getNumberOfDocuments() - 1;
-                if(newDocIndex < 0) {
-                    tabbedPane.setCurrentDocument(null);
-                    return;
-                }
-                tabbedPane.setCurrentDocument(tabbedPane.getDocument(newDocIndex));
+
             }
         });
 
@@ -129,42 +151,39 @@ public class JNotepadPP extends JFrame {
 
         JMenu fileMenu = new LJMenu("file", flp);
         List<LocalizableAction> fileActions = new ArrayList<>();
-        fileActions.add(new CreateBlankDocumentAction(tabbedPane, flp));
-        fileActions.add(new SaveDocumentAction(tabbedPane, flp));
-        fileActions.add(new SaveAsDocumentAction(tabbedPane, flp));
-        fileActions.add(new OpenDocumentAction(tabbedPane, flp));
-        fileActions.add(new CloseDocumentAction(tabbedPane, flp));
+        fileActions.add(new CreateBlankDocumentAction(documentsModel, flp));
+        fileActions.add(new SaveDocumentAction(documentsModel, flp));
+        fileActions.add(new SaveAsDocumentAction(documentsModel, flp));
+        fileActions.add(new OpenDocumentAction(documentsModel, flp));
+        fileActions.add(new CloseDocumentAction(documentsModel, flp));
+        fileActions.add(new ExitAction(documentsModel, flp, this));
         for(var action : fileActions) {
             JMenuItem menuItem = new JMenuItem();
             menuItem.setAction(action);
             fileMenu.add(menuItem);
         }
+        JMenu editMenu = new LJMenu("edit", flp);
+        List<TextAction> editActions = new ArrayList<>();
+        editActions.add(new CopyAction("copy",flp));
+        editActions.add(new CutAction("cut",flp));
+        editActions.add(new PasteAction("paste",flp));
 
+        for(var action : editActions) {
+            JMenuItem menuItem = new JMenuItem();
+            menuItem.setAction(action);
+            editMenu.add(menuItem);
+        }
         JMenu infoMenu = new LJMenu("info", flp);
         JMenuItem stats = new JMenuItem();
-        stats.setAction(new ShowStatisticsAction(tabbedPane, flp));
+        stats.setAction(new ShowStatisticsAction(documentsModel, flp));
         infoMenu.add(stats);
 
+
         menuBar.add(fileMenu);
+        menuBar.add(editMenu);
         menuBar.add(infoMenu);
 
         contentPane.add(menuBar, BorderLayout.NORTH);
-    }
-
-    private ImageIcon loadIcon(String iconName) {
-        InputStream is = this.getClass().getResourceAsStream("/icons/" + iconName + ".png");
-        if(is==null) {
-            throw new IllegalArgumentException("Icon not found: " + iconName);
-        }
-        byte[] bytes = new byte[0];
-        try {
-            bytes = is.readAllBytes();
-            is.close();
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Couldn't load icon: " + iconName);
-        }
-
-        return new ImageIcon(bytes);
     }
 
     public static void main(String[] args) {
