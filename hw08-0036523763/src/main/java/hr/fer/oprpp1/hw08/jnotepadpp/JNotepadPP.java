@@ -6,13 +6,14 @@ import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.PasteAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.file.*;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.info.ShowStatisticsAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.language.ChangeLanguageAction;
+import hr.fer.oprpp1.hw08.jnotepadpp.components.Clock;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.FormLocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizationProvider;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.components.LJButton;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.components.LJCountBar;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.components.LJMenu;
+import hr.fer.oprpp1.hw08.jnotepadpp.components.LJButton;
+import hr.fer.oprpp1.hw08.jnotepadpp.components.LJCountBar;
+import hr.fer.oprpp1.hw08.jnotepadpp.components.LJMenu;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.DefaultMultipleDocumentModel;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.SingleDocumentModel;
@@ -189,10 +190,17 @@ public class JNotepadPP extends JFrame {
         toolBar.add(statsToolBarButton);
         innerContainer.add(toolBar, BorderLayout.NORTH);
 
-        JSplitPane statusBar = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        Container statusBar = new Container();
+        statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.LINE_AXIS));
         LJCountBar countBar = new LJCountBar(flp);
-        statusBar.setLeftComponent(countBar);
+        Clock clock = new Clock();
+        Timer timer = new Timer(1000, e -> clock.update());
+        timer.start();
+        statusBar.add(countBar);
+        statusBar.add(Box.createHorizontalGlue());
+        statusBar.add(clock);
         contentPane.add(statusBar, BorderLayout.SOUTH);
+
 
         documentsModel.addMultipleDocumentListener(new MultipleDocumentListener() {
             @Override
@@ -205,6 +213,12 @@ public class JNotepadPP extends JFrame {
                     fileName = sdm.getFilePath().getFileName().toString();
                 }
                 frame.setTitle(fileName + " - JNotepad++");
+                if(currentModel != null) {
+                    currentModel.getTextComponent().addCaretListener(countBar.caretListener);
+                }
+                if(previousModel!= null) {
+                    previousModel.getTextComponent().removeCaretListener(countBar.caretListener);
+                }
                 countBar.updateFromModel(currentModel);
             }
 
