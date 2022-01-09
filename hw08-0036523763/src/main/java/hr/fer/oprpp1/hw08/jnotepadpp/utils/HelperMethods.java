@@ -4,6 +4,7 @@ import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,7 +36,7 @@ public class HelperMethods {
         } catch (IOException e) {
             throw new IllegalArgumentException("Couldn't load icon: " + iconName);
         }
-
-        return new ImageIcon(bytes);
+        Image img = new ImageIcon(bytes).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        return new ImageIcon(img);
     }
 }

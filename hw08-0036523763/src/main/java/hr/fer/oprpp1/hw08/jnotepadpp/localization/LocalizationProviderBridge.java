@@ -4,10 +4,15 @@ public class LocalizationProviderBridge extends AbstractLocalizationProvider {
     boolean connected;
     private String currentLanguage;
     private ILocalizationProvider provider;
+    private ILocalizationListener listener;
 
     public LocalizationProviderBridge(ILocalizationProvider provider) {
         this.provider = provider;
         currentLanguage = "";
+        listener = () -> {
+            currentLanguage = provider.getLanguage();
+            fire();
+        };
     }
 
     public void connect() {
@@ -16,11 +21,12 @@ public class LocalizationProviderBridge extends AbstractLocalizationProvider {
             currentLanguage = provider.getLanguage();
             fire();
         }
-        provider.addLocalizationListener(() -> currentLanguage = provider.getLanguage());
+        provider.addLocalizationListener(listener);
     }
 
     public void disconnect() {
-        provider.removeLocalizationListener(() -> currentLanguage = provider.getLanguage());
+        connected = false;
+        provider.removeLocalizationListener(listener);
     }
 
     @Override

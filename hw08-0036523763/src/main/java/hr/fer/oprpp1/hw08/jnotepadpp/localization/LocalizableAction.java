@@ -6,15 +6,13 @@ import java.io.Serial;
 
 public class LocalizableAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
-    String key;
+    private String key;
     public LocalizableAction(String key, ILocalizationProvider lp) {
         this.key = key;
         String translation = lp.getString(key);
         putValue(NAME, translation);
-        lp.addLocalizationListener(() -> {
-            String translation1 = lp.getString(key);
-            putValue(NAME, translation1);
-        });
+
+        lp.addLocalizationListener(() -> putValue(NAME, lp.getString(key)));
     }
 
     /**
@@ -25,5 +23,9 @@ public class LocalizableAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public String getKey() {
+        return key;
     }
 }

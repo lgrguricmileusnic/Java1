@@ -11,9 +11,7 @@ public class LJMenu extends JMenu {
         String translation = lp.getString(key);
         this.setText(translation);
         lp.addLocalizationListener(() -> {
-            String translation1 = lp.getString(key);
-            this.setText(translation);
-
+            this.setText(lp.getString(this.key));
         });
     }
 }
