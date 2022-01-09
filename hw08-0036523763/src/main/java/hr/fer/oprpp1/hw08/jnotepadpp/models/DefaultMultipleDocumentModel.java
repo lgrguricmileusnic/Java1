@@ -103,16 +103,14 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     public void saveDocument(SingleDocumentModel model, Path newPath) {
         Objects.requireNonNull(model);
         if (newPath == null) newPath = model.getFilePath();
-        if (!findForPath(newPath).equals(model))
-            throw new IllegalArgumentException("File specified by newPath is already open.");
+        SingleDocumentModel other = findForPath(newPath);
+        if (other != null)
+            if (!other.equals(model)) throw new IllegalArgumentException("File specified by newPath is already open.");
 
-        try {
-            Writer bw = new BufferedWriter(
-                    new OutputStreamWriter(
-                            new BufferedOutputStream(
-                                    Files.newOutputStream(newPath)), StandardCharsets.UTF_8));
-            bw.write(model.getTextComponent().getText());
+        try (BufferedWriter fileOut = new BufferedWriter(new FileWriter(newPath.toFile()))) {
+            model.getTextComponent().write(fileOut);
         } catch (IOException ignored) {
+            ignored.printStackTrace();
         }
     }
 
@@ -183,7 +181,10 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
     public SingleDocumentModel findForPath(Path path) {
         Objects.requireNonNull(path);
         for (var doc : documents) {
-            if (doc.getFilePath().equals(path)) return doc;
+            Path otherPath = doc.getFilePath();
+            if(otherPath != null) {
+                if (otherPath.equals(path)) return doc;
+            }
         }
         return null;
     }

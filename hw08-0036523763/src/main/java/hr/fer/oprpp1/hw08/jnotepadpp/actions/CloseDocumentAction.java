@@ -1,18 +1,20 @@
-package hr.fer.oprpp1.hw08.jnotepadpp.commands;
+package hr.fer.oprpp1.hw08.jnotepadpp.actions;
 
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
-import hr.fer.oprpp1.hw08.jnotepadpp.models.SingleDocumentModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class CloseDocumentAction extends AbstractAction {
+public class CloseDocumentAction extends LocalizableAction {
     private MultipleDocumentModel model;
 
     /**
      * Creates an {@code Action}.
      */
-    public CloseDocumentAction(MultipleDocumentModel model) {
+    public CloseDocumentAction(MultipleDocumentModel model, ILocalizationProvider lp) {
+        super("close", lp);
         this.model = model;
     }
 

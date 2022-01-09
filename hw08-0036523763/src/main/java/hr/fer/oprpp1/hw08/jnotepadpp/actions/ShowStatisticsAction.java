@@ -1,21 +1,23 @@
-package hr.fer.oprpp1.hw08.jnotepadpp.commands;
+package hr.fer.oprpp1.hw08.jnotepadpp.actions;
 
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
-import hr.fer.oprpp1.hw08.jnotepadpp.models.SingleDocumentModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.nio.charset.Charset;
 
-public class ShowStatisticsAction extends AbstractAction {
+public class ShowStatisticsAction extends LocalizableAction {
     private MultipleDocumentModel model;
+    private ILocalizationProvider localizationProvider;
 
     /**
      * Creates an {@code Action}.
      */
-    public ShowStatisticsAction(MultipleDocumentModel model) {
+    public ShowStatisticsAction(MultipleDocumentModel model, ILocalizationProvider lp) {
+        super("stats", lp);
         this.model = model;
+        localizationProvider = lp;
     }
 
     /**
@@ -29,7 +31,7 @@ public class ShowStatisticsAction extends AbstractAction {
         int lineCount = textArea.getLineCount();
         int charCount = textArea.getText().length();
         long nonBlankCount = textArea.getText().chars().filter((c) -> !Character.isWhitespace(c)).count();
-        String stats = String.format("Your document has %d characters, %d non-blank characters and %d lines.", charCount, nonBlankCount, lineCount);
+        String stats = String.format(localizationProvider.getString("stats_string"), charCount, nonBlankCount, lineCount);
         JOptionPane.showMessageDialog(model.getVisualComponent(),stats,"Statistics",JOptionPane.PLAIN_MESSAGE);
     }
 }

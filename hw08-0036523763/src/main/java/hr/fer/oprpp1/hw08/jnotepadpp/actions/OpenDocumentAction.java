@@ -1,18 +1,21 @@
-package hr.fer.oprpp1.hw08.jnotepadpp.commands;
+package hr.fer.oprpp1.hw08.jnotepadpp.actions;
 
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 
-public class OpenDocumentAction extends AbstractAction {
+public class OpenDocumentAction extends LocalizableAction {
     private MultipleDocumentModel model;
 
     /**
      * Creates an {@code Action}.
      */
-    public OpenDocumentAction(MultipleDocumentModel model) {
+    public OpenDocumentAction(MultipleDocumentModel model, ILocalizationProvider lp) {
+        super("open", lp);
         this.model = model;
     }
 

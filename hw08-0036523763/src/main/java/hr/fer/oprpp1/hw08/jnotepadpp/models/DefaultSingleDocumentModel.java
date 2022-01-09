@@ -87,6 +87,7 @@ public class DefaultSingleDocumentModel implements SingleDocumentModel{
     @Override
     public void setFilePath(Path path) {
         filePath = path;
+        notifyListeners(l -> l.documentFilePathUpdated(this));
     }
 
     /**
