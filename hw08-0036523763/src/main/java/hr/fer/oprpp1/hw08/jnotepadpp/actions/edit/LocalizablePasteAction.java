@@ -2,19 +2,22 @@ package hr.fer.oprpp1.hw08.jnotepadpp.actions.edit;
 
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
 
+import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 
-public class PasteAction extends DefaultEditorKit.PasteAction {
+public class LocalizablePasteAction extends DefaultEditorKit.PasteAction {
     private static final long serialVersionUID = 1L;
     private String key;
-    public PasteAction(ILocalizationProvider lp) {
+    public LocalizablePasteAction(String key, ILocalizationProvider lp) {
         super();
-        this.key = "paste";
+        this.key = key;
         String translation = lp.getString(key);
         putValue(NAME, translation);
         lp.addLocalizationListener(() -> {
             putValue(NAME, lp.getString(key));
         });
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control P"));
+
     }
 
     public String getKey() {

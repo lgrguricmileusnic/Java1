@@ -1,12 +1,14 @@
 package hr.fer.oprpp1.hw08.jnotepadpp;
 
-import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.CopyAction;
-import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.CutAction;
-import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.PasteAction;
+
+import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.LocalizableCopyAction;
+import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.LocalizableCutAction;
+import hr.fer.oprpp1.hw08.jnotepadpp.actions.edit.LocalizablePasteAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.file.*;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.info.ShowStatisticsAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.language.ChangeLanguageAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.tools.ReplaceSelectionAction;
+import hr.fer.oprpp1.hw08.jnotepadpp.actions.tools.SortSelectionAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.components.Clock;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.FormLocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
@@ -23,17 +25,17 @@ import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.SingleDocumentListener;
 import hr.fer.oprpp1.hw08.jnotepadpp.utils.HelperMethods;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 import javax.swing.text.TextAction;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static hr.fer.oprpp1.hw08.jnotepadpp.utils.HelperMethods.*;
 
@@ -49,12 +51,6 @@ public class JNotepadPP extends JFrame {
         flp = new FormLocalizationProvider(LocalizationProvider.getInstance(), this);
         documentsModel = new DefaultMultipleDocumentModel();
         this.addWindowListener(new WindowAdapter() {
-            /**
-             * Invoked when a window is in the process of being closed.
-             * The close operation can be overridden at this point.
-             *
-             * @param e
-             */
             @Override
             public void windowClosing(WindowEvent e) {
                 if (HelperMethods.checkModifiedDocuments(documentsModel, flp)) {
@@ -62,7 +58,6 @@ public class JNotepadPP extends JFrame {
                 }
             }
         });
-
         setLocation(20, 20);
         setSize(1300, 900);
         loadIcons();
@@ -104,12 +99,12 @@ public class JNotepadPP extends JFrame {
 
         JMenu fileMenu = new LJMenu("file", flp);
         List<LocalizableAction> fileActions = new ArrayList<>();
-        fileActions.add(new CreateBlankDocumentAction(documentsModel, flp));
-        fileActions.add(new OpenDocumentAction(documentsModel, flp));
-        fileActions.add(new SaveDocumentAction(documentsModel, flp));
-        fileActions.add(new SaveAsDocumentAction(documentsModel, flp));
-        fileActions.add(new CloseDocumentAction(documentsModel, flp));
-        fileActions.add(new ExitAction(documentsModel, flp, this));
+        fileActions.add(new CreateBlankDocumentAction("new", documentsModel, flp));
+        fileActions.add(new OpenDocumentAction("open", documentsModel, flp));
+        fileActions.add(new SaveDocumentAction("save", documentsModel, flp));
+        fileActions.add(new SaveAsDocumentAction("save_as", documentsModel, flp));
+        fileActions.add(new CloseDocumentAction("close", documentsModel, flp));
+        fileActions.add(new ExitAction("exit", documentsModel, flp, this));
 
         for (var action : fileActions) {
             JMenuItem menuItem = new JMenuItem();
@@ -119,9 +114,9 @@ public class JNotepadPP extends JFrame {
 
         JMenu editMenu = new LJMenu("edit", flp);
         List<TextAction> editActions = new ArrayList<>();
-        editActions.add(new CopyAction(flp));
-        editActions.add(new CutAction(flp));
-        editActions.add(new PasteAction(flp));
+        editActions.add(new LocalizableCopyAction("copy", flp));
+        editActions.add(new LocalizableCutAction("cut", flp));
+        editActions.add(new LocalizablePasteAction("paste",flp));
 
         for (var action : editActions) {
             JMenuItem menuItem = new JMenuItem();
@@ -137,7 +132,7 @@ public class JNotepadPP extends JFrame {
         replaceSelectionActions.add(new ReplaceSelectionAction("lower", flp, documentsModel, String::toLowerCase));
         replaceSelectionActions.add(new ReplaceSelectionAction("invert", flp, documentsModel, s -> {
             StringBuilder sb = new StringBuilder();
-            for(char c : s.toCharArray()) {
+            for (char c : s.toCharArray()) {
                 sb.append(Character.isUpperCase(c) ? Character.toLowerCase(c) : Character.toUpperCase(c));
             }
             return sb.toString();
@@ -149,17 +144,35 @@ public class JNotepadPP extends JFrame {
             changeCaseSubMenu.add(menuItem);
         }
 
+        JMenu sortSubMenu = new LJMenu("sort", flp);
+        SortSelectionAction[] sortActions = new SortSelectionAction[]{
+                new SortSelectionAction("ascending", flp, documentsModel, false),
+                new SortSelectionAction("descending", flp, documentsModel, true)
+        };
+        for (var action : sortActions) {
+            JMenuItem menuItem = new JMenuItem();
+            menuItem.setAction(action);
+            sortSubMenu.add(menuItem);
+        }
+        toolsMenu.add(sortSubMenu);
+        ReplaceSelectionAction uniqueAction = new ReplaceSelectionAction("unique", flp, documentsModel, text -> {
+            Set<String> lines = new LinkedHashSet<>(Arrays.asList(text.split("\\n")));
+            return String.join("\n", lines) + "\n";
+        });
+        toolsMenu.add(new JMenuItem(uniqueAction));
+
         JMenu infoMenu = new LJMenu("info", flp);
         JMenuItem stats = new JMenuItem();
-        stats.setAction(new ShowStatisticsAction(documentsModel, flp));
+        stats.setAction(new ShowStatisticsAction("stats", documentsModel, flp));
         infoMenu.add(stats);
 
         List<ChangeLanguageAction> languageActions = new ArrayList<>(3);
         languageActions.add(new ChangeLanguageAction("en", flp));
         languageActions.add(new ChangeLanguageAction("hr", flp));
         languageActions.add(new ChangeLanguageAction("de", flp));
+        languageActions.add(new ChangeLanguageAction("ru", flp));
         JMenu languageMenu = new LJMenu("language", flp);
-        for(var action : languageActions) {
+        for (var action : languageActions) {
             JMenuItem menuItem = new JMenuItem();
             menuItem.setAction(action);
             languageMenu.add(menuItem);
@@ -174,43 +187,8 @@ public class JNotepadPP extends JFrame {
         contentPane.add(menuBar, BorderLayout.NORTH);
 
         //build toolbar
-        JToolBar toolBar = new JToolBar("");
 
-        JButton copyToolBarButton = new LJButton("copy", flp);
-        copyToolBarButton.setAction(editActions.get(0));
-        copyToolBarButton.setIcon(icons.get("copy"));
-
-
-        JButton cutToolBarButton = new LJButton("cut", flp);
-        cutToolBarButton.setAction(editActions.get(1));
-        cutToolBarButton.setIcon(icons.get("cut"));
-
-
-        JButton pasteToolBarButton = new LJButton("paste", flp);
-        pasteToolBarButton.setAction(editActions.get(2));
-        pasteToolBarButton.setIcon(icons.get("paste"));
-
-
-        JButton statsToolBarButton = new LJButton("stats", flp);
-        statsToolBarButton.setAction(stats.getAction());
-        statsToolBarButton.setIcon(icons.get("stats"));
-
-
-        toolBar.add(copyToolBarButton);
-        toolBar.add(cutToolBarButton);
-        toolBar.add(pasteToolBarButton);
-
-        toolBar.addSeparator();
-        for (var action : fileActions) {
-            JButton toolBarButton = new LJButton(action.getKey(), flp);
-            toolBarButton.setAction(action);
-            toolBarButton.setIcon(icons.get(action.getKey()));
-            toolBar.add(toolBarButton);
-        }
-
-        toolBar.addSeparator();
-        toolBar.add(statsToolBarButton);
-        innerContainer.add(toolBar, BorderLayout.NORTH);
+        innerContainer.add(buildToolbar(), BorderLayout.NORTH);
 
         Container statusBar = new Container();
         statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.LINE_AXIS));
@@ -229,23 +207,28 @@ public class JNotepadPP extends JFrame {
                 String fileName;
                 if (currentModel == null) {
                     fileName = "";
-                }else if(currentModel.getFilePath() == null) {
+                } else if (currentModel.getFilePath() == null) {
                     fileName = flp.getString("unnamed");
                 } else {
                     fileName = currentModel.getFilePath().getFileName().toString();
                 }
                 frame.setTitle(fileName + " - JNotepad++");
 
-                if(currentModel != null) {
-                    currentModel.getTextComponent().addCaretListener(countBar.caretListener);
-                    for(var action : replaceSelectionActions) {
-                        currentModel.getTextComponent().addCaretListener(action.listener);
+                if (currentModel != null) {
+                    JTextComponent currentTextComponent = currentModel.getTextComponent();
+                    currentTextComponent.addCaretListener(countBar.caretListener);
+                    for (var action : replaceSelectionActions) {
+                        currentTextComponent.addCaretListener(action.enableBySelectionListener);
                     }
+                    for (var action : sortActions) {
+                        currentTextComponent.addCaretListener(action.enableBySelectionListener);
+                    }
+                    currentTextComponent.addCaretListener(uniqueAction.enableBySelectionListener);
                 }
-                if(previousModel != null) {
+                if (previousModel != null) {
                     previousModel.getTextComponent().removeCaretListener(countBar.caretListener);
-                    for(var action : replaceSelectionActions) {
-                        previousModel.getTextComponent().removeCaretListener(action.listener);
+                    for (var action : replaceSelectionActions) {
+                        previousModel.getTextComponent().removeCaretListener(action.enableBySelectionListener);
                     }
                 }
                 countBar.updateFromModel(currentModel);
@@ -265,6 +248,7 @@ public class JNotepadPP extends JFrame {
 
                         countBar.updateFromModel(model);
                     }
+
                     @Override
                     public void documentFilePathUpdated(SingleDocumentModel model) {
                         int index = documentsModel.getIndexOfDocument(model);
@@ -279,10 +263,12 @@ public class JNotepadPP extends JFrame {
                     public void insertUpdate(DocumentEvent e) {
                         model.setModified(true);
                     }
+
                     @Override
                     public void removeUpdate(DocumentEvent e) {
                         model.setModified(true);
                     }
+
                     @Override
                     public void changedUpdate(DocumentEvent e) {
                         model.setModified(true);
@@ -306,27 +292,53 @@ public class JNotepadPP extends JFrame {
             }
 
             @Override
-            public void documentRemoved(SingleDocumentModel model) {}
+            public void documentRemoved(SingleDocumentModel model) {
+            }
         });
+    }
 
-        InputMap inputMap = tabbedPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = tabbedPane.getActionMap();
+    private JToolBar buildToolbar() {
+        JToolBar toolBar = new JToolBar("");
 
-        inputMap.put(KeyStroke.getKeyStroke("control N"), fileActions.get(0).getKey()); //new
-        actionMap.put(fileActions.get(0).getKey(), fileActions.get(0));
-        inputMap.put(KeyStroke.getKeyStroke("control O"), fileActions.get(1).getKey()); //open
-        actionMap.put(fileActions.get(1).getKey(), fileActions.get(1));
-        inputMap.put(KeyStroke.getKeyStroke("control S"), fileActions.get(2).getKey()); //save
-        actionMap.put(fileActions.get(2).getKey(), fileActions.get(2));
-        inputMap.put(KeyStroke.getKeyStroke("control shift S"), fileActions.get(3).getKey()); //save as
-        actionMap.put(fileActions.get(3).getKey(), fileActions.get(3));
-        inputMap.put(KeyStroke.getKeyStroke("control W"), fileActions.get(4).getKey()); //close tab
-        actionMap.put(fileActions.get(4).getKey(), fileActions.get(4));
-        inputMap.put(KeyStroke.getKeyStroke("control Q"), fileActions.get(5).getKey()); //exit
-        actionMap.put(fileActions.get(5).getKey(), fileActions.get(5));
+        JButton copyToolBarButton = new LJButton("copy", flp);
+        copyToolBarButton.setAction(new LocalizableCopyAction("none", flp));
+        copyToolBarButton.setIcon(icons.get("copy"));
 
-        inputMap.put(KeyStroke.getKeyStroke("control T"), "stats");
-        actionMap.put("stats", stats.getAction());
+        JButton cutToolBarButton = new LJButton("cut", flp);
+        cutToolBarButton.setAction(new LocalizableCutAction("none", flp));
+        cutToolBarButton.setIcon(icons.get("cut"));
+
+        JButton pasteToolBarButton = new LJButton("paste", flp);
+        pasteToolBarButton.setAction(new LocalizablePasteAction("none", flp));
+        pasteToolBarButton.setIcon(icons.get("paste"));
+
+        JButton statsToolBarButton = new LJButton("stats", flp);
+        statsToolBarButton.setAction(new ShowStatisticsAction("none", documentsModel, flp));
+        statsToolBarButton.setIcon(icons.get("stats"));
+
+        toolBar.add(copyToolBarButton);
+        toolBar.add(cutToolBarButton);
+        toolBar.add(pasteToolBarButton);
+
+        toolBar.addSeparator();
+
+        List<LocalizableAction> fileActions = new ArrayList<>();
+        fileActions.add(new CreateBlankDocumentAction("new", documentsModel, flp));
+        fileActions.add(new OpenDocumentAction("open", documentsModel, flp));
+        fileActions.add(new SaveDocumentAction("save", documentsModel, flp));
+        fileActions.add(new SaveAsDocumentAction("save_as", documentsModel, flp));
+        fileActions.add(new CloseDocumentAction("close", documentsModel, flp));
+        fileActions.add(new ExitAction("exit", documentsModel, flp, this));
+        for (LocalizableAction action : fileActions) {
+            JButton toolBarButton = new LJButton(action.getKey(), flp);
+            action.putValue(Action.SMALL_ICON, icons.get(action.getKey()));
+            toolBarButton.setAction(action);
+            toolBar.add(toolBarButton);
+        }
+
+        toolBar.addSeparator();
+        toolBar.add(statsToolBarButton);
+        return toolBar;
     }
 
     public static void main(String[] args) {

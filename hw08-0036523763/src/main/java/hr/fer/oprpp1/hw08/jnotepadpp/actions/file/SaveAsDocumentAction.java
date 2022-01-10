@@ -17,10 +17,11 @@ public class SaveAsDocumentAction extends LocalizableAction {
     /**
      * Creates an {@code Action}.
      */
-    public SaveAsDocumentAction(MultipleDocumentModel model, ILocalizationProvider lp) {
-        super("save_as", lp);
-        this.model = model;
+    public SaveAsDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
+        super(key, lp);
         this.lp = lp;
+        this.model = model;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control shift S"));
     }
 
     /**

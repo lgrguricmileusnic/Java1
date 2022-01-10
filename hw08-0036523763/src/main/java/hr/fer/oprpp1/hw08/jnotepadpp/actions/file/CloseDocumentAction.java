@@ -14,10 +14,11 @@ public class CloseDocumentAction extends LocalizableAction {
     /**
      * Creates an {@code Action}.
      */
-    public CloseDocumentAction(MultipleDocumentModel model, ILocalizationProvider lp) {
-        super("close", lp);
+    public CloseDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
+        super(key, lp);
         this.lp = lp;
         this.model = model;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control W"));
     }
 
     /**

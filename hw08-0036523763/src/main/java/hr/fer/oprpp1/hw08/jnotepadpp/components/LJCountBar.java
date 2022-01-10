@@ -45,11 +45,10 @@ public class LJCountBar extends JComponent {
         right = new JLabel();
         updateLabels();
         left.setBorder(BorderFactory.createSoftBevelBorder(1));
-        left.setPreferredSize(new Dimension(50, 10));
+        left.setMinimumSize(new Dimension(200, 20));
         right.setBorder(BorderFactory.createSoftBevelBorder(1));
         add(left);
         add(right);
-
     }
 
     private void updateLabels() {

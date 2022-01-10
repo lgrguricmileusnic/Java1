@@ -16,11 +16,12 @@ public class ExitAction extends LocalizableAction {
     private MultipleDocumentModel model;
     private ILocalizationProvider lp;
 
-    public ExitAction(MultipleDocumentModel model, ILocalizationProvider lp, JFrame frame) {
-        super("exit", lp);
+    public ExitAction(String key, MultipleDocumentModel model, ILocalizationProvider lp, JFrame frame) {
+        super(key, lp);
         this.frame = frame;
         this.model = model;
         this.lp = lp;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control Q"));
     }
 
     /**

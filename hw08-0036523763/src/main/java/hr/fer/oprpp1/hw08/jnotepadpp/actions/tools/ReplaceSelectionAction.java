@@ -4,7 +4,6 @@ import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
 
-import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
@@ -12,9 +11,9 @@ import java.util.function.Function;
 
 public class ReplaceSelectionAction extends LocalizableAction {
     private MultipleDocumentModel model;
-    private Function<String,String> caseChanger;
+    private Function<String,String> replacer;
 
-    public CaretListener listener = e -> {
+    public CaretListener enableBySelectionListener = e -> {
         JTextComponent textComponent = (JTextComponent) e.getSource();
         if(textComponent.getSelectedText() == null) {
             this.setEnabled(false);
@@ -23,10 +22,10 @@ public class ReplaceSelectionAction extends LocalizableAction {
         this.setEnabled(true);
     };
 
-    public ReplaceSelectionAction(String key, ILocalizationProvider lp, MultipleDocumentModel model, Function<String,String> caseChanger) {
+    public ReplaceSelectionAction(String key, ILocalizationProvider lp, MultipleDocumentModel model, Function<String,String> replacer) {
         super(key, lp);
         this.model = model;
-        this.caseChanger = caseChanger;
+        this.replacer = replacer;
         setEnabled(false);
     }
 
@@ -39,6 +38,6 @@ public class ReplaceSelectionAction extends LocalizableAction {
     public void actionPerformed(ActionEvent e) {
         JTextComponent textComponent = model.getCurrentDocument().getTextComponent();
         String selection = textComponent.getSelectedText();
-        textComponent.replaceSelection(caseChanger.apply(selection));
+        textComponent.replaceSelection(replacer.apply(selection));
     }
 }

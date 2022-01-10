@@ -16,10 +16,11 @@ public class OpenDocumentAction extends LocalizableAction {
     /**
      * Creates an {@code Action}.
      */
-    public OpenDocumentAction(MultipleDocumentModel model, ILocalizationProvider lp) {
-        super("open", lp);
-        this.model = model;
+    public OpenDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
+        super(key, lp);
         this.lp = lp;
+        this.model = model;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control O"));
     }
 
     /**

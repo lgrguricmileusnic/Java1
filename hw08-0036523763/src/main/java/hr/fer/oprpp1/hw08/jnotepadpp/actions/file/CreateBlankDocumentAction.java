@@ -13,9 +13,10 @@ public class CreateBlankDocumentAction extends LocalizableAction {
     /**
      * Creates an {@code Action}.
      */
-    public CreateBlankDocumentAction(MultipleDocumentModel model, ILocalizationProvider lp) {
-        super("new", lp);
+    public CreateBlankDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
+        super(key, lp);
         this.model = model;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control N"));
     }
 
     /**

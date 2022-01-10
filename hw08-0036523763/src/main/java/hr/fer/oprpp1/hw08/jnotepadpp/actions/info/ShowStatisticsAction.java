@@ -14,10 +14,11 @@ public class ShowStatisticsAction extends LocalizableAction {
     /**
      * Creates an {@code Action}.
      */
-    public ShowStatisticsAction(MultipleDocumentModel model, ILocalizationProvider lp) {
-        super("stats", lp);
+    public ShowStatisticsAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
+        super(key, lp);
         this.model = model;
         localizationProvider = lp;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control T"));
     }
 
     /**

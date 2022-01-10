@@ -2,20 +2,22 @@ package hr.fer.oprpp1.hw08.jnotepadpp.actions.edit;
 
 import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
 
+import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
-import java.awt.event.ActionEvent;
 
-public class CopyAction extends DefaultEditorKit.CopyAction {
+public class LocalizableCutAction extends DefaultEditorKit.CutAction {
     private static final long serialVersionUID = 1L;
     private String key;
-    public CopyAction(ILocalizationProvider lp) {
+    public LocalizableCutAction(String key, ILocalizationProvider lp) {
         super();
-        this.key = "copy";
+        this.key = key;
         String translation = lp.getString(key);
         putValue(NAME, translation);
         lp.addLocalizationListener(() -> {
             putValue(NAME, lp.getString(key));
         });
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control X"));
+
     }
 
     public String getKey() {
