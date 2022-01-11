@@ -10,10 +10,7 @@ import hr.fer.oprpp1.hw08.jnotepadpp.actions.language.ChangeLanguageAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.tools.ReplaceSelectionAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.actions.tools.SortSelectionAction;
 import hr.fer.oprpp1.hw08.jnotepadpp.components.Clock;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.FormLocalizationProvider;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.ILocalizationProvider;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizableAction;
-import hr.fer.oprpp1.hw08.jnotepadpp.localization.LocalizationProvider;
+import hr.fer.oprpp1.hw08.jnotepadpp.localization.*;
 import hr.fer.oprpp1.hw08.jnotepadpp.components.LJButton;
 import hr.fer.oprpp1.hw08.jnotepadpp.components.LJCountBar;
 import hr.fer.oprpp1.hw08.jnotepadpp.components.LJMenu;
@@ -293,6 +290,18 @@ public class JNotepadPP extends JFrame {
 
             @Override
             public void documentRemoved(SingleDocumentModel model) {
+            }
+        });
+        flp.addLocalizationListener(new ILocalizationListener() {
+            @Override
+            public void localizationChanged() {
+                for(SingleDocumentModel doc : documentsModel) {
+                    if (doc.getFilePath() == null) {
+                        int index = documentsModel.getIndexOfDocument(doc);
+                        tabbedPane.setTitleAt(index, flp.getString("unnamed"));
+                        tabbedPane.setToolTipTextAt(index, flp.getString("unnamed"));
+                    }
+                }
             }
         });
     }

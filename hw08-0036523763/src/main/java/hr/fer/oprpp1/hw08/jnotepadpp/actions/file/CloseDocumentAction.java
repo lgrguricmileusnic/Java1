@@ -18,7 +18,7 @@ public class CloseDocumentAction extends LocalizableAction {
         super(key, lp);
         this.lp = lp;
         this.model = model;
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control W"));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control E"));
     }
 
     /**
