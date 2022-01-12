@@ -10,12 +10,24 @@ import java.awt.event.ActionEvent;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Action saves current document to new location, warns user if an existing location was selected.
+ */
 public class SaveAsDocumentAction extends LocalizableAction {
+    /**
+     * multiple document model reference
+     */
     private MultipleDocumentModel model;
+    /**
+     * localization provider allowing for initial and dynamic localization
+     */
     private ILocalizationProvider lp;
 
     /**
-     * Creates an {@code Action}.
+     * Creates {@code SaveAsDocumentAction} for passed model and localization key and provider.
+     * @param key localization key
+     * @param lp localization provider
+     * @param model multiple document model
      */
     public SaveAsDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
         super(key, lp);
@@ -26,6 +38,8 @@ public class SaveAsDocumentAction extends LocalizableAction {
 
     /**
      * Invoked when an action occurs.
+     * When invoked opens {@link JFileChooser}, and tries to save document content to chosen path,
+     * if file already exists, warns user and creates {@link JOptionPane} asking whether to continue.
      *
      * @param e the event to be processed
      */
@@ -35,8 +49,8 @@ public class SaveAsDocumentAction extends LocalizableAction {
         SingleDocumentModel doc = model.getCurrentDocument();
         if (fc.showSaveDialog(model.getVisualComponent()) == JFileChooser.APPROVE_OPTION) {
             Path path = fc.getSelectedFile().toPath();
-            if(Files.isRegularFile(path)) {
-                Object[] options = new Object[] {lp.getString("yes"), lp.getString("no")};
+            if (Files.isRegularFile(path)) {
+                Object[] options = new Object[]{lp.getString("yes"), lp.getString("no")};
                 int selected = JOptionPane.showOptionDialog(model.getVisualComponent(),
                         lp.getString("exists_message"),
                         lp.getString("warning"),
@@ -50,11 +64,11 @@ public class SaveAsDocumentAction extends LocalizableAction {
                 SingleDocumentModel other = model.findForPath(path);
                 if (other != null)
                     if (!other.equals(doc)) {
-                        JOptionPane.showMessageDialog(model.getVisualComponent(),lp.getString("already_open_message"),"Warning", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(model.getVisualComponent(), lp.getString("already_open_message"), "Warning", JOptionPane.WARNING_MESSAGE);
                         return;
                     }
             }
-            model.saveDocument(doc,path);
+            model.saveDocument(doc, path);
             doc.setFilePath(path);
             doc.setModified(false);
         }

@@ -4,6 +4,7 @@ import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.MultipleDocumentListener;
 import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.MultipleDocumentListenerNotifier;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,9 +13,21 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Default implementation of {@link MultipleDocumentModel}
+ */
 public class DefaultMultipleDocumentModel extends JTabbedPane implements MultipleDocumentModel {
+    /**
+     * underlying list of documents
+     */
     List<SingleDocumentModel> documents;
+    /**
+     * current document reference
+     */
     SingleDocumentModel currentDocument;
+    /**
+     * underlying listener set
+     */
     Set<MultipleDocumentListener> listeners;
 
     /**
@@ -233,19 +246,32 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
         return documents.iterator();
     }
 
+    /**
+     * Notifies subscribed listeners with passed notifier.
+     * @param notifier listener notifier
+     */
     private void notifyListeners(MultipleDocumentListenerNotifier notifier) {
         for(var listener : listeners) {
             notifier.notify(listener);
         }
     }
 
+    /**
+     * Sets current document and notifies listeners.
+     * @param document new current document
+     */
     private void setCurrentDocument(SingleDocumentModel document) {
         SingleDocumentModel prev = this.currentDocument;
         this.currentDocument = document;
         notifyListeners((l -> l.currentDocumentChanged(prev, this.currentDocument)));
     }
 
-    private JComponent wrapTextComponent(JTextArea comp) {
+    /**
+     * Wraps passed {@link JTextComponent} into {@link JScrollPane}.
+     * @param comp component to be wrapped
+     * @return wrapped component
+     */
+    private JComponent wrapTextComponent(JTextComponent comp) {
         return new JScrollPane(comp);
     }
 }

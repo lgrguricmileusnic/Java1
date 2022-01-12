@@ -16,11 +16,27 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Function;
 
+/**
+ * Action for sorting selected text in {@link JTextComponent}.
+ */
 public class SortSelectionAction extends LocalizableAction {
+    /**
+     * multiple document model
+     */
     private MultipleDocumentModel model;
+    /**
+     * localization provider
+     */
     private ILocalizationProvider lp;
+    /**
+     * sort order flag
+     */
     boolean reverse;
 
+    /**
+     * Default {@link CaretListener} implementation which checks text component for
+     * selection. If there is no selection, disables this {@link javax.swing.Action}
+     */
     public CaretListener enableBySelectionListener = e -> {
         JTextComponent textComponent = (JTextComponent) e.getSource();
         if(textComponent.getSelectedText() == null) {
@@ -30,6 +46,14 @@ public class SortSelectionAction extends LocalizableAction {
         this.setEnabled(true);
     };
 
+    /**
+     * Creates {@code SortSelectionAction} with passed localization provider and key,
+     * multiple document model and sort order.
+     * @param key localization key
+     * @param lp localization provider
+     * @param model multiple document model
+     * @param reverse sort order flag
+     */
     public SortSelectionAction(String key, ILocalizationProvider lp, MultipleDocumentModel model, boolean reverse) {
         super(key, lp);
         this.model = model;
@@ -40,7 +64,8 @@ public class SortSelectionAction extends LocalizableAction {
 
     /**
      * Invoked when an action occurs.
-     *
+     * When invoked, sorts selected lines from current document's {@link JTextComponent}
+     * in order definded by {@code reverse}.
      * @param e the event to be processed
      */
     @Override

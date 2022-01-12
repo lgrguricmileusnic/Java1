@@ -7,12 +7,25 @@ import hr.fer.oprpp1.hw08.jnotepadpp.models.MultipleDocumentModel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Action shows current file statistics: line count, character count and non-blank character count.
+ */
 public class ShowStatisticsAction extends LocalizableAction {
+    /**
+     * multiple document model reference
+     */
     private MultipleDocumentModel model;
+    /**
+     * localization provider reference for initial and dynamic localization
+     */
     private ILocalizationProvider localizationProvider;
 
     /**
-     * Creates an {@code Action}.
+     * Creates an {@code ShowStatisticsAction} with passed model and localization key and provider.
+     * Sets {@code ACCELERATOR_KEY} to {@code control T}
+     * @param key localization key
+     * @param lp localization provider
+     * @param model multiple document model
      */
     public ShowStatisticsAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
         super(key, lp);
@@ -23,7 +36,8 @@ public class ShowStatisticsAction extends LocalizableAction {
 
     /**
      * Invoked when an action occurs.
-     *
+     * When invoked shows current file statistics in a message dialog:
+     * line count, character count and non-blank character count.
      * @param e the event to be processed
      */
     @Override

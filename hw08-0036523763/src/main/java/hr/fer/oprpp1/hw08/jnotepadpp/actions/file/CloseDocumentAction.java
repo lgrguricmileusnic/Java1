@@ -8,11 +8,24 @@ import hr.fer.oprpp1.hw08.jnotepadpp.models.SingleDocumentModel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Action which closes current document in passed {@link MultipleDocumentModel}.
+ * Extends {@link LocalizableAction} so dynamic localization is supported.
+ */
 public class CloseDocumentAction extends LocalizableAction {
+    /**
+     * {@link MultipleDocumentModel} reference
+     */
     private MultipleDocumentModel model;
+    /**
+     * {@link ILocalizationProvider} reference for initial and dynamic localization
+     */
     private ILocalizationProvider lp;
     /**
-     * Creates an {@code Action}.
+     * Creates an {@code CloseDocumentAction} and sets up ACCELERATOR_KEY to be control E.
+     * @param key localization key
+     * @param lp localization provider
+     * @param model multiple document model
      */
     public CloseDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
         super(key, lp);
@@ -22,7 +35,9 @@ public class CloseDocumentAction extends LocalizableAction {
     }
 
     /**
-     * Invoked when an action occurs.
+     * When invoked, closes current document.
+     * If document was modified displays a {@link JOptionPane} option dialog to double-check if the user wishes to close
+     * without saving.
      *
      * @param e the event to be processed
      */

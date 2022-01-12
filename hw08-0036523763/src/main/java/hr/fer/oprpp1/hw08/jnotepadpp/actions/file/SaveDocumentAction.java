@@ -11,11 +11,18 @@ import java.awt.event.ActionEvent;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Action saves current document, if document has no path, opens {@link JFileChooser} and saves to chosen location.
+ */
 public class SaveDocumentAction extends LocalizableAction {
     private MultipleDocumentModel model;
     private ILocalizationProvider lp;
+
     /**
-     * Creates an {@code Action}.
+     * Creates {@code SaveDocumentAction} for passed model and localization key and provider.
+     * @param key localization key
+     * @param lp localization provider
+     * @param model multiple document model
      */
     public SaveDocumentAction(String key, MultipleDocumentModel model, ILocalizationProvider lp) {
         super(key, lp);
@@ -26,7 +33,8 @@ public class SaveDocumentAction extends LocalizableAction {
 
     /**
      * Invoked when an action occurs.
-     *
+     * When invoked, saves current document,
+     * if document has no path opens {@link JFileChooser} and saves to new location.
      * @param e the event to be processed
      */
     @Override

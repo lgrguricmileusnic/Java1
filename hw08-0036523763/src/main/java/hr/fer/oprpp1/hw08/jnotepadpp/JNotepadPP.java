@@ -22,7 +22,6 @@ import hr.fer.oprpp1.hw08.jnotepadpp.models.listeners.SingleDocumentListener;
 import hr.fer.oprpp1.hw08.jnotepadpp.utils.HelperMethods;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
@@ -36,11 +35,33 @@ import java.util.List;
 
 import static hr.fer.oprpp1.hw08.jnotepadpp.utils.HelperMethods.*;
 
+/**
+ * JNotepad++ is a GUI application for editing simple text documents.
+ * Multiple documents can be open in a tabbed view.
+ * Provides the user with tools such as case switching, line sorting and removing duplicate lines.
+ * File statistics are also available, displaying line, character and non-blank character counts.
+ * The application features a floatable toolabar, built-in clock and status bar for tracking line and column indexes,
+ * selection and file length.
+ * Includes 4 localizations: Russian, German, Croatian and English
+ *
+ */
 public class JNotepadPP extends JFrame {
+    /**
+     * localization provider
+     */
     ILocalizationProvider flp;
+    /**
+     * multiple documents model
+     */
     MultipleDocumentModel documentsModel;
+    /**
+     * cached icons map
+     */
     Map<String, ImageIcon> icons;
 
+    /**
+     * Constructor
+     */
     public JNotepadPP() {
         super();
         setTitle("JNotepad++");
@@ -61,6 +82,9 @@ public class JNotepadPP extends JFrame {
         initGUI();
     }
 
+    /**
+     * Caches icons from resources.
+     */
     private void loadIcons() {
         icons = new HashMap<>(12);
         icons.put("close", loadIcon("close", this));
@@ -191,8 +215,6 @@ public class JNotepadPP extends JFrame {
         statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.LINE_AXIS));
         LJCountBar countBar = new LJCountBar(flp);
         Clock clock = new Clock();
-        Timer timer = new Timer(1000, e -> clock.update());
-        timer.start();
         statusBar.add(countBar);
         statusBar.add(Box.createHorizontalGlue());
         statusBar.add(clock);
@@ -213,7 +235,7 @@ public class JNotepadPP extends JFrame {
 
                 if (currentModel != null) {
                     JTextComponent currentTextComponent = currentModel.getTextComponent();
-                    currentTextComponent.addCaretListener(countBar.caretListener);
+                    currentTextComponent.addCaretListener(countBar.lineColumnSelectionListener);
                     for (var action : replaceSelectionActions) {
                         currentTextComponent.addCaretListener(action.enableBySelectionListener);
                     }
@@ -223,7 +245,7 @@ public class JNotepadPP extends JFrame {
                     currentTextComponent.addCaretListener(uniqueAction.enableBySelectionListener);
                 }
                 if (previousModel != null) {
-                    previousModel.getTextComponent().removeCaretListener(countBar.caretListener);
+                    previousModel.getTextComponent().removeCaretListener(countBar.lineColumnSelectionListener);
                     for (var action : replaceSelectionActions) {
                         previousModel.getTextComponent().removeCaretListener(action.enableBySelectionListener);
                     }
@@ -306,6 +328,10 @@ public class JNotepadPP extends JFrame {
         });
     }
 
+    /**
+     * Creates and populates {@link JToolBar}
+     * @return toolbar
+     */
     private JToolBar buildToolbar() {
         JToolBar toolBar = new JToolBar("");
 
@@ -350,6 +376,10 @@ public class JNotepadPP extends JFrame {
         return toolBar;
     }
 
+    /**
+     * Creates JNotepadPP {@link JFrame}
+     * @param args none
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new JNotepadPP().setVisible(true);

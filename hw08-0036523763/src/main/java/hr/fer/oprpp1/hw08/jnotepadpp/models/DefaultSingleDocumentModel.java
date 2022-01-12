@@ -133,6 +133,10 @@ public class DefaultSingleDocumentModel implements SingleDocumentModel{
         listeners.remove(l);
     }
 
+    /**
+     * Notifies listeners with passed notifier.
+     * @param notifier listener notifier
+     */
     private void notifyListeners(SingleDocumentListenerNotifier notifier) {
         for(var listener : listeners) {
             notifier.notify(listener);
