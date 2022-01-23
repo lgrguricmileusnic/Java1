@@ -37,6 +37,11 @@ public class Calculator extends JFrame {
     private static Stack<Double> stack;
 
     /**
+     * display
+     */
+    private Display display;
+
+    /**
      * Constructs {@code Calculator JFrame}, sets title, location, close operation and preferred size.
      * Initialises stack and GUI.
      */
@@ -58,7 +63,7 @@ public class Calculator extends JFrame {
         contentPane = getContentPane();
         contentPane.setBackground(Color.WHITE);
         contentPane.setLayout(new CalcLayout(10));
-        Display display = new Display("");
+        display = new Display("");
         contentPane.add(display, "1,1");
         model.addCalcValueListener(model -> display.setText(model.toString()));
         initInputPanel();
@@ -85,7 +90,9 @@ public class Calculator extends JFrame {
 
         for(var button : buttons) {
             button.addActionListener(l -> {
-                if (model.hasFrozenValue()) throw new CalculatorInputException("Model has frozen value");
+                if (model.hasFrozenValue()) {
+                    display.setText("ERROR. Press cls or reset.");
+                }
                 if(model.getPendingBinaryOperation() != null) {
                     model.setValue(model.getPendingBinaryOperation().applyAsDouble(model.getActiveOperand(), model.getValue()));
                 }
@@ -119,7 +126,9 @@ public class Calculator extends JFrame {
 
         for(var b : buttons) {
             b.addActionListener((l) -> {
-                if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
+                if(model.hasFrozenValue()) {
+                    display.setText("ERROR. Press cls or reset.");
+                }
                 model.setValue(b.getActiveFunction().apply(model.getValue()));
             });
         }
@@ -142,7 +151,10 @@ public class Calculator extends JFrame {
         UnaryFunctionCalcButton reciprocal = new UnaryFunctionCalcButton("1/x", x -> 1/x);
 
         reciprocal.addActionListener(l -> {
-            if(model.hasFrozenValue()) throw new CalcLayoutException("Model already has frozen value");
+            if(model.hasFrozenValue()) {
+                display.setText("ERROR. Press cls or reset.");
+                return;
+            }
             model.setValue(reciprocal.getFunction().apply(model.getValue()));
         });
         contentPane.add(reciprocal, "2,1");
@@ -190,7 +202,13 @@ public class Calculator extends JFrame {
         for (int i = 2; i < 5 ; i++) {
             for (int j = 5; j >=3 ; j--) {
                 CalcButton tmp = new CalcButton(String.valueOf(dgt));
-                tmp.addActionListener((e) -> model.insertDigit(Integer.parseInt(((JButton) e.getSource()).getText())));
+                tmp.addActionListener((e) -> {
+                    try {
+                        model.insertDigit(Integer.parseInt(((JButton) e.getSource()).getText()));
+                    } catch (CalculatorInputException ex) {
+                        display.setText("ERROR. Press cls or reset.");
+                    }
+                });
                 tmp.setFont(tmp.getFont().deriveFont(30f));
                 contentPane.add(tmp, new RCPosition(i, j));
                 dgt--;
@@ -202,11 +220,23 @@ public class Calculator extends JFrame {
         contentPane.add(zero, new RCPosition(5,3));
 
         CalcButton swap = new CalcButton("+/-");
-        swap.addActionListener(l -> model.swapSign());
+        swap.addActionListener(l -> {
+            try {
+                model.swapSign();
+            }catch (CalculatorInputException ex) {
+                display.setText("ERROR. Press cls or reset.");
+            }
+        });
         contentPane.add(swap, "5,4");
 
         CalcButton decimalPoint = new CalcButton(".");
-        decimalPoint.addActionListener(l -> model.insertDecimalPoint());
+        decimalPoint.addActionListener(l -> {
+            try {
+                model.insertDecimalPoint();
+            } catch (CalculatorInputException e) {
+                display.setText("ERROR. Press cls or reset.");
+            }
+        });
         contentPane.add(decimalPoint, "5,5");
     }
 

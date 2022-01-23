@@ -74,6 +74,7 @@ public class JNotepadPP extends JFrame {
                 if (HelperMethods.checkModifiedDocuments(documentsModel, flp)) {
                     dispose();
                 }
+
             }
         });
         setLocation(20, 20);
@@ -223,14 +224,7 @@ public class JNotepadPP extends JFrame {
         documentsModel.addMultipleDocumentListener(new MultipleDocumentListener() {
             @Override
             public void currentDocumentChanged(SingleDocumentModel previousModel, SingleDocumentModel currentModel) {
-                String fileName;
-                if (currentModel == null) {
-                    fileName = "";
-                } else if (currentModel.getFilePath() == null) {
-                    fileName = flp.getString("unnamed");
-                } else {
-                    fileName = currentModel.getFilePath().getFileName().toString();
-                }
+                String fileName = HelperMethods.getFileNameSafe(currentModel, flp);
                 frame.setTitle(fileName +(fileName.equals("") ? "" : " - ") + "JNotepad++");
 
                 if (currentModel != null) {
@@ -323,14 +317,7 @@ public class JNotepadPP extends JFrame {
                 }
             }
             SingleDocumentModel currentModel = documentsModel.getCurrentDocument();
-            String fileName;
-            if (currentModel == null) {
-                fileName = "";
-            } else if (currentModel.getFilePath() == null) {
-                fileName = flp.getString("unnamed");
-            } else {
-                fileName = currentModel.getFilePath().getFileName().toString();
-            }
+            String fileName = HelperMethods.getFileNameSafe(currentModel, flp);
             frame.setTitle(fileName +(fileName.equals("") ? "" : " - ") + "JNotepad++");
         });
     }
