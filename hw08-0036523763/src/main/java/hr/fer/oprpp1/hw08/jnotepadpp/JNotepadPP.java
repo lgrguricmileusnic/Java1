@@ -231,7 +231,7 @@ public class JNotepadPP extends JFrame {
                 } else {
                     fileName = currentModel.getFilePath().getFileName().toString();
                 }
-                frame.setTitle(fileName + " - JNotepad++");
+                frame.setTitle(fileName +(fileName.equals("") ? "" : " - ") + "JNotepad++");
 
                 if (currentModel != null) {
                     JTextComponent currentTextComponent = currentModel.getTextComponent();
@@ -314,17 +314,24 @@ public class JNotepadPP extends JFrame {
             public void documentRemoved(SingleDocumentModel model) {
             }
         });
-        flp.addLocalizationListener(new ILocalizationListener() {
-            @Override
-            public void localizationChanged() {
-                for(SingleDocumentModel doc : documentsModel) {
-                    if (doc.getFilePath() == null) {
-                        int index = documentsModel.getIndexOfDocument(doc);
-                        tabbedPane.setTitleAt(index, flp.getString("unnamed"));
-                        tabbedPane.setToolTipTextAt(index, flp.getString("unnamed"));
-                    }
+        flp.addLocalizationListener(() -> {
+            for(SingleDocumentModel doc : documentsModel) {
+                if (doc.getFilePath() == null) {
+                    int index = documentsModel.getIndexOfDocument(doc);
+                    tabbedPane.setTitleAt(index, flp.getString("unnamed"));
+                    tabbedPane.setToolTipTextAt(index, flp.getString("unnamed"));
                 }
             }
+            SingleDocumentModel currentModel = documentsModel.getCurrentDocument();
+            String fileName;
+            if (currentModel == null) {
+                fileName = "";
+            } else if (currentModel.getFilePath() == null) {
+                fileName = flp.getString("unnamed");
+            } else {
+                fileName = currentModel.getFilePath().getFileName().toString();
+            }
+            frame.setTitle(fileName +(fileName.equals("") ? "" : " - ") + "JNotepad++");
         });
     }
 

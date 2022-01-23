@@ -71,12 +71,13 @@ public class BarChartComponent extends JComponent {
         //draw xTitle
         g2d.drawString(barChart.getXTitle(), originX + (xAxisLength - titleMetrics.stringWidth(barChart.getXTitle())) / 2, h - titleMetrics.getDescent());
         //draw yTitle
-        AffineTransform at = new AffineTransform();
+        AffineTransform def = g2d.getTransform();
+        AffineTransform at = new AffineTransform(def);
         at.rotate(-Math.PI / 2);
         g2d.setTransform(at);
         g2d.drawString(barChart.getYTitle(), -(yAxisLength + titleMetrics.stringWidth(barChart.getYTitle())) / 2, titleMetrics.getAscent());
-        at.rotate(Math.PI / 2);
-        g2d.setTransform(at);
+        //at.rotate(Math.PI / 2);
+        g2d.setTransform(def);
 
         //draw x axis names and markers
         List<XYValue> values = barChart.getValues();

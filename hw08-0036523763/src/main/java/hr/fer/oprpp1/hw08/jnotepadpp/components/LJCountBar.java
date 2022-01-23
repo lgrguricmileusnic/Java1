@@ -140,6 +140,14 @@ public class LJCountBar extends JComponent {
             return;
         }
         JTextArea textArea = model.getTextComponent();
+        try {
+            line = textArea.getLineOfOffset(textArea.getSelectionStart());
+            column = textArea.getSelectionStart() - textArea.getLineStartOffset(line);
+            line++;
+            column++;
+        } catch (BadLocationException ignored) {
+        }
+        selected = Math.abs(textArea.getSelectionEnd() - textArea.getSelectionStart());
         this.length = textArea.getDocument().getLength();
         updateLabels();
     }

@@ -47,7 +47,7 @@ public class DefaultMultipleDocumentModel extends JTabbedPane implements Multipl
             }
             setCurrentDocument(getDocument(getSelectedIndex()));
             Path p = currentDocument.getFilePath();
-            System.out.println("Current Document: " + (p == null ? "Unnamed" : p.getFileName().toString()));
+            //System.out.println("Current Document: " + (p == null ? "Unnamed" : p.getFileName().toString()));
         });
     }
 
